@@ -1,0 +1,1 @@
+import{d as t,f as s,o as a,a as r,t as o}from"./app-keLGV_nh.js";const c={key:0},m={class:"text-sm text-red-600 dark:text-red-400"},g={__name:"InputError",props:{message:[String,Array]},setup(e){return(n,d)=>e.message?(a(),t("div",c,[r("p",m,o(Array.isArray(e.message)?e.message[0]:e.message),1)])):s("",!0)}};export{g as _};
