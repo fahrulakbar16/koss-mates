@@ -111,7 +111,7 @@
                                         <span class="w-1.5 h-1.5 rounded-full mr-2" :class="[
                                             report.status === 'pending' ? 'bg-yellow-500' :
                                             report.status === 'in_progress' ? 'bg-blue-500' :
-                                            report.status === 'resolved' ? 'bg-green-500' : 'bg-red-500'
+                                            report.status === 'resolved' ? 'bg-green-500' : 'bg-primary-500'
                                         ]"></span>
                                         {{ report.status_label }}
                                     </span>
@@ -157,7 +157,7 @@
                                         </button>
 
                                         <button v-if="report.status === 'pending'" @click="openRejectModal(report)" :disabled="processing"
-                                            class="p-2.5 text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-xl disabled:opacity-50 transition-all shadow-sm"
+                                            class="p-2.5 text-primary-600 bg-primary-50 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50 rounded-xl disabled:opacity-50 transition-all shadow-sm"
                                             title="Tolak Laporan">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -272,8 +272,8 @@
         <div v-if="showRejectModal"
             class="fixed inset-0 z-[100] overflow-y-auto bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
             <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 max-w-md w-full p-8 transform transition-all scale-100">
-                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 mb-6 border border-red-200 dark:border-red-800/50">
-                    <svg class="h-8 w-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-900/30 mb-6 border border-primary-200 dark:border-primary-800/50">
+                    <svg class="h-8 w-8 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                 </div>
@@ -285,7 +285,7 @@
                 </p>
                 <div class="mb-6">
                     <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-                        Alasan Penolakan <span class="text-red-500">*</span>
+                        Alasan Penolakan <span class="text-primary-500">*</span>
                     </label>
                     <textarea v-model="adminNotes" rows="3"
                         class="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-900/50 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all resize-none shadow-inner"
@@ -297,7 +297,7 @@
                         Batal
                     </button>
                     <button @click="confirmReject" :disabled="processing"
-                        class="w-full px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 disabled:opacity-50 shadow-lg shadow-red-600/30 transition-all active:scale-95">
+                        class="w-full px-4 py-3 text-sm font-bold text-white bg-primary-600 rounded-xl hover:bg-primary-700 disabled:opacity-50 shadow-lg shadow-primary-600/30 transition-all active:scale-95">
                         {{ processing ? 'Memproses...' : 'Tolak Laporan' }}
                     </button>
                 </div>
@@ -379,7 +379,7 @@ const getStatusClass = (status) => {
         case 'pending': return 'bg-yellow-50 text-yellow-700 border border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800';
         case 'in_progress': return 'bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800';
         case 'resolved': return 'bg-green-50 text-green-700 border border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800';
-        case 'rejected': return 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800';
+        case 'rejected': return 'bg-primary-50 text-primary-700 border border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800';
         default: return 'bg-gray-50 text-gray-700 border border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700';
     }
 };

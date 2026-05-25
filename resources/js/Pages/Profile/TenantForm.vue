@@ -63,7 +63,7 @@ const submit = () => {
                         Telepon</label>
                     <input v-model="form.phone" type="text" id="phone"
                         class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition" />
-                    <p v-if="form.errors.phone" class="text-xs text-rose-500 font-medium mt-1">{{ form.errors.phone[0] }}
+                    <p v-if="form.errors.phone" class="text-xs text-primary-500 font-medium mt-1">{{ form.errors.phone[0] }}
                     </p>
                 </div>
 
@@ -77,7 +77,7 @@ const submit = () => {
                         <option value="male">Laki-laki</option>
                         <option value="female">Perempuan</option>
                     </select>
-                    <p v-if="form.errors.gender" class="text-xs text-rose-500 font-medium mt-1">{{ form.errors.gender[0] }}
+                    <p v-if="form.errors.gender" class="text-xs text-primary-500 font-medium mt-1">{{ form.errors.gender[0] }}
                     </p>
                 </div>
 
@@ -87,7 +87,7 @@ const submit = () => {
                         KTP</label>
                     <input v-model="form.id_card_number" type="text" id="id_card_number"
                         class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition" />
-                    <p v-if="form.errors.id_card_number" class="text-xs text-rose-500 font-medium mt-1">{{
+                    <p v-if="form.errors.id_card_number" class="text-xs text-primary-500 font-medium mt-1">{{
                         form.errors.id_card_number[0] }}</p>
                 </div>
 
@@ -97,7 +97,7 @@ const submit = () => {
                         Lahir</label>
                     <input v-model="form.birth_date" type="date" id="birth_date"
                         class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition" />
-                    <p v-if="form.errors.birth_date" class="text-xs text-rose-500 font-medium mt-1">{{
+                    <p v-if="form.errors.birth_date" class="text-xs text-primary-500 font-medium mt-1">{{
                         form.errors.birth_date[0] }}</p>
                 </div>
 
@@ -108,7 +108,7 @@ const submit = () => {
                     <textarea v-model="form.address" id="address" rows="3"
                         class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition"
                         placeholder="Alamat sesuai KTP atau tempat tinggal saat ini"></textarea>
-                    <p v-if="form.errors.address" class="text-xs text-rose-500 font-medium mt-1">{{ form.errors.address[0]
+                    <p v-if="form.errors.address" class="text-xs text-primary-500 font-medium mt-1">{{ form.errors.address[0]
                     }}</p>
                 </div>
 
@@ -130,7 +130,7 @@ const submit = () => {
                             class="w-full pl-10 pr-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition"
                             placeholder="Contoh: Ayah - 08123456789" />
                     </div>
-                    <p v-if="form.errors.emergency_contact" class="text-xs text-rose-500 font-medium mt-1">{{
+                    <p v-if="form.errors.emergency_contact" class="text-xs text-primary-500 font-medium mt-1">{{
                         form.errors.emergency_contact[0] }}</p>
                 </div>
             </div>

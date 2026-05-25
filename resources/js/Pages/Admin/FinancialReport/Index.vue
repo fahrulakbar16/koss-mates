@@ -37,7 +37,7 @@
                         <input v-model="startDateFilter" type="date" class="h-9 rounded-lg border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-36" />
                         <span class="text-gray-400 text-sm">—</span>
                         <input v-model="endDateFilter" type="date" class="h-9 rounded-lg border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-36" />
-                        <button v-if="startDateFilter || endDateFilter" @click="startDateFilter = ''; endDateFilter = '';" class="text-xs text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium flex items-center gap-1 transition-colors">
+                        <button v-if="startDateFilter || endDateFilter" @click="startDateFilter = ''; endDateFilter = '';" class="text-xs text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium flex items-center gap-1 transition-colors">
                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
@@ -105,7 +105,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-5 whitespace-nowrap text-right">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-sm font-bold bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-sm font-bold bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
                                         {{ formatCurrency(item.total_expense) }}
                                     </span>
                                 </td>

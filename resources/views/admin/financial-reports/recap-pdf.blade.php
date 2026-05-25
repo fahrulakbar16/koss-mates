@@ -67,7 +67,7 @@
             color: #4b5563;
         }
 
-        .text-red-600 {
+        .text-primary-600 {
             color: #dc2626;
         }
 
@@ -75,7 +75,7 @@
             color: #059669;
         }
 
-        .text-rose-600 {
+        .text-primary-600 {
             color: #e11d48;
         }
 
@@ -364,7 +364,7 @@
             @foreach ($tenants as $index => $tenant)
                 <tr>
                     <td class="text-center text-gray-400">{{ $index + 1 }}</td>
-                    <td class="text-center font-bold text-red-600">{{ $tenant['room_number'] }}</td>
+                    <td class="text-center font-bold text-primary-600">{{ $tenant['room_number'] }}</td>
                     <td class="font-bold">{{ $tenant['name'] }}</td>
                     <td class="text-xs text-gray-600">{{ $tenant['origin'] }}</td>
                     <td class="text-xs text-gray-500">{{ $tenant['phone'] }}</td>
@@ -413,7 +413,7 @@
                                     <div class="font-bold">{{ $expense['category'] }}</div>
                                     <div class="text-xs text-gray-500">{{ $expense['description'] }}</div>
                                 </td>
-                                <td class="text-right currency text-rose-600">
+                                <td class="text-right currency text-primary-600">
                                     {{ number_format($expense['amount'], 0, ',', '.') }}
                                 </td>
                             </tr>
@@ -429,7 +429,7 @@
                         <tr class="row-total">
                             <td colspan="2" class="text-right text-xs" style="padding: 10px; color: #64748b;">TOTAL
                                 PENGELUARAN:</td>
-                            <td class="text-right currency text-rose-600" style="font-size: 11pt; padding: 10px;">
+                            <td class="text-right currency text-primary-600" style="font-size: 11pt; padding: 10px;">
                                 {{ number_format($summary['total_expense'], 0, ',', '.') }}
                             </td>
                         </tr>
@@ -447,20 +447,20 @@
                     </div>
                     <div class="summary-item">
                         <div class="summary-label">TOTAL PENGELUARAN (CASH OUT)</div>
-                        <div class="summary-value text-rose-600 text-right">-
+                        <div class="summary-value text-primary-600 text-right">-
                             {{ number_format($summary['total_expense'], 0, ',', '.') }}</div>
                     </div>
                     <div class="summary-item">
                         <div class="summary-label text-uppercase font-bold" style="color: #0f172a;">PORSI PENGELOLA ({{ 100 - ($boardingHouse->persentasi_pemilik ?? 100) }}%)</div>
                         <div
-                            class="summary-value net-value text-right {{ $summary['net_profit'] >= 0 ? 'text-blue-600' : 'text-rose-600' }}">
+                            class="summary-value net-value text-right {{ $summary['net_profit'] >= 0 ? 'text-blue-600' : 'text-primary-600' }}">
                            {{ number_format($summary['management_share'], 0, ',', '.') }}
                         </div>
                     </div>
                     <div class="summary-item">
                         <div class="summary-label text-uppercase font-bold" style="color: #0f172a;">LABA BERSIH</div>
                         <div
-                            class="summary-value net-value text-right {{ $summary['net_profit'] >= 0 ? 'text-blue-600' : 'text-rose-600' }}">
+                            class="summary-value net-value text-right {{ $summary['net_profit'] >= 0 ? 'text-blue-600' : 'text-primary-600' }}">
                            {{ number_format($summary['owner_share'], 0, ',', '.') }}
                         </div>
                     </div>

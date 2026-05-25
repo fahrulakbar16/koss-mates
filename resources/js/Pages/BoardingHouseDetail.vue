@@ -177,7 +177,7 @@ const getStatusClass = (status) => {
     switch (status) {
         case 'available': return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800';
         case 'occupied': return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200 dark:border-blue-800';
-        case 'maintenance': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800';
+        case 'maintenance': return 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 border-primary-200 dark:border-primary-800';
         case 'booked': return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border-amber-200 dark:border-amber-800';
         default: return 'bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400 border-gray-200 dark:border-gray-800';
     }
@@ -708,7 +708,7 @@ onUnmounted(() => {
                                     :min="new Date().toISOString().split('T')[0]"
                                     class="block w-full pl-11 pr-4 py-4 rounded-2xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 focus:border-primary-600 focus:ring-4 focus:ring-primary-600/10 transition-all duration-200 text-gray-900 dark:text-white font-medium"
                                 />
-                                <div v-if="bookingForm.errors.planned_checkin_date" class="mt-2 text-xs font-bold text-red-500">
+                                <div v-if="bookingForm.errors.planned_checkin_date" class="mt-2 text-xs font-bold text-primary-500">
                                     {{ bookingForm.errors.planned_checkin_date }}
                                 </div>
                             </div>

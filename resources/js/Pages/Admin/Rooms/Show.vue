@@ -42,7 +42,7 @@
                                             room.status === 'available' ? 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800' :
                                                 room.status === 'occupied' ? 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800' :
                                                     room.status === 'booked' ? 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800' :
-                                                        'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
+                                                        'bg-primary-100 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800'
                                         ]">
                                             {{ room.status === 'available' ? 'Tersedia' : room.status === 'occupied' ? 'Terisi' : room.status === 'booked' ? 'Booked' : 'Maintenance' }}
                                         </span>
@@ -54,7 +54,7 @@
 
                                 <div class="flex gap-2">
                                     <button v-if="room.status === 'booked'" @click="cancelBooking"
-                                        class="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-lg shadow-red-500/30 hover:shadow-red-500/40 transform hover:-translate-y-0.5 transition-all duration-200"
+                                        class="flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200"
                                         title="Batalkan Booking">
                                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -211,7 +211,7 @@
                                         <EditIcon class="w-4 h-4" />
                                     </button>
                                     <button @click="deleteExpense(expense)"
-                                        class="p-2 text-red-600 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+                                        class="p-2 text-primary-600 bg-primary-50 dark:bg-primary-900/20 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/40 transition-colors"
                                         title="Hapus">
                                         <TrashIcon class="w-4 h-4" />
                                     </button>
@@ -250,12 +250,12 @@
             <div class="space-y-5">
                 <div class="space-y-2">
                     <label for="expense_category" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                        Kategori <span class="text-red-500">*</span>
+                        Kategori <span class="text-primary-500">*</span>
                     </label>
                     <input id="expense_category"
                         class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all placeholder:text-gray-400"
                         type="text" v-model="expenseForm.category" required placeholder="Contoh: Perbaikan, Listrik, Air, dll" />
-                    <div v-if="expenseForm.errors.category" class="text-xs text-red-500 font-medium mt-1">
+                    <div v-if="expenseForm.errors.category" class="text-xs text-primary-500 font-medium mt-1">
                         {{ expenseForm.errors.category }}
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label for="expense_amount" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Jumlah (Rp) <span class="text-red-500">*</span>
+                            Jumlah (Rp) <span class="text-primary-500">*</span>
                         </label>
                         <div class="relative">
                             <span class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400">Rp</span>
@@ -271,19 +271,19 @@
                                 class="w-full pl-10 pr-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all placeholder:text-gray-400"
                                 type="number" step="0.01" min="0" v-model.number="expenseForm.amount" required placeholder="0" />
                         </div>
-                        <div v-if="expenseForm.errors.amount" class="text-xs text-red-500 font-medium mt-1">
+                        <div v-if="expenseForm.errors.amount" class="text-xs text-primary-500 font-medium mt-1">
                             {{ expenseForm.errors.amount }}
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label for="expense_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Tanggal <span class="text-red-500">*</span>
+                            Tanggal <span class="text-primary-500">*</span>
                         </label>
                         <input id="expense_date"
                             class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
                             type="date" v-model="expenseForm.expense_date" required />
-                        <div v-if="expenseForm.errors.expense_date" class="text-xs text-red-500 font-medium mt-1">
+                        <div v-if="expenseForm.errors.expense_date" class="text-xs text-primary-500 font-medium mt-1">
                             {{ expenseForm.errors.expense_date }}
                         </div>
                     </div>
@@ -296,7 +296,7 @@
                     <textarea id="expense_description"
                         class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all placeholder:text-gray-400"
                         v-model="expenseForm.description" rows="3" placeholder="Tambahkan keterangan pengeluaran..."></textarea>
-                    <div v-if="expenseForm.errors.description" class="text-xs text-red-500 font-medium mt-1">
+                    <div v-if="expenseForm.errors.description" class="text-xs text-primary-500 font-medium mt-1">
                         {{ expenseForm.errors.description }}
                     </div>
                 </div>
@@ -311,14 +311,14 @@
                                 alt="Receipt preview"
                                 class="w-full max-w-xs h-48 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600" />
                             <button type="button" @click="removeExpenseReceipt"
-                                class="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">
+                                class="absolute top-2 right-2 p-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors">
                                 <TrashIcon class="w-4 h-4" />
                             </button>
                         </div>
                     </div>
                     <input id="expense_receipt" type="file" accept="image/*" @change="handleExpenseReceiptChange"
                         class="block w-full text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-primary-900/30 dark:file:text-primary-300 cursor-pointer bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" />
-                    <div v-if="expenseForm.errors.receipt" class="text-xs text-red-500 font-medium mt-1">
+                    <div v-if="expenseForm.errors.receipt" class="text-xs text-primary-500 font-medium mt-1">
                         {{ expenseForm.errors.receipt }}
                     </div>
                 </div>

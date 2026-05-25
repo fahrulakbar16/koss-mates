@@ -190,7 +190,7 @@ const sendPhoneOtp = () => {
                             {{ $page.props.flash.success }}
                         </div>
 
-                        <div v-if="$page.props.flash?.error" class="mb-6 flex items-center gap-3 p-4 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/50 rounded-2xl text-red-600 dark:text-red-400 text-sm font-medium animate-in fade-in slide-in-from-top-2">
+                        <div v-if="$page.props.flash?.error" class="mb-6 flex items-center gap-3 p-4 bg-primary-50 dark:bg-primary-950/30 border border-primary-100 dark:border-primary-900/50 rounded-2xl text-primary-600 dark:text-primary-400 text-sm font-medium animate-in fade-in slide-in-from-top-2">
                             <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
                             </svg>
@@ -231,7 +231,7 @@ const sendPhoneOtp = () => {
                                     class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all"
                                     required
                                 >
-                                <p v-if="phoneForm.errors.phone" class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                <p v-if="phoneForm.errors.phone" class="mt-2 text-sm text-primary-600 dark:text-primary-400">
                                     {{ phoneForm.errors.phone }}
                                 </p>
                             </div>
@@ -259,7 +259,7 @@ const sendPhoneOtp = () => {
                                     :href="route('logout')"
                                     method="post"
                                     as="button"
-                                    class="flex items-center gap-1.5 text-sm font-bold text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
+                                    class="flex items-center gap-1.5 text-sm font-bold text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors"
                                 >
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

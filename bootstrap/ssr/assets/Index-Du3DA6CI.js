@@ -221,7 +221,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
               _push(`<!---->`);
             }
             if (unref(can)("roles.delete")) {
-              _push(`<button class="text-red-500 hover:text-red-600" title="Hapus">`);
+              _push(`<button class="text-primary-500 hover:text-primary-600" title="Hapus">`);
               _push(ssrRenderComponent(TrashIcon, null, null, _parent));
               _push(`</button>`);
             } else {
@@ -369,9 +369,9 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="font-semibold text-gray-900 dark:text-white"${_scopeId}>Nama <span class="text-red-500"${_scopeId}>*</span></label><input id="name" class="w-full text-sm font-medium text-gray-600 placeholder-gray-500 border-gray-400 rounded-lg placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama jabatan"${_scopeId}>`);
+            _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="font-semibold text-gray-900 dark:text-white"${_scopeId}>Nama <span class="text-primary-500"${_scopeId}>*</span></label><input id="name" class="w-full text-sm font-medium text-gray-600 placeholder-gray-500 border-gray-400 rounded-lg placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama jabatan"${_scopeId}>`);
             if (unref(form).errors.name) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -385,7 +385,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     class: "font-semibold text-gray-900 dark:text-white"
                   }, [
                     createTextVNode("Nama "),
-                    createVNode("span", { class: "text-red-500" }, "*")
+                    createVNode("span", { class: "text-primary-500" }, "*")
                   ]),
                   withDirectives(createVNode("input", {
                     id: "name",
@@ -399,7 +399,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.name ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.name), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [

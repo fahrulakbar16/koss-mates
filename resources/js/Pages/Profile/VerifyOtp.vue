@@ -72,7 +72,7 @@ const submit = () => {
                                     maxlength="6"
                                     placeholder="000000"
                                 >
-                                <p v-if="form.errors.otp" class="mt-2 text-sm text-red-600 dark:text-red-400 text-center font-medium">
+                                <p v-if="form.errors.otp" class="mt-2 text-sm text-primary-600 dark:text-primary-400 text-center font-medium">
                                     {{ form.errors.otp }}
                                 </p>
                             </div>

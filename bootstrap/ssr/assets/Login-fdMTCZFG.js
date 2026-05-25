@@ -74,11 +74,11 @@ const _sfc_main = {
       _push(ssrRenderComponent(_sfc_main$1, _attrs, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="flex relative w-full h-screen overflow-hidden"${_scopeId}><div class="hidden relative lg:flex lg:w-1/2 bg-cover bg-center bg-no-repeat" style="${ssrRenderStyle({ backgroundImage: "url(https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=2000)" })}"${_scopeId}><div class="absolute inset-0 bg-black/40"${_scopeId}></div><div class="relative z-10 flex flex-col justify-between p-8 h-full text-white"${_scopeId}><div class="flex gap-2 items-center"${_scopeId}><div class="flex justify-center items-center w-10 h-10 bg-white rounded-lg"${_scopeId}><svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20"${_scopeId}><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"${_scopeId}></path></svg></div><span class="text-xl font-bold"${_scopeId}>Tharahub</span></div><div class="flex flex-col gap-6 max-w-md"${_scopeId}><h1 class="text-4xl font-bold leading-tight"${_scopeId}> Pengelolaan Kos Modern di Ujung Jari Anda. </h1><p class="text-lg leading-relaxed text-white/90"${_scopeId}> Bergabunglah dengan ribuan penyewa, pengelola, dan pemilik kos untuk pengalaman sewa menyewa yang lebih transparan dan mudah. </p><div class="flex gap-3"${_scopeId}><div class="flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-red-500/30"${_scopeId}><svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"${_scopeId}><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"${_scopeId}></path></svg><span class="text-sm font-medium"${_scopeId}>Terpercaya</span></div><div class="flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-red-500/30"${_scopeId}><svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"${_scopeId}><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"${_scopeId}></path></svg><span class="text-sm font-medium"${_scopeId}>Aman</span></div></div></div></div></div><div class="flex flex-1 items-center justify-center bg-gray-100 dark:bg-gray-900 lg:w-1/2"${_scopeId}><div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg dark:bg-gray-800"${_scopeId}><div class="relative flex gap-1 p-1 mb-6 bg-gray-100 rounded-lg dark:bg-gray-700"${_scopeId}><button class="${ssrRenderClass([activeTab.value === "login" ? "bg-white text-gray-900 shadow-sm dark:bg-gray-600 dark:text-white" : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300", "relative flex-1 px-4 py-2.5 text-base font-medium transition-all duration-200 rounded-md"])}"${_scopeId}> Masuk </button><button class="${ssrRenderClass([activeTab.value === "register" ? "bg-white text-gray-900 shadow-sm dark:bg-gray-600 dark:text-white" : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300", "relative flex-1 px-4 py-2.5 text-base font-medium transition-all duration-200 rounded-md"])}"${_scopeId}> Registrasi </button></div>`);
+            _push2(`<div class="flex relative w-full h-screen overflow-hidden"${_scopeId}><div class="hidden relative lg:flex lg:w-1/2 bg-cover bg-center bg-no-repeat" style="${ssrRenderStyle({ backgroundImage: "url(https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=2000)" })}"${_scopeId}><div class="absolute inset-0 bg-black/40"${_scopeId}></div><div class="relative z-10 flex flex-col justify-between p-8 h-full text-white"${_scopeId}><div class="flex gap-2 items-center"${_scopeId}><div class="flex justify-center items-center w-10 h-10 bg-white rounded-lg"${_scopeId}><svg class="w-6 h-6 text-primary-600" fill="currentColor" viewBox="0 0 20 20"${_scopeId}><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"${_scopeId}></path></svg></div><span class="text-xl font-bold"${_scopeId}>Tharahub</span></div><div class="flex flex-col gap-6 max-w-md"${_scopeId}><h1 class="text-4xl font-bold leading-tight"${_scopeId}> Pengelolaan Kos Modern di Ujung Jari Anda. </h1><p class="text-lg leading-relaxed text-white/90"${_scopeId}> Bergabunglah dengan ribuan penyewa, pengelola, dan pemilik kos untuk pengalaman sewa menyewa yang lebih transparan dan mudah. </p><div class="flex gap-3"${_scopeId}><div class="flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-primary-500/30"${_scopeId}><svg class="w-5 h-5 text-primary-400" fill="currentColor" viewBox="0 0 20 20"${_scopeId}><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"${_scopeId}></path></svg><span class="text-sm font-medium"${_scopeId}>Terpercaya</span></div><div class="flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-primary-500/30"${_scopeId}><svg class="w-5 h-5 text-primary-400" fill="currentColor" viewBox="0 0 20 20"${_scopeId}><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"${_scopeId}></path></svg><span class="text-sm font-medium"${_scopeId}>Aman</span></div></div></div></div></div><div class="flex flex-1 items-center justify-center bg-gray-100 dark:bg-gray-900 lg:w-1/2"${_scopeId}><div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg dark:bg-gray-800"${_scopeId}><div class="relative flex gap-1 p-1 mb-6 bg-gray-100 rounded-lg dark:bg-gray-700"${_scopeId}><button class="${ssrRenderClass([activeTab.value === "login" ? "bg-white text-gray-900 shadow-sm dark:bg-gray-600 dark:text-white" : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300", "relative flex-1 px-4 py-2.5 text-base font-medium transition-all duration-200 rounded-md"])}"${_scopeId}> Masuk </button><button class="${ssrRenderClass([activeTab.value === "register" ? "bg-white text-gray-900 shadow-sm dark:bg-gray-600 dark:text-white" : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300", "relative flex-1 px-4 py-2.5 text-base font-medium transition-all duration-200 rounded-md"])}"${_scopeId}> Registrasi </button></div>`);
             if (activeTab.value === "login") {
               _push2(`<div${_scopeId}><div class="mb-6"${_scopeId}><h2 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white"${_scopeId}> Selamat Datang Kembali </h2><p class="text-sm text-gray-600 dark:text-gray-400"${_scopeId}> Silakan masukkan detail akun Anda untuk melanjutkan. </p></div><form${_scopeId}><div class="space-y-5"${_scopeId}>`);
               if (flashError.value || unref(loginForm).errors.user || unref(loginForm).errors.password || unref(loginForm).hasErrors) {
-                _push2(`<div class="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800"${_scopeId}>`);
+                _push2(`<div class="p-3 text-sm text-primary-600 bg-primary-50 rounded-lg border border-primary-200 dark:bg-primary-900/20 dark:text-primary-400 dark:border-primary-800"${_scopeId}>`);
                 if (flashError.value) {
                   _push2(`<p${_scopeId}>${ssrInterpolate(flashError.value)}</p>`);
                 } else if (getErrorMessage(unref(loginForm).errors.user)) {
@@ -96,15 +96,15 @@ const _sfc_main = {
               }
               _push2(`<div${_scopeId}><label for="email" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300"${_scopeId}> Email </label><div class="relative"${_scopeId}><div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"${_scopeId}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"${_scopeId}></path></svg></div><input type="text" id="email"${ssrRenderAttr("value", unref(loginForm).user)} placeholder="email@contoh.com" class="${ssrRenderClass([
                 "pl-10 pr-4 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                unref(loginForm).errors.user ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                unref(loginForm).errors.user ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
               ])}"${_scopeId}></div>`);
               _push2(ssrRenderComponent(_sfc_main$3, {
                 message: getErrorMessage(unref(loginForm).errors.user),
                 class: "mt-1"
               }, null, _parent2, _scopeId));
-              _push2(`</div><div${_scopeId}><div class="flex justify-between items-center mb-2"${_scopeId}><label for="password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300"${_scopeId}> Password </label><a href="/forgot-password" class="text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"${_scopeId}> Lupa Password? </a></div><div class="relative"${_scopeId}><div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"${_scopeId}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"${_scopeId}></path></svg></div><input${ssrRenderDynamicModel(showPassword.value ? "text" : "password", unref(loginForm).password, null)}${ssrRenderAttr("type", showPassword.value ? "text" : "password")} id="password" placeholder="Enter your password" class="${ssrRenderClass([
+              _push2(`</div><div${_scopeId}><div class="flex justify-between items-center mb-2"${_scopeId}><label for="password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300"${_scopeId}> Password </label><a href="/forgot-password" class="text-xs font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"${_scopeId}> Lupa Password? </a></div><div class="relative"${_scopeId}><div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"${_scopeId}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"${_scopeId}></path></svg></div><input${ssrRenderDynamicModel(showPassword.value ? "text" : "password", unref(loginForm).password, null)}${ssrRenderAttr("type", showPassword.value ? "text" : "password")} id="password" placeholder="Enter your password" class="${ssrRenderClass([
                 "pl-10 pr-11 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                unref(loginForm).errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                unref(loginForm).errors.password ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
               ])}"${_scopeId}><button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"${_scopeId}>`);
               if (!showPassword.value) {
                 _push2(`<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"${_scopeId}></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"${_scopeId}></path></svg>`);
@@ -116,7 +116,7 @@ const _sfc_main = {
                 message: getErrorMessage(unref(loginForm).errors.password),
                 class: "mt-1"
               }, null, _parent2, _scopeId));
-              _push2(`</div><div${_scopeId}><button type="submit"${ssrIncludeBooleanAttr(unref(loginForm).processing) ? " disabled" : ""} class="px-4 py-3 w-full text-sm font-semibold text-white bg-red-600 rounded-lg shadow-sm transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"${_scopeId}>`);
+              _push2(`</div><div${_scopeId}><button type="submit"${ssrIncludeBooleanAttr(unref(loginForm).processing) ? " disabled" : ""} class="px-4 py-3 w-full text-sm font-semibold text-white bg-primary-600 rounded-lg shadow-sm transition-all hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"${_scopeId}>`);
               if (unref(loginForm).processing) {
                 _push2(`<span${_scopeId}>Masuk...</span>`);
               } else {
@@ -129,7 +129,7 @@ const _sfc_main = {
             if (activeTab.value === "register") {
               _push2(`<div${_scopeId}><div class="mb-6"${_scopeId}><h2 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white"${_scopeId}> Buat Akun Baru </h2><p class="text-sm text-gray-600 dark:text-gray-400"${_scopeId}> Daftar sekarang untuk mulai mencari kos impian Anda. </p></div><form${_scopeId}><div class="space-y-5"${_scopeId}>`);
               if (unref(registerForm).errors.name || unref(registerForm).errors.email || unref(registerForm).errors.password || unref(registerForm).hasErrors) {
-                _push2(`<div class="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800"${_scopeId}>`);
+                _push2(`<div class="p-3 text-sm text-primary-600 bg-primary-50 rounded-lg border border-primary-200 dark:bg-primary-900/20 dark:text-primary-400 dark:border-primary-800"${_scopeId}>`);
                 if (getErrorMessage(unref(registerForm).errors.name)) {
                   _push2(`<p${_scopeId}>${ssrInterpolate(getErrorMessage(unref(registerForm).errors.name))}</p>`);
                 } else if (getErrorMessage(unref(registerForm).errors.email)) {
@@ -147,7 +147,7 @@ const _sfc_main = {
               }
               _push2(`<div${_scopeId}><label for="name" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300"${_scopeId}> Nama Lengkap </label><div class="relative"${_scopeId}><div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"${_scopeId}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"${_scopeId}></path></svg></div><input type="text" id="name"${ssrRenderAttr("value", unref(registerForm).name)} placeholder="Nama Anda" class="${ssrRenderClass([
                 "pl-10 pr-4 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                unref(registerForm).errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                unref(registerForm).errors.name ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
               ])}"${_scopeId}></div>`);
               _push2(ssrRenderComponent(_sfc_main$3, {
                 message: getErrorMessage(unref(registerForm).errors.name),
@@ -155,7 +155,7 @@ const _sfc_main = {
               }, null, _parent2, _scopeId));
               _push2(`</div><div${_scopeId}><label for="register-email" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300"${_scopeId}> Email </label><div class="relative"${_scopeId}><div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"${_scopeId}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"${_scopeId}></path></svg></div><input type="email" id="register-email"${ssrRenderAttr("value", unref(registerForm).email)} placeholder="email@contoh.com" class="${ssrRenderClass([
                 "pl-10 pr-4 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                unref(registerForm).errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                unref(registerForm).errors.email ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
               ])}"${_scopeId}></div>`);
               _push2(ssrRenderComponent(_sfc_main$3, {
                 message: getErrorMessage(unref(registerForm).errors.email),
@@ -163,7 +163,7 @@ const _sfc_main = {
               }, null, _parent2, _scopeId));
               _push2(`</div><div${_scopeId}><label for="register-password" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300"${_scopeId}> Password </label><div class="relative"${_scopeId}><div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"${_scopeId}><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"${_scopeId}></path></svg></div><input${ssrRenderDynamicModel(showRegisterPassword.value ? "text" : "password", unref(registerForm).password, null)}${ssrRenderAttr("type", showRegisterPassword.value ? "text" : "password")} id="register-password" placeholder="Enter your password" class="${ssrRenderClass([
                 "pl-10 pr-11 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                unref(registerForm).errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                unref(registerForm).errors.password ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
               ])}"${_scopeId}><button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"${_scopeId}>`);
               if (!showRegisterPassword.value) {
                 _push2(`<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"${_scopeId}></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"${_scopeId}></path></svg>`);
@@ -175,7 +175,7 @@ const _sfc_main = {
                 message: getErrorMessage(unref(registerForm).errors.password),
                 class: "mt-1"
               }, null, _parent2, _scopeId));
-              _push2(`</div><div${_scopeId}><button type="submit"${ssrIncludeBooleanAttr(unref(registerForm).processing) ? " disabled" : ""} class="px-4 py-3 w-full text-sm font-semibold text-white bg-red-600 rounded-lg shadow-sm transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"${_scopeId}>`);
+              _push2(`</div><div${_scopeId}><button type="submit"${ssrIncludeBooleanAttr(unref(registerForm).processing) ? " disabled" : ""} class="px-4 py-3 w-full text-sm font-semibold text-white bg-primary-600 rounded-lg shadow-sm transition-all hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"${_scopeId}>`);
               if (unref(registerForm).processing) {
                 _push2(`<span${_scopeId}>Mendaftar...</span>`);
               } else {
@@ -198,7 +198,7 @@ const _sfc_main = {
                     createVNode("div", { class: "flex gap-2 items-center" }, [
                       createVNode("div", { class: "flex justify-center items-center w-10 h-10 bg-white rounded-lg" }, [
                         (openBlock(), createBlock("svg", {
-                          class: "w-6 h-6 text-red-600",
+                          class: "w-6 h-6 text-primary-600",
                           fill: "currentColor",
                           viewBox: "0 0 20 20"
                         }, [
@@ -211,9 +211,9 @@ const _sfc_main = {
                       createVNode("h1", { class: "text-4xl font-bold leading-tight" }, " Pengelolaan Kos Modern di Ujung Jari Anda. "),
                       createVNode("p", { class: "text-lg leading-relaxed text-white/90" }, " Bergabunglah dengan ribuan penyewa, pengelola, dan pemilik kos untuk pengalaman sewa menyewa yang lebih transparan dan mudah. "),
                       createVNode("div", { class: "flex gap-3" }, [
-                        createVNode("div", { class: "flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-red-500/30" }, [
+                        createVNode("div", { class: "flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-primary-500/30" }, [
                           (openBlock(), createBlock("svg", {
-                            class: "w-5 h-5 text-red-400",
+                            class: "w-5 h-5 text-primary-400",
                             fill: "currentColor",
                             viewBox: "0 0 20 20"
                           }, [
@@ -225,9 +225,9 @@ const _sfc_main = {
                           ])),
                           createVNode("span", { class: "text-sm font-medium" }, "Terpercaya")
                         ]),
-                        createVNode("div", { class: "flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-red-500/30" }, [
+                        createVNode("div", { class: "flex gap-2 items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-primary-500/30" }, [
                           (openBlock(), createBlock("svg", {
-                            class: "w-5 h-5 text-red-400",
+                            class: "w-5 h-5 text-primary-400",
                             fill: "currentColor",
                             viewBox: "0 0 20 20"
                           }, [
@@ -269,7 +269,7 @@ const _sfc_main = {
                         createVNode("div", { class: "space-y-5" }, [
                           flashError.value || unref(loginForm).errors.user || unref(loginForm).errors.password || unref(loginForm).hasErrors ? (openBlock(), createBlock("div", {
                             key: 0,
-                            class: "p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800"
+                            class: "p-3 text-sm text-primary-600 bg-primary-50 rounded-lg border border-primary-200 dark:bg-primary-900/20 dark:text-primary-400 dark:border-primary-800"
                           }, [
                             flashError.value ? (openBlock(), createBlock("p", { key: 0 }, toDisplayString(flashError.value), 1)) : getErrorMessage(unref(loginForm).errors.user) ? (openBlock(), createBlock("p", { key: 1 }, toDisplayString(getErrorMessage(unref(loginForm).errors.user)), 1)) : getErrorMessage(unref(loginForm).errors.password) ? (openBlock(), createBlock("p", { key: 2 }, toDisplayString(getErrorMessage(unref(loginForm).errors.password)), 1)) : Object.keys(unref(loginForm).errors).length > 0 ? (openBlock(), createBlock("p", { key: 3 }, toDisplayString(getErrorMessage(Object.values(unref(loginForm).errors)[0])), 1)) : createCommentVNode("", true)
                           ])) : createCommentVNode("", true),
@@ -301,7 +301,7 @@ const _sfc_main = {
                                 placeholder: "email@contoh.com",
                                 class: [
                                   "pl-10 pr-4 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                                  unref(loginForm).errors.user ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                                  unref(loginForm).errors.user ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
                                 ]
                               }, null, 10, ["onUpdate:modelValue"]), [
                                 [vModelText, unref(loginForm).user]
@@ -320,7 +320,7 @@ const _sfc_main = {
                               }, " Password "),
                               createVNode("a", {
                                 href: "/forgot-password",
-                                class: "text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+                                class: "text-xs font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"
                               }, " Lupa Password? ")
                             ]),
                             createVNode("div", { class: "relative" }, [
@@ -346,7 +346,7 @@ const _sfc_main = {
                                 placeholder: "Enter your password",
                                 class: [
                                   "pl-10 pr-11 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                                  unref(loginForm).errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                                  unref(loginForm).errors.password ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
                                 ]
                               }, null, 10, ["onUpdate:modelValue", "type"]), [
                                 [vModelDynamic, unref(loginForm).password]
@@ -400,7 +400,7 @@ const _sfc_main = {
                             createVNode("button", {
                               type: "submit",
                               disabled: unref(loginForm).processing,
-                              class: "px-4 py-3 w-full text-sm font-semibold text-white bg-red-600 rounded-lg shadow-sm transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                              class: "px-4 py-3 w-full text-sm font-semibold text-white bg-primary-600 rounded-lg shadow-sm transition-all hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                             }, [
                               unref(loginForm).processing ? (openBlock(), createBlock("span", { key: 0 }, "Masuk...")) : (openBlock(), createBlock("span", { key: 1 }, "Masuk Sekarang"))
                             ], 8, ["disabled"])
@@ -459,7 +459,7 @@ const _sfc_main = {
                         createVNode("div", { class: "space-y-5" }, [
                           unref(registerForm).errors.name || unref(registerForm).errors.email || unref(registerForm).errors.password || unref(registerForm).hasErrors ? (openBlock(), createBlock("div", {
                             key: 0,
-                            class: "p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800"
+                            class: "p-3 text-sm text-primary-600 bg-primary-50 rounded-lg border border-primary-200 dark:bg-primary-900/20 dark:text-primary-400 dark:border-primary-800"
                           }, [
                             getErrorMessage(unref(registerForm).errors.name) ? (openBlock(), createBlock("p", { key: 0 }, toDisplayString(getErrorMessage(unref(registerForm).errors.name)), 1)) : getErrorMessage(unref(registerForm).errors.email) ? (openBlock(), createBlock("p", { key: 1 }, toDisplayString(getErrorMessage(unref(registerForm).errors.email)), 1)) : getErrorMessage(unref(registerForm).errors.password) ? (openBlock(), createBlock("p", { key: 2 }, toDisplayString(getErrorMessage(unref(registerForm).errors.password)), 1)) : Object.keys(unref(registerForm).errors).length > 0 ? (openBlock(), createBlock("p", { key: 3 }, toDisplayString(getErrorMessage(Object.values(unref(registerForm).errors)[0])), 1)) : createCommentVNode("", true)
                           ])) : createCommentVNode("", true),
@@ -491,7 +491,7 @@ const _sfc_main = {
                                 placeholder: "Nama Anda",
                                 class: [
                                   "pl-10 pr-4 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                                  unref(registerForm).errors.name ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                                  unref(registerForm).errors.name ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
                                 ]
                               }, null, 10, ["onUpdate:modelValue"]), [
                                 [vModelText, unref(registerForm).name]
@@ -530,7 +530,7 @@ const _sfc_main = {
                                 placeholder: "email@contoh.com",
                                 class: [
                                   "pl-10 pr-4 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                                  unref(registerForm).errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                                  unref(registerForm).errors.email ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
                                 ]
                               }, null, 10, ["onUpdate:modelValue"]), [
                                 [vModelText, unref(registerForm).email]
@@ -569,7 +569,7 @@ const _sfc_main = {
                                 placeholder: "Enter your password",
                                 class: [
                                   "pl-10 pr-11 py-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border dark:bg-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 dark:text-white dark:placeholder:text-gray-500 transition-colors",
-                                  unref(registerForm).errors.password ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : "border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500/20 dark:focus:border-red-500"
+                                  unref(registerForm).errors.password ? "border-primary-500 focus:border-primary-500 focus:ring-primary-500/20" : "border-gray-300 dark:border-gray-600 focus:border-primary-500 focus:ring-primary-500/20 dark:focus:border-primary-500"
                                 ]
                               }, null, 10, ["onUpdate:modelValue", "type"]), [
                                 [vModelDynamic, unref(registerForm).password]
@@ -623,7 +623,7 @@ const _sfc_main = {
                             createVNode("button", {
                               type: "submit",
                               disabled: unref(registerForm).processing,
-                              class: "px-4 py-3 w-full text-sm font-semibold text-white bg-red-600 rounded-lg shadow-sm transition-all hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                              class: "px-4 py-3 w-full text-sm font-semibold text-white bg-primary-600 rounded-lg shadow-sm transition-all hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                             }, [
                               unref(registerForm).processing ? (openBlock(), createBlock("span", { key: 0 }, "Mendaftar...")) : (openBlock(), createBlock("span", { key: 1 }, "Daftar Sekarang"))
                             ], 8, ["disabled"])

@@ -160,7 +160,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
           }
           _push(`<span class="${ssrRenderClass([
             "absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded",
-            boardingHouse.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : boardingHouse.status === "maintenance" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+            boardingHouse.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : boardingHouse.status === "maintenance" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" : "bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300"
           ])}">${ssrInterpolate(boardingHouse.status === "active" ? "Aktif" : boardingHouse.status === "maintenance" ? "Maintenance" : "Tidak Aktif")}</span></div><div class="p-4"><h3 class="font-semibold text-gray-900 dark:text-white mb-1">${ssrInterpolate(boardingHouse.name)}</h3>`);
           if (boardingHouse.cluster) {
             _push(`<p class="text-xs text-gray-500 dark:text-gray-400 mb-2">${ssrInterpolate(boardingHouse.cluster.name)}</p>`);
@@ -183,7 +183,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
               _push(`<!---->`);
             }
             if (unref(can)("boarding_houses.delete")) {
-              _push(`<button class="text-red-500 hover:text-red-600" title="Hapus">`);
+              _push(`<button class="text-primary-500 hover:text-primary-600" title="Hapus">`);
               _push(ssrRenderComponent(TrashIcon, null, null, _parent));
               _push(`</button>`);
             } else {
@@ -210,19 +210,19 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="text-gray-900 dark:text-white"${_scopeId}>Nama Boarding House <span class="text-red-500"${_scopeId}>*</span></label><input id="name" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama boarding house"${_scopeId}>`);
+            _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="text-gray-900 dark:text-white"${_scopeId}>Nama Boarding House <span class="text-primary-500"${_scopeId}>*</span></label><input id="name" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama boarding house"${_scopeId}>`);
             if (unref(form).errors.name) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="owner_id" class="text-gray-900 dark:text-white"${_scopeId}>Pemilik <span class="text-red-500"${_scopeId}>*</span></label><select id="owner_id" class="block p-2.5 w-full text-sm text-gray-600 rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"${_scopeId}><option selected hidden value=""${_scopeId}> Pilih pemilik </option><!--[-->`);
+            _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="owner_id" class="text-gray-900 dark:text-white"${_scopeId}>Pemilik <span class="text-primary-500"${_scopeId}>*</span></label><select id="owner_id" class="block p-2.5 w-full text-sm text-gray-600 rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"${_scopeId}><option selected hidden value=""${_scopeId}> Pilih pemilik </option><!--[-->`);
             ssrRenderList(props.owners, (owner) => {
               _push2(`<option${ssrRenderAttr("value", owner.id)}${ssrIncludeBooleanAttr(Array.isArray(unref(form).owner_id) ? ssrLooseContain(unref(form).owner_id, owner.id) : ssrLooseEqual(unref(form).owner_id, owner.id)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(owner.name)}</option>`);
             });
             _push2(`<!--]--></select>`);
             if (unref(form).errors.owner_id) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.owner_id)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.owner_id)}</div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -232,49 +232,49 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
             });
             _push2(`<!--]--></select>`);
             if (unref(form).errors.cluster_id) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.cluster_id)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.cluster_id)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="thumbnail" class="text-gray-900 dark:text-white"${_scopeId}>Thumbnail</label><input id="thumbnail" type="file" accept="image/*" class="block w-full text-sm text-gray-600 border border-gray-400 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"${_scopeId}>`);
             if (unref(form).errors.thumbnail) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.thumbnail)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.thumbnail)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="address" class="text-gray-900 dark:text-white"${_scopeId}>Alamat <span class="text-red-500"${_scopeId}>*</span></label><input id="address" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).address)} required placeholder="Masukkan alamat"${_scopeId}>`);
+            _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="address" class="text-gray-900 dark:text-white"${_scopeId}>Alamat <span class="text-primary-500"${_scopeId}>*</span></label><input id="address" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).address)} required placeholder="Masukkan alamat"${_scopeId}>`);
             if (unref(form).errors.address) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.address)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.address)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="phone" class="text-gray-900 dark:text-white"${_scopeId}>Telepon</label><input id="phone" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).phone)} placeholder="Masukkan nomor telepon"${_scopeId}>`);
             if (unref(form).errors.phone) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.phone)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.phone)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="grid grid-cols-2 gap-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="latitude" class="text-gray-900 dark:text-white"${_scopeId}>Latitude</label><input id="latitude" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="number" step="any"${ssrRenderAttr("value", unref(form).latitude)} placeholder="Latitude"${_scopeId}>`);
             if (unref(form).errors.latitude) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.latitude)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.latitude)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="longitude" class="text-gray-900 dark:text-white"${_scopeId}>Longitude</label><input id="longitude" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="number" step="any"${ssrRenderAttr("value", unref(form).longitude)} placeholder="Longitude"${_scopeId}>`);
             if (unref(form).errors.longitude) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.longitude)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.longitude)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div></div><div class="space-y-1 text-sm"${_scopeId}><label for="description" class="text-gray-900 dark:text-white"${_scopeId}>Deskripsi</label><textarea id="description" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" rows="3" placeholder="Masukkan deskripsi"${_scopeId}>${ssrInterpolate(unref(form).description)}</textarea>`);
             if (unref(form).errors.description) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.description)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.description)}</div>`);
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="status" class="text-gray-900 dark:text-white"${_scopeId}>Status <span class="text-red-500"${_scopeId}>*</span></label><select id="status" class="block p-2.5 w-full text-sm text-gray-600 rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"${_scopeId}><option value="active"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "active") : ssrLooseEqual(unref(form).status, "active")) ? " selected" : ""}${_scopeId}>Aktif</option><option value="inactive"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "inactive") : ssrLooseEqual(unref(form).status, "inactive")) ? " selected" : ""}${_scopeId}>Tidak Aktif</option><option value="maintenance"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "maintenance") : ssrLooseEqual(unref(form).status, "maintenance")) ? " selected" : ""}${_scopeId}>Maintenance</option></select>`);
+            _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="status" class="text-gray-900 dark:text-white"${_scopeId}>Status <span class="text-primary-500"${_scopeId}>*</span></label><select id="status" class="block p-2.5 w-full text-sm text-gray-600 rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"${_scopeId}><option value="active"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "active") : ssrLooseEqual(unref(form).status, "active")) ? " selected" : ""}${_scopeId}>Aktif</option><option value="inactive"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "inactive") : ssrLooseEqual(unref(form).status, "inactive")) ? " selected" : ""}${_scopeId}>Tidak Aktif</option><option value="maintenance"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "maintenance") : ssrLooseEqual(unref(form).status, "maintenance")) ? " selected" : ""}${_scopeId}>Maintenance</option></select>`);
             if (unref(form).errors.status) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.status)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.status)}</div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -288,7 +288,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     class: "text-gray-900 dark:text-white"
                   }, [
                     createTextVNode("Nama Boarding House "),
-                    createVNode("span", { class: "text-red-500" }, "*")
+                    createVNode("span", { class: "text-primary-500" }, "*")
                   ]),
                   withDirectives(createVNode("input", {
                     id: "name",
@@ -302,7 +302,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.name ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.name), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -311,7 +311,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     class: "text-gray-900 dark:text-white"
                   }, [
                     createTextVNode("Pemilik "),
-                    createVNode("span", { class: "text-red-500" }, "*")
+                    createVNode("span", { class: "text-primary-500" }, "*")
                   ]),
                   withDirectives(createVNode("select", {
                     id: "owner_id",
@@ -334,7 +334,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.owner_id ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.owner_id), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -359,7 +359,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.cluster_id ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.cluster_id), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -376,7 +376,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   }, null, 32),
                   unref(form).errors.thumbnail ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.thumbnail), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -385,7 +385,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     class: "text-gray-900 dark:text-white"
                   }, [
                     createTextVNode("Alamat "),
-                    createVNode("span", { class: "text-red-500" }, "*")
+                    createVNode("span", { class: "text-primary-500" }, "*")
                   ]),
                   withDirectives(createVNode("input", {
                     id: "address",
@@ -399,7 +399,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.address ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.address), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -418,7 +418,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.phone ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.phone), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "grid grid-cols-2 gap-3" }, [
@@ -439,7 +439,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     ]),
                     unref(form).errors.latitude ? (openBlock(), createBlock("div", {
                       key: 0,
-                      class: "text-sm text-red-500"
+                      class: "text-sm text-primary-500"
                     }, toDisplayString(unref(form).errors.latitude), 1)) : createCommentVNode("", true)
                   ]),
                   createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -459,7 +459,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     ]),
                     unref(form).errors.longitude ? (openBlock(), createBlock("div", {
                       key: 0,
-                      class: "text-sm text-red-500"
+                      class: "text-sm text-primary-500"
                     }, toDisplayString(unref(form).errors.longitude), 1)) : createCommentVNode("", true)
                   ])
                 ]),
@@ -479,7 +479,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.description ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.description), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -488,7 +488,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     class: "text-gray-900 dark:text-white"
                   }, [
                     createTextVNode("Status "),
-                    createVNode("span", { class: "text-red-500" }, "*")
+                    createVNode("span", { class: "text-primary-500" }, "*")
                   ]),
                   withDirectives(createVNode("select", {
                     id: "status",
@@ -503,7 +503,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.status ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.status), 1)) : createCommentVNode("", true)
                 ])
               ])

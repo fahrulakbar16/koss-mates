@@ -27,7 +27,7 @@
                         <!-- Active Status Badge (Top Right) -->
                         <div
                             class="absolute top-6 right-6 z-10 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
-                            <span class="text-xs font-bold text-red-500 uppercase tracking-widest">AKTIF</span>
+                            <span class="text-xs font-bold text-primary-500 uppercase tracking-widest">AKTIF</span>
                         </div>
 
                         <!-- Room Image (Full Width Top) -->
@@ -52,7 +52,7 @@
                                     </p>
                                 </div>
                                 <div
-                                    class="flex items-center gap-2 bg-red-50 dark:bg-red-900/20 text-red-500 px-4 py-2 rounded-full text-sm font-bold">
+                                    class="flex items-center gap-2 bg-primary-50 dark:bg-primary-900/20 text-primary-500 px-4 py-2 rounded-full text-sm font-bold">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -71,12 +71,12 @@
                                         <div class="flex items-baseline gap-3">
                                             <span class="text-xl font-bold text-gray-900 dark:text-white">{{
                                                 formatDate(nextPayment.created_at) }}</span>
-                                            <span class="text-3xl font-bold text-red-500">{{
+                                            <span class="text-3xl font-bold text-primary-500">{{
                                                 formatPrice(nextPayment.total_price) }}</span>
                                         </div>
                                     </div>
                                     <Link :href="route('penyewa.transactions.show', nextPayment.id)"
-                                        class="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg shadow-red-500/30 text-center">
+                                        class="w-full md:w-auto bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg shadow-primary-500/30 text-center">
                                         Bayar Sekarang
                                     </Link>
                                 </div>
@@ -131,7 +131,7 @@
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="font-bold text-gray-900 dark:text-white">Riwayat Terbaru</h3>
                             <Link :href="route('penyewa.transactions.index')"
-                                class="text-sm font-bold text-red-500 hover:text-red-600 flex items-center gap-1">
+                                class="text-sm font-bold text-primary-500 hover:text-primary-600 flex items-center gap-1">
                                 Semua <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -151,7 +151,7 @@
                                     <div class="px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap" :class="{
                                         'bg-green-100 text-green-600': transaction.status === 'completed',
                                         'bg-yellow-100 text-yellow-600': transaction.status === 'pending',
-                                        'bg-red-100 text-red-600': transaction.status === 'cancelled' || transaction.status === 'failed'
+                                        'bg-primary-100 text-primary-600': transaction.status === 'cancelled' || transaction.status === 'failed'
                                     }">
                                         {{ transaction.status === 'completed' ? 'Lunas' : (transaction.status ===
                                             'pending' ? 'Pending' : 'Gagal') }}

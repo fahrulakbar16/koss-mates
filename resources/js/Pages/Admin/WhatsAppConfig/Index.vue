@@ -14,17 +14,17 @@
 
                 <!-- Error Alert -->
                 <div v-if="error"
-                    class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                    class="mb-6 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg p-4">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="h-5 w-5 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
                                     clip-rule="evenodd" />
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-red-800 dark:text-red-200">
+                            <p class="text-sm font-medium text-primary-800 dark:text-primary-200">
                                 {{ error }}
                             </p>
                         </div>
@@ -39,7 +39,7 @@
                                 Daftar Perangkat Fonnte
                             </h2>
                             <button @click="fetchDevicesList" :disabled="loadingDevices"
-                                class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed">
                                 <svg :class="['w-4 h-4 mr-2', loadingDevices ? 'animate-spin' : '']" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -52,7 +52,7 @@
                         <!-- Devices Grid -->
                         <div v-if="devices.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div v-for="device in devices" :key="device.device"
-                                class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-red-300 dark:hover:border-red-700 transition-colors">
+                                class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-primary-300 dark:hover:border-primary-700 transition-colors">
                                 <div class="flex items-start justify-between mb-3">
                                     <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
                                         {{ device.name || 'Unnamed Device' }}
@@ -61,7 +61,7 @@
                                         'inline-flex items-center px-2 py-0.5 rounded text-xs font-medium',
                                         device.status === 'connect'
                                             ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                                            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                                            : 'bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-200'
                                     ]">
                                         {{ device.status === 'connect' ? 'Connected' : 'Disconnected' }}
                                     </span>
@@ -84,7 +84,7 @@
                                 <!-- Show Connect button if disconnected, Disconnect if connected -->
                                 <button v-if="device.status === 'connect'" @click="disconnectDevice(device)"
                                     :disabled="selectingDevice"
-                                    class="w-full inline-flex justify-center items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    class="w-full inline-flex justify-center items-center px-3 py-2 border border-transparent text-xs font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed">
                                     <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M6 18L18 6M6 6l12 12" />
@@ -104,7 +104,7 @@
 
                         <!-- Loading State -->
                         <div v-else-if="loadingDevices" class="flex items-center justify-center py-12">
-                            <svg class="animate-spin h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24">
+                            <svg class="animate-spin h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor"
@@ -185,8 +185,8 @@
 
                             <!-- QR Error -->
                             <div v-else-if="qrError"
-                                class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg mb-4">
-                                <p class="text-sm text-red-800 dark:text-red-200">
+                                class="p-4 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg mb-4">
+                                <p class="text-sm text-primary-800 dark:text-primary-200">
                                     {{ qrError }}
                                 </p>
                             </div>

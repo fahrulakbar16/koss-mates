@@ -17,34 +17,27 @@
             <Link href="/" class="flex items-center gap-3">
                 <!-- Icon Logo when collapsed -->
                 <div v-if="!isExpanded && !isHovered"
-                    class="flex-shrink-0 w-8 h-8 bg-red-600 text-white flex items-center justify-center rounded-lg font-bold text-lg">
+                    class="flex-shrink-0 w-8 h-8 bg-primary-600 text-white flex items-center justify-center rounded-lg font-bold text-lg">
                     K
                 </div>
                 <!-- Full Logo when expanded -->
                 <div v-else class="flex items-center gap-2">
-                    <div
-                        class="flex-shrink-0 w-8 h-8 bg-red-600 text-white flex items-center justify-center rounded-lg font-bold text-xl">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold text-gray-900 dark:text-white">Tharahub</span>
+                    <img src="/KosMates/Asset 2.png" alt="KosMates Logo" class="h-8 object-contain" />
                 </div>
             </Link>
         </div>
 
         <!-- User Profile Section -->
         <div
-            class="relative flex flex-col items-center px-4 py-6 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-br from-red-50/30 to-transparent dark:from-red-900/10">
+            class="relative flex flex-col items-center px-4 py-6 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-br from-primary-50/30 to-transparent dark:from-primary-900/10">
             <!-- Decorative background -->
             <div
-                class="absolute inset-0 bg-gradient-to-br from-red-50/50 via-transparent to-transparent dark:from-red-900/5 pointer-events-none">
+                class="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-transparent dark:from-primary-900/5 pointer-events-none">
             </div>
 
             <div class="relative z-10">
                 <div
-                    class="flex items-center justify-center w-14 h-14 overflow-hidden rounded-full ring-4 ring-red-100/50 dark:ring-red-900/20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-lg">
+                    class="flex items-center justify-center w-14 h-14 overflow-hidden rounded-full ring-4 ring-primary-100/50 dark:ring-primary-900/20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-lg">
                     <img v-if="user?.profile_photo_url || user?.profile_photo_path"
                         :src="user.profile_photo_url || user.profile_photo_path" alt="Profile"
                         class="object-cover w-full h-full" />
@@ -65,8 +58,8 @@
                     <div class="font-bold text-sm text-gray-900 dark:text-gray-100 truncate max-w-[200px]">
                         {{ user?.name || user?.username || "User" }}
                     </div>
-                    <div class="inline-flex items-center mt-1.5 px-2.5 py-1 bg-red-50 dark:bg-red-900/20 rounded-full">
-                        <span class="text-[10px] font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider">
+                    <div class="inline-flex items-center mt-1.5 px-2.5 py-1 bg-primary-50 dark:bg-primary-900/20 rounded-full">
+                        <span class="text-[10px] font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider">
                             {{ roles.length > 0 ? roles[0] : 'User' }}
                         </span>
                     </div>
@@ -91,8 +84,8 @@
                         <button @click="isClusterDropdownOpen = !isClusterDropdownOpen" :class="[
                             'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg transition-all duration-200 group shadow-sm border',
                             isClusterDropdownOpen
-                                ? 'bg-red-50 text-red-600 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-900/40 shadow-red-100 dark:shadow-none'
-                                : 'bg-white text-gray-700 border-gray-200 hover:border-red-200 hover:bg-red-50/50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700/50 dark:hover:border-gray-600',
+                                ? 'bg-primary-50 text-primary-600 border-primary-200 dark:bg-primary-900/20 dark:text-primary-400 dark:border-primary-900/40 shadow-primary-100 dark:shadow-none'
+                                : 'bg-white text-gray-700 border-gray-200 hover:border-primary-200 hover:bg-primary-50/50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700/50 dark:hover:border-gray-600',
                         ]">
                             <OfficeIcon class="w-4 h-4 flex-shrink-0" />
                             <span class="text-sm font-medium truncate flex-1 text-left">
@@ -120,12 +113,12 @@
                                             @click="selectCluster('all')" :class="[
                                                 'w-full text-left px-3 py-2 text-sm transition-all duration-150 flex items-center gap-2 rounded-lg',
                                                 selectedClusterId === 'all'
-                                                    ? 'bg-red-50 text-red-600 font-semibold dark:bg-red-900/20 dark:text-red-400'
+                                                    ? 'bg-primary-50 text-primary-600 font-semibold dark:bg-primary-900/20 dark:text-primary-400'
                                                     : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700'
                                             ]">
                                             <div :class="[
                                                 'w-1.5 h-1.5 rounded-full transition-all duration-150',
-                                                selectedClusterId === 'all' ? 'bg-red-500' : 'bg-gray-300 dark:bg-gray-600'
+                                                selectedClusterId === 'all' ? 'bg-primary-500' : 'bg-gray-300 dark:bg-gray-600'
                                             ]"></div>
                                             <span class="truncate pr-16">Semua Cluster</span>
                                         </button>
@@ -136,12 +129,12 @@
                                             @click="selectCluster(cluster)" :class="[
                                                 'w-full text-left px-3 py-2 text-sm transition-all duration-150 flex items-center gap-2 rounded-lg',
                                                 selectedClusterId === cluster.id
-                                                    ? 'bg-red-50 text-red-600 font-semibold dark:bg-red-900/20 dark:text-red-400'
+                                                    ? 'bg-primary-50 text-primary-600 font-semibold dark:bg-primary-900/20 dark:text-primary-400'
                                                     : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700'
                                             ]">
                                             <div :class="[
                                                 'w-1.5 h-1.5 rounded-full transition-all duration-150',
-                                                selectedClusterId === cluster.id ? 'bg-red-500' : 'bg-gray-300 dark:bg-gray-600'
+                                                selectedClusterId === cluster.id ? 'bg-primary-500' : 'bg-gray-300 dark:bg-gray-600'
                                             ]"></div>
                                             <span class="truncate pr-16">{{ cluster.name }}</span>
                                         </button>
@@ -150,7 +143,7 @@
                                             <Link :href="route('clusters.edit', cluster.id)" class="p-1.5 text-gray-500 hover:text-yellow-600 dark:text-gray-400 dark:hover:text-yellow-500 rounded-md hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm" @click.stop title="Edit Cluster">
                                                 <EditIcon class="w-4 h-4" />
                                             </Link>
-                                            <button @click.stop="deleteCluster(cluster.id)" class="p-1.5 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 rounded-md hover:bg-red-50 dark:hover:bg-red-900/40 transition-colors bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-sm" title="Hapus Cluster">
+                                            <button @click.stop="deleteCluster(cluster.id)" class="p-1.5 text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 rounded-md hover:bg-primary-50 dark:hover:bg-primary-900/40 transition-colors bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-sm" title="Hapus Cluster">
                                                 <TrashIcon class="w-4 h-4" />
                                             </button>
                                         </div>
@@ -158,7 +151,7 @@
 
                                     <!-- Tambah Cluster Button -->
                                     <div class="px-2 pt-2 border-t border-gray-100 dark:border-gray-700 mt-1" v-if="is('Superadmin') || is('Pengelola')">
-                                        <Link :href="route('clusters.create')" @click="isClusterDropdownOpen = false" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors w-full text-left">
+                                        <Link :href="route('clusters.create')" @click="isClusterDropdownOpen = false" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors w-full text-left">
                                             <PlusSquareIcon class="w-4 h-4 flex-shrink-0" />
                                             Tambah Cluster
                                         </Link>
@@ -198,7 +191,7 @@
                                 @click="toggleSubmenu(groupIndex, index)" :class="[
                                     'flex items-center w-full p-2.5 rounded-lg transition-all duration-200 group',
                                     isSubmenuOpen(groupIndex, index) || hasActiveSubmenuRoute(groupIndex, index)
-                                        ? 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400'
+                                        ? 'bg-primary-50 text-primary-600 dark:bg-primary-900/20 dark:text-primary-400'
                                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200',
                                     !isExpanded && !isHovered && !isMobileOpen ? 'lg:justify-center px-2' : '',
                                 ]">
@@ -206,7 +199,7 @@
                                 <component :is="item.icon" :class="[
                                     'flex-shrink-0 w-5 h-5 transition-colors duration-200',
                                     isSubmenuOpen(groupIndex, index) || hasActiveSubmenuRoute(groupIndex, index)
-                                        ? 'text-red-600 dark:text-red-400'
+                                        ? 'text-primary-600 dark:text-primary-400'
                                         : 'text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-400',
                                 ]" />
 
@@ -214,7 +207,7 @@
                                     class="flex flex-1 items-center justify-between ml-3 overflow-hidden">
                                     <span class="text-sm font-medium truncate">{{ item.name }}</span>
                                     <span v-if="item.name === 'Daftar Pengajuan' && pendingCount > 0"
-                                        class="px-1.5 py-0.5 text-[10px] font-bold text-white bg-red-500 rounded-full min-w-[18px] text-center">
+                                        class="px-1.5 py-0.5 text-[10px] font-bold text-white bg-primary-500 rounded-full min-w-[18px] text-center">
                                         {{ pendingCount }}
                                     </span>
                                     <ChevronDownIcon :class="[
@@ -230,20 +223,20 @@
                                 @click="openSubmenu = null" :class="[
                                     'flex items-center w-full px-3 py-2.5 rounded-xl transition-all duration-200 group relative',
                                     isActive(item.pathName ? route(item.pathName) : item.path)
-                                        ? 'bg-gradient-to-r from-red-50 to-red-50/50 text-red-600 shadow-sm border border-red-100 dark:from-red-900/20 dark:to-red-900/10 dark:text-red-400 dark:border-red-900/30'
+                                        ? 'bg-gradient-to-r from-primary-50 to-primary-50/50 text-primary-600 shadow-sm border border-primary-100 dark:from-primary-900/20 dark:to-primary-900/10 dark:text-primary-400 dark:border-primary-900/30'
                                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800/50 dark:hover:text-gray-200',
                                     !isExpanded && !isHovered && !isMobileOpen ? 'lg:justify-center px-2' : '',
                                 ]">
                                 <!-- Active indicator -->
                                 <div v-if="isActive(item.pathName ? route(item.pathName) : item.path)"
-                                    class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-red-600 dark:bg-red-400 rounded-r-full">
+                                    class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-600 dark:bg-primary-400 rounded-r-full">
                                 </div>
 
                                 <component :is="item.icon" :class="[
                                     'flex-shrink-0 w-5 h-5 transition-colors duration-200',
                                     isActive(item.pathName ? route(item.pathName) : item.path)
-                                        ? 'text-red-600 dark:text-red-400'
-                                        : 'text-gray-400 group-hover:text-red-500 dark:text-gray-500 dark:group-hover:text-red-400',
+                                        ? 'text-primary-600 dark:text-primary-400'
+                                        : 'text-gray-400 group-hover:text-primary-500 dark:text-gray-500 dark:group-hover:text-primary-400',
                                 ]" />
 
                                 <span v-if="isExpanded || isHovered || isMobileOpen"
@@ -253,7 +246,7 @@
 
                                 <!-- Pending Count Badge -->
                                 <span v-if="getBadgeCount(item.name) > 0"
-                                    class="ml-auto px-2 py-0.5 text-[10px] font-bold text-white bg-red-500 rounded-full min-w-[20px] text-center shadow-sm">
+                                    class="ml-auto px-2 py-0.5 text-[10px] font-bold text-white bg-primary-500 rounded-full min-w-[20px] text-center shadow-sm">
                                     {{ getBadgeCount(item.name) }}
                                 </span>
                             </Link>
@@ -274,7 +267,7 @@
                                                     :class="[
                                                         'flex items-center justify-between w-full py-2 px-3 rounded-md text-sm transition-colors duration-200',
                                                         isActive(subItem.pathName ? route(subItem.pathName) : subItem.path)
-                                                            ? 'text-red-600 font-medium bg-red-50/50 dark:text-red-400 dark:bg-red-900/10'
+                                                            ? 'text-primary-600 font-medium bg-primary-50/50 dark:text-primary-400 dark:bg-primary-900/10'
                                                             : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800'
                                                     ]">
                                                     <span>{{ subItem?.name }}</span>
@@ -283,7 +276,7 @@
                                                     <span class="flex items-center">
                                                         <span
                                                             v-if="subItem.pathName === 'material-requests.index' && sidebarCounts.on_progress > 0"
-                                                            class="ml-2 px-1.5 py-0.5 text-[10px] font-bold text-white bg-red-500 rounded-full">
+                                                            class="ml-2 px-1.5 py-0.5 text-[10px] font-bold text-white bg-primary-500 rounded-full">
                                                             {{ sidebarCounts.on_progress }}
                                                         </span>
                                                     </span>
@@ -302,9 +295,9 @@
         <!-- Logout Button at Bottom -->
         <div class="px-4 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/30 dark:bg-gray-800/30">
             <Link href="#" @click.prevent="signOut"
-                class="flex items-center gap-3 px-3.5 py-3 text-sm font-semibold text-gray-600 rounded-xl transition-all duration-200 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-50/50 hover:text-red-600 hover:shadow-sm hover:border hover:border-red-100 dark:text-gray-400 dark:hover:from-red-900/20 dark:hover:to-red-900/10 dark:hover:text-red-400 dark:hover:border-red-900/30 group">
+                class="flex items-center gap-3 px-3.5 py-3 text-sm font-semibold text-gray-600 rounded-xl transition-all duration-200 hover:bg-gradient-to-r hover:from-primary-50 hover:to-primary-50/50 hover:text-primary-600 hover:shadow-sm hover:border hover:border-primary-100 dark:text-gray-400 dark:hover:from-primary-900/20 dark:hover:to-primary-900/10 dark:hover:text-primary-400 dark:hover:border-primary-900/30 group">
                 <LogoutIcon
-                    class="w-5 h-5 text-gray-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-red-500 dark:group-hover:text-red-400" />
+                    class="w-5 h-5 text-gray-400 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-primary-500 dark:group-hover:text-primary-400" />
                 <span v-if="isExpanded || isHovered || isMobileOpen" class="truncate">Keluar</span>
             </Link>
         </div>
@@ -719,11 +712,6 @@ const pengelolaMenuGroups = [
     {
         title: "Konfigurasi",
         items: [
-            {
-                icon: CubeIcon,
-                name: "Import Data",
-                path: "/admin/import",
-            },
             {
                 icon: ChatIcon,
                 name: "Konfigurasi WA",

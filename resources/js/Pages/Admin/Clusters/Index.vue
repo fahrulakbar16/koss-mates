@@ -104,7 +104,7 @@
                                     <EditIcon class="w-5 h-5 group-hover/edit:scale-110 transition-transform" />
                                 </button>
                                 <button v-if="can('clusters.delete')" @click="openConfirmModal(cluster)"
-                                    class="p-2.5 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:text-gray-400 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200 group/delete"
+                                    class="p-2.5 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:text-gray-400 dark:hover:bg-primary-900/20 rounded-xl transition-all duration-200 group/delete"
                                     title="Hapus Cluster">
                                     <TrashIcon class="w-5 h-5 group-hover/delete:scale-110 transition-transform" />
                                 </button>
@@ -136,7 +136,7 @@
                                                 ? 'bg-green-500/90 text-white'
                                                 : boardingHouse.status === 'maintenance'
                                                     ? 'bg-yellow-500/90 text-white'
-                                                    : 'bg-red-500/90 text-white',
+                                                    : 'bg-primary-500/90 text-white',
                                         ]">
                                             {{ boardingHouse.status === 'active' ? 'Aktif' : boardingHouse.status ===
                                                 'maintenance' ? 'Maintenance' : 'Tidak Aktif' }}
@@ -157,7 +157,7 @@
                                             </button>
                                             <button v-if="can('boarding_houses.delete')"
                                                 @click.stop="openConfirmBoardingHouseModal(cluster, boardingHouse)"
-                                                class="p-2 text-white bg-red-500/90 hover:bg-red-600 rounded-lg backdrop-blur-sm transition-all transform hover:scale-105">
+                                                class="p-2 text-white bg-primary-500/90 hover:bg-primary-600 rounded-lg backdrop-blur-sm transition-all transform hover:scale-105">
                                                 <TrashIcon class="w-4 h-4" />
                                             </button>
                                         </div>
@@ -262,12 +262,12 @@
                 <div class="space-y-5">
                     <div class="space-y-2">
                         <label for="name" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Nama Cluster <span class="text-red-500">*</span>
+                            Nama Cluster <span class="text-primary-500">*</span>
                         </label>
                         <input id="name"
                             class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
                             type="text" v-model="form.name" required placeholder="Contoh: Cluster Melati" />
-                        <div v-if="form.errors.name" class="text-xs text-red-500 mt-1 font-medium">
+                        <div v-if="form.errors.name" class="text-xs text-primary-500 mt-1 font-medium">
                             {{ form.errors.name }}
                         </div>
                     </div>
@@ -279,7 +279,7 @@
                         <input id="address"
                             class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
                             type="text" v-model="form.address" placeholder="Masukkan alamat lengkap cluster" />
-                        <div v-if="form.errors.address" class="text-xs text-red-500 mt-1 font-medium">
+                        <div v-if="form.errors.address" class="text-xs text-primary-500 mt-1 font-medium">
                             {{ form.errors.address }}
                         </div>
                     </div>
@@ -292,7 +292,7 @@
                             class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400 resize-none"
                             v-model="form.description" rows="3"
                             placeholder="Tuliskan deskripsi singkat mengenai cluster ini..."></textarea>
-                        <div v-if="form.errors.description" class="text-xs text-red-500 mt-1 font-medium">
+                        <div v-if="form.errors.description" class="text-xs text-primary-500 mt-1 font-medium">
                             {{ form.errors.description }}
                         </div>
                     </div>

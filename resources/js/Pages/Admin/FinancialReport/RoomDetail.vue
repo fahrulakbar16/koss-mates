@@ -22,7 +22,7 @@
                     <h1 class="text-lg font-bold text-gray-800 dark:text-white">Detail Pemasukan per Kamar</h1>
                 </div>
                 <button @click="print"
-                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
+                    class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -45,8 +45,8 @@
                     class="mb-6 bg-pink-50 dark:bg-pink-900/10 rounded-xl p-6 border border-pink-100 dark:border-pink-900/30">
                     <div class="flex items-start gap-4">
                         <div
-                            class="w-16 h-16 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
-                            <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24"
+                            class="w-16 h-16 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -60,7 +60,7 @@
                                     room.status === 'available' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' :
                                     room.status === 'occupied' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
                                     room.status === 'booked' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' :
-                                    'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                                    'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400'
                                 ]">
                                     {{ room.status === 'available' ? 'Tersedia' : room.status === 'occupied' ? 'Terisi' : room.status === 'booked' ? 'Booked' : 'Maintenance' }}
                                 </span>
@@ -173,10 +173,10 @@
                 </div>
 
                 <!-- Summary Box -->
-                <div class="bg-red-50 dark:bg-red-900/10 rounded-xl p-6 border-2 border-red-200 dark:border-red-900/30">
+                <div class="bg-primary-50 dark:bg-primary-900/10 rounded-xl p-6 border-2 border-primary-200 dark:border-primary-900/30">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-lg bg-red-600 flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-lg bg-primary-600 flex items-center justify-center">
                                 <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -191,7 +191,7 @@
                             </div>
                         </div>
                         <div class="text-right">
-                            <div class="text-3xl font-bold text-red-600 dark:text-red-400">{{
+                            <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">{{
                                 formatCurrency(totalIncome)
                             }}</div>
                             <div class="text-xs text-gray-500 dark:text-gray-400 uppercase mt-1">{{ transactions.length

@@ -20,7 +20,7 @@
                     Tambah Pemasukan
                 </button>
                 <button @click="openExpenseModal"
-                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold shadow-lg shadow-rose-200 dark:shadow-none transition-all duration-300 transform hover:-translate-y-0.5">
+                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold shadow-lg shadow-primary-200 dark:shadow-none transition-all duration-300 transform hover:-translate-y-0.5">
                     <PlusIcon class="w-5 h-5 text-white" />
                     Tambah Pengeluaran
                 </button>
@@ -54,7 +54,7 @@
                         <input v-model="startDateFilter" type="date" class="h-10 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-40" />
                         <span class="text-gray-400 text-sm">—</span>
                         <input v-model="endDateFilter" type="date" class="h-10 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-40" />
-                        <button v-if="startDateFilter || endDateFilter || search || typeFilter" @click="resetFilters" class="text-xs text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-bold flex items-center gap-1 transition-colors ml-2">
+                        <button v-if="startDateFilter || endDateFilter || search || typeFilter" @click="resetFilters" class="text-xs text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-bold flex items-center gap-1 transition-colors ml-2">
                             Reset
                         </button>
                     </div>
@@ -119,14 +119,14 @@
                                     <span v-else-if="item.type === 'income'" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
                                         Pemasukan Manual
                                     </span>
-                                    <span v-else-if="item.type === 'expense'" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-rose-50 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400">
+                                    <span v-else-if="item.type === 'expense'" class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
                                         Pengeluaran
                                     </span>
                                 </td>
                                 <td class="px-6 py-5 whitespace-nowrap text-right">
                                     <span :class="[
                                         'text-sm font-bold',
-                                        item.type === 'expense' ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
+                                        item.type === 'expense' ? 'text-primary-600 dark:text-primary-400' : 'text-emerald-600 dark:text-emerald-400'
                                     ]">
                                         {{ item.type === 'expense' ? '-' : '+' }} {{ formatCurrency(Math.abs(item.amount)) }}
                                     </span>

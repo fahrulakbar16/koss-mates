@@ -265,7 +265,7 @@
                         <div v-if="canCancelTransaction"
                             class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
                             <button @click="showCancelModal = true"
-                                class="w-full py-3.5 px-6 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 text-red-700 dark:text-red-400 font-bold rounded-xl border-2 border-red-200 dark:border-red-800 hover:border-red-300 dark:hover:border-red-700 transition-all duration-300 flex items-center justify-center gap-2 group">
+                                class="w-full py-3.5 px-6 bg-primary-50 hover:bg-primary-100 dark:bg-primary-900/20 dark:hover:bg-primary-900/30 text-primary-700 dark:text-primary-400 font-bold rounded-xl border-2 border-primary-200 dark:border-primary-800 hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300 flex items-center justify-center gap-2 group">
                                 <XCircle class="w-5 h-5 group-hover:scale-110 transition-transform" />
                                 <span>Batalkan Transaksi</span>
                             </button>
@@ -311,7 +311,7 @@
                                 class="w-full px-5 py-4 text-lg font-semibold border-2 border-gray-300 dark:border-gray-600 rounded-2xl focus:ring-4 focus:ring-primary-500/20 focus:border-primary-500 dark:bg-gray-700 dark:text-white transition-all"
                                 placeholder="Masukkan jumlah" />
                             <p v-if="paymentAmount > remainingAmount"
-                                class="text-sm text-red-600 dark:text-red-400 mt-2 font-medium">⚠️ Jumlah melebihi sisa
+                                class="text-sm text-primary-600 dark:text-primary-400 mt-2 font-medium">⚠️ Jumlah melebihi sisa
                                 tagihan</p>
                         </div>
                     </div>
@@ -332,8 +332,8 @@
                 <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-md w-full p-8 animate-slideUp">
                     <div class="text-center mb-6">
                         <div
-                            class="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <XCircle class="w-8 h-8 text-red-600 dark:text-red-400" />
+                            class="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <XCircle class="w-8 h-8 text-primary-600 dark:text-primary-400" />
                         </div>
                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                             Batalkan Transaksi?
@@ -344,8 +344,8 @@
                     </div>
 
                     <div
-                        class="bg-red-50 dark:bg-red-900/20 rounded-2xl p-4 mb-6 border border-red-200 dark:border-red-800">
-                        <p class="text-sm text-red-800 dark:text-red-300 font-medium">
+                        class="bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-4 mb-6 border border-primary-200 dark:border-primary-800">
+                        <p class="text-sm text-primary-800 dark:text-primary-300 font-medium">
                             ⚠️ Setelah dibatalkan, Anda perlu membuat booking baru jika ingin menyewa kamar ini.
                         </p>
                     </div>
@@ -356,7 +356,7 @@
                             Tidak
                         </button>
                         <button @click="cancelTransaction" :disabled="isCanceling"
-                            class="flex-1 px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-2xl shadow-lg shadow-red-500/30 hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                            class="flex-1 px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-bold rounded-2xl shadow-lg shadow-primary-500/30 hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                             <svg v-if="isCanceling" class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4"></circle>
@@ -433,7 +433,7 @@ const getStatusClass = (status) => {
         case 'canceled':
         case 'expire':
             return {
-                class: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+                class: 'bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-400',
                 label: 'Gagal'
             };
         default:
@@ -477,10 +477,10 @@ const getStatusStyle = (status) => {
         case 'canceled':
         case 'expire':
             return {
-                bg: 'bg-red-50 dark:bg-red-900/20',
-                text: 'text-red-800 dark:text-red-200',
-                border: 'border-red-200 dark:border-red-800',
-                iconBg: 'bg-red-100 dark:bg-red-800/50',
+                bg: 'bg-primary-50 dark:bg-primary-900/20',
+                text: 'text-primary-800 dark:text-primary-200',
+                border: 'border-primary-200 dark:border-primary-800',
+                iconBg: 'bg-primary-100 dark:bg-primary-800/50',
                 icon: XCircle,
                 title: 'Gagal',
                 desc: 'Maaf, pembayaran Anda gagal atau dibatalkan.',

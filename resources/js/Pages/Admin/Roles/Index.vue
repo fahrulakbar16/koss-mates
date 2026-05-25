@@ -276,7 +276,7 @@
                                 <div
                                     class="flex items-center justify-center px-3 whitespace-nowrap"
                                 >
-                                    <p 
+                                    <p
                                         class="cursor-pointer dark:text-blue-400"
                                         :class="can('roles.view') ? 'text-primary hover:underline' : 'text-gray-600'"
                                     >
@@ -291,7 +291,7 @@
                                 <div
                                     class="flex items-center justify-center px-3 whitespace-nowrap"
                                 >
-                                    <p 
+                                    <p
                                         class="cursor-pointer dark:text-blue-400"
                                         :class="can('roles.view') ? 'text-primary hover:underline' : 'text-gray-600'"
                                     >
@@ -306,7 +306,7 @@
                                 <div
                                     class="flex justify-center gap-3 px-4 whitespace-nowrap sm:px-0"
                                 >
-                                    <Link 
+                                    <Link
                                         v-if="can('roles.edit')"
                                         :href="route('roles.edit', role.id)"
                                         class="text-primary hover:text-primary"
@@ -314,7 +314,7 @@
                                     >
                                         <GearIcon />
                                     </Link>
-                                    <button 
+                                    <button
                                         v-if="can('roles.edit')"
                                         @click="openEditModal(role)"
                                         class="text-yellow-500 hover:text-yellow-600"
@@ -322,10 +322,10 @@
                                     >
                                         <EditIcon />
                                     </button>
-                                    <button 
+                                    <button
                                         v-if="can('roles.delete')"
                                         @click="openConfirmModal(role)"
-                                        class="text-red-500 hover:text-red-600"
+                                        class="text-primary-500 hover:text-primary-600"
                                         title="Hapus"
                                     >
                                         <TrashIcon />
@@ -344,7 +344,7 @@
                         </tr>
                     </tbody>
                 </table>
-                
+
                 <!-- Stats Modal: Users & Permissions -->
                 <Modal
                     :show="isStatsModalOpen"
@@ -423,7 +423,7 @@
                         </div>
                     </div>
                 </Modal>
-                
+
                 <Modal
                     :show="isModalOpen"
                     :title="
@@ -441,7 +441,7 @@
                             <label
                                 for="name"
                                 class="font-semibold text-gray-900 dark:text-white"
-                            >Nama <span class="text-red-500">*</span></label
+                            >Nama <span class="text-primary-500">*</span></label
                             >
                             <input
                                 id="name"
@@ -453,7 +453,7 @@
                             />
                             <div
                                 v-if="form.errors.name"
-                                class="text-sm text-red-500"
+                                class="text-sm text-primary-500"
                             >
                                 {{ form.errors.name }}
                             </div>
@@ -486,7 +486,7 @@
                         </div>
                     </div>
                 </Modal>
-                
+
                 <ConfirmModal
                     :show="isConfirmModalOpen"
                     :question="`Yakin ingin menghapus`"
@@ -690,7 +690,7 @@ async function openStatsModal(role, tab = 'users') {
     if (!can('roles.view')) {
         return;
     }
-    
+
     try {
         statsRole.value = role;
         activeStatsTab.value = tab;

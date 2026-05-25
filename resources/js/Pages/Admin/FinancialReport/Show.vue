@@ -69,12 +69,12 @@
                             {{ formatCurrency(summary.total_expense) }}
                         </h3>
                     </div>
-                    <div class="rounded-lg bg-rose-50 p-3 dark:bg-rose-900/20">
-                        <ChartIcon class="h-6 w-6 text-rose-600 dark:text-rose-400" />
+                    <div class="rounded-lg bg-primary-50 p-3 dark:bg-primary-900/20">
+                        <ChartIcon class="h-6 w-6 text-primary-600 dark:text-primary-400" />
                     </div>
                 </div>
                 <div class="mt-4 flex items-center text-sm">
-                    <span class="text-rose-600 dark:text-rose-400 font-medium">
+                    <span class="text-primary-600 dark:text-primary-400 font-medium">
                         {{ expenses.length }} Item
                     </span>
                     <span class="mx-2 text-gray-300 dark:text-gray-600">•</span>
@@ -89,7 +89,7 @@
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Laba Bersih</p>
                         <h3
-                            :class="['mt-2 text-2xl font-bold', summary.net_profit >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-rose-600 dark:text-rose-400']">
+                            :class="['mt-2 text-2xl font-bold', summary.net_profit >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-primary-600 dark:text-primary-400']">
                             {{ formatCurrency(summary.net_profit) }}
                         </h3>
                     </div>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="mt-4 flex items-center text-sm">
                     <span
-                        :class="['font-medium', summary.net_profit >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-rose-600 dark:text-rose-400']">
+                        :class="['font-medium', summary.net_profit >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-primary-600 dark:text-primary-400']">
                         {{ summary.total_income > 0 ? ((summary.net_profit / summary.total_income) * 100).toFixed(1) : 0
                         }}% Margin
                     </span>
@@ -206,7 +206,7 @@
                 class="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 h-[500px]">
                 <div class="border-b border-gray-200 px-6 py-4 dark:border-gray-700 flex justify-between items-center">
                     <h3 class="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                        <span class="h-2 w-2 rounded-full bg-rose-500"></span>
+                        <span class="h-2 w-2 rounded-full bg-primary-500"></span>
                         Rincian Pengeluaran
                     </h3>
                 </div>
@@ -235,7 +235,7 @@
                                             {{ expense.description }}
                                         </div>
                                     </td>
-                                    <td class="px-6 py-3 text-right font-medium text-rose-600 dark:text-rose-400">
+                                    <td class="px-6 py-3 text-right font-medium text-primary-600 dark:text-primary-400">
                                         - {{ formatCurrency(expense.amount) }}
                                     </td>
                                 </tr>

@@ -28,19 +28,19 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label for="name" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Nomor Kos <span class="text-red-500">*</span>
+                                    Nomor Kos <span class="text-primary-500">*</span>
                                 </label>
                                 <input id="name"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
                                     type="number" v-model="form.number" required placeholder="Contoh: 01" />
-                                <div v-if="form.errors.number" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.number" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.number[0] }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label for="persentasi_pemilik" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Persentasi Pemilik (%) <span class="text-red-500">*</span>
+                                    Persentasi Pemilik (%) <span class="text-primary-500">*</span>
                                 </label>
                                 <div class="relative">
                                     <input id="persentasi_pemilik"
@@ -50,14 +50,14 @@
                                         %
                                     </div>
                                 </div>
-                                <div v-if="form.errors.persentasi_pemilik" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.persentasi_pemilik" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.persentasi_pemilik[0] }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label for="owner_id" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Pemilik <span class="text-red-500">*</span>
+                                    Pemilik <span class="text-primary-500">*</span>
                                 </label>
                                 <select id="owner_id" v-model="form.owner_id" required
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500">
@@ -66,7 +66,7 @@
                                         {{ owner.name }}
                                     </option>
                                 </select>
-                                <div v-if="form.errors.owner_id" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.owner_id" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.owner_id[0] }}
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                         {{ cluster.name }}
                                     </option>
                                 </select>
-                                <div v-if="form.errors.cluster_id" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.cluster_id" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.cluster_id[0] }}
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
 
                         <div class="space-y-4">
                             <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Foto Utama (Thumbnail) <span class="text-red-500">*</span>
+                                Foto Utama (Thumbnail) <span class="text-primary-500">*</span>
                             </label>
 
                             <div class="flex flex-col sm:flex-row items-stretch gap-6">
@@ -126,7 +126,7 @@
                                                 <span>Klik untuk ubah foto</span>
                                             </div>
                                             <button type="button" @click.prevent="removeThumbnail"
-                                                class="flex items-center gap-2 px-4 py-2 bg-red-500 text-white font-medium text-sm rounded-xl hover:bg-red-600 transition-colors shadow-lg transform hover:scale-105"
+                                                class="flex items-center gap-2 px-4 py-2 bg-primary-500 text-white font-medium text-sm rounded-xl hover:bg-primary-600 transition-colors shadow-lg transform hover:scale-105"
                                                 title="Hapus gambar">
                                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
 
-                            <div v-if="form.errors.thumbnail" class="text-sm text-red-500 mt-2 font-medium bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg inline-block">
+                            <div v-if="form.errors.thumbnail" class="text-sm text-primary-500 mt-2 font-medium bg-primary-50 dark:bg-primary-900/20 px-3 py-2 rounded-lg inline-block">
                                 {{ form.errors.thumbnail[0] }}
                             </div>
                         </div>
@@ -173,19 +173,19 @@
                         <div class="grid grid-cols-1 gap-6">
                             <div class="space-y-2">
                                 <label for="address" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Alamat Lengkap <span class="text-red-500">*</span>
+                                    Alamat Lengkap <span class="text-primary-500">*</span>
                                 </label>
                                 <textarea id="address"
                                     class="w-full px-4 py-3 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400 resize-none"
                                     v-model="form.address" required rows="2" placeholder="Masukkan alamat lengkap"></textarea>
-                                <div v-if="form.errors.address" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.address" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.address[0] }}
                                 </div>
                             </div>
 
                             <div class="space-y-2 md:w-1/2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Tipe Kos (Gender) <span class="text-red-500">*</span>
+                                    Tipe Kos (Gender) <span class="text-primary-500">*</span>
                                 </label>
                                 <select id="gender" v-model="form.gender" required
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500">
@@ -193,7 +193,7 @@
                                     <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
                                 </select>
-                                <div v-if="form.errors.gender" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.gender" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.gender[0] }}
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                                     </button>
                                 </div>
                                 <div v-if="form.errors.latitude || form.errors.longitude"
-                                    class="text-xs text-red-500 mt-1 font-medium">
+                                    class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.latitude[0] || form.errors.longitude[0] }}
                                 </div>
                             </div>
@@ -242,7 +242,7 @@
                                 class="w-full px-4 py-3 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400 resize-none"
                                 v-model="form.description" rows="6"
                                 placeholder="Jelaskan fasilitas, lingkungan, dan keunggulan kos ini..."></textarea>
-                            <div v-if="form.errors.description" class="text-xs text-red-500 mt-1 font-medium">
+                            <div v-if="form.errors.description" class="text-xs text-primary-500 mt-1 font-medium">
                                 {{ form.errors.description[0] }}
                             </div>
                         </div>

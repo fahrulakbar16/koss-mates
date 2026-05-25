@@ -16,14 +16,7 @@
                 <div class="relative z-10 flex flex-col justify-between p-12 h-full text-white w-full">
                     <!-- Logo Section -->
                     <Link href="/" class="flex gap-3 items-center group/logo w-fit">
-                        <div
-                            class="flex justify-center items-center w-12 h-12 bg-white rounded-2xl shadow-2xl shadow-white/20 transform transition-all duration-500 group-hover/logo:rotate-12 group-hover/logo:scale-110">
-                            <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                        </div>
-                        <span class="text-2xl font-black tracking-tight drop-shadow-sm">Tharahub</span>
+                        <img src="/KosMates/White Asset 2.png" alt="Kostmates Logo" class="h-12 w-auto object-contain transform transition-all duration-500 group-hover/logo:scale-110" />
                     </Link>
 
                     <!-- Main Branding Content -->
@@ -68,7 +61,7 @@
 
                     <!-- Footer Info -->
                     <div class="text-sm text-white/50 font-medium">
-                        © {{ new Date().getFullYear() }} Tharahub Platform. All rights reserved.
+                        © {{ new Date().getFullYear() }} Kostmates Platform. All rights reserved.
                     </div>
                 </div>
             </div>
@@ -89,14 +82,8 @@
                         <!-- Mobile Logo (Visible only on small screens) -->
                         <div class="flex lg:hidden justify-center mb-8">
                             <Link href="/" class="flex gap-3 items-center">
-                                <div
-                                    class="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary-600/20">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                    </svg>
-                                </div>
-                                <span class="text-2xl font-bold dark:text-white">Tharahub</span>
+                                <img src="/KosMates/Asset 2.png" alt="Kostmates Logo" class="h-10 w-auto object-contain" />
+                                <span class="text-2xl font-bold dark:text-white">Kostmates</span>
                             </Link>
                         </div>
 
@@ -136,7 +123,7 @@
                                     <form @submit.prevent="loginForm.post('/login')" class="space-y-6">
                                         <!-- Alert for Flash Errors -->
                                         <div v-if="flashError"
-                                            class="flex items-center gap-3 p-4 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/50 rounded-2xl text-red-600 dark:text-red-400 text-sm font-medium animate-in fade-in zoom-in-95">
+                                            class="flex items-center gap-3 p-4 bg-primary-50 dark:bg-primary-950/30 border border-primary-100 dark:border-primary-900/50 rounded-2xl text-primary-600 dark:text-primary-400 text-sm font-medium animate-in fade-in zoom-in-95">
                                             <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd"
                                                     d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
@@ -162,10 +149,10 @@
                                                 <input v-model="loginForm.user" type="text"
                                                     placeholder="email@example.com"
                                                     class="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm transition-all focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 dark:text-white"
-                                                    :class="{ 'border-red-500 ring-red-500/10': loginForm.errors.user }" />
+                                                    :class="{ 'border-primary-500 ring-primary-500/10': loginForm.errors.user }" />
                                             </div>
                                             <p v-if="loginForm.errors.user"
-                                                class="text-xs font-bold text-red-500 ml-1 mt-1">{{
+                                                class="text-xs font-bold text-primary-500 ml-1 mt-1">{{
                                                     getErrorMessage(loginForm.errors.user) }}</p>
                                         </div>
 
@@ -191,7 +178,7 @@
                                                 <input v-model="loginForm.password"
                                                     :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
                                                     class="w-full pl-12 pr-12 py-3.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm transition-all focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 dark:text-white"
-                                                    :class="{ 'border-red-500 ring-red-500/10': loginForm.errors.password }" />
+                                                    :class="{ 'border-primary-500 ring-primary-500/10': loginForm.errors.password }" />
                                                 <button type="button" @click="togglePasswordVisibility"
                                                     class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
                                                     <svg v-if="!showPassword" class="w-5 h-5" fill="none"
@@ -211,7 +198,7 @@
                                                 </button>
                                             </div>
                                             <p v-if="loginForm.errors.password"
-                                                class="text-xs font-bold text-red-500 ml-1 mt-1">{{
+                                                class="text-xs font-bold text-primary-500 ml-1 mt-1">{{
                                                     getErrorMessage(loginForm.errors.password) }}</p>
                                         </div>
 
@@ -289,10 +276,10 @@
                                                 <input v-model="registerForm.name" type="text"
                                                     placeholder="Nama lengkap Anda"
                                                     class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm transition-all focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 dark:text-white"
-                                                    :class="{ 'border-red-500': registerForm.errors.name }" />
+                                                    :class="{ 'border-primary-500': registerForm.errors.name }" />
                                             </div>
                                             <p v-if="registerForm.errors.name"
-                                                class="text-xs font-bold text-red-500 ml-1 mt-1">{{
+                                                class="text-xs font-bold text-primary-500 ml-1 mt-1">{{
                                                     getErrorMessage(registerForm.errors.name) }}</p>
                                         </div>
 
@@ -313,10 +300,10 @@
                                                 <input v-model="registerForm.email" type="email"
                                                     placeholder="email@example.com"
                                                     class="w-full pl-12 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm transition-all focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 dark:text-white"
-                                                    :class="{ 'border-red-500': registerForm.errors.email }" />
+                                                    :class="{ 'border-primary-500': registerForm.errors.email }" />
                                             </div>
                                             <p v-if="registerForm.errors.email"
-                                                class="text-xs font-bold text-red-500 ml-1 mt-1">{{
+                                                class="text-xs font-bold text-primary-500 ml-1 mt-1">{{
                                                     getErrorMessage(registerForm.errors.email) }}</p>
                                         </div>
 
@@ -358,7 +345,7 @@
                                             </div>
                                         </div>
                                         <p v-if="registerForm.errors.password"
-                                            class="text-xs font-bold text-red-500 ml-1">
+                                            class="text-xs font-bold text-primary-500 ml-1">
                                             {{ getErrorMessage(registerForm.errors.password) }}</p>
 
                                         <!-- Submit Button -->
@@ -402,7 +389,7 @@
                         <div class="mt-12 text-center">
                             <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">
                                 Butuh bantuan lebih lanjut?
-                                <a href="mailto:support@Tharahub.com"
+                                <a href="mailto:support@Kostmates.com"
                                     class="text-primary-600 dark:text-primary-400 font-bold ml-1 hover:underline">Hubungi
                                     Support</a>
                             </p>

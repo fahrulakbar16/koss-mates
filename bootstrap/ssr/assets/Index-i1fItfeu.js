@@ -210,10 +210,10 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       }
       _push(`</button><button class="${ssrRenderClass([
         "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
-        statusFilter.value === "inactive" ? "border-red-500 text-red-600 dark:text-red-400" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
+        statusFilter.value === "inactive" ? "border-primary-500 text-primary-600 dark:text-primary-400" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300"
       ])}"> Tidak Aktif `);
       if (statusFilter.value === "inactive") {
-        _push(`<span class="px-2 py-0.5 ml-2 text-xs text-red-600 bg-red-100 rounded-full dark:bg-red-900 dark:text-red-300">${ssrInterpolate(getStatusCount("inactive"))}</span>`);
+        _push(`<span class="px-2 py-0.5 ml-2 text-xs text-primary-600 bg-primary-100 rounded-full dark:bg-primary-900 dark:text-primary-300">${ssrInterpolate(getStatusCount("inactive"))}</span>`);
       } else {
         _push(`<!---->`);
       }
@@ -286,7 +286,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
             )}&background=3b82f6&color=fff`
           )} alt="User profile" loading="lazy"><div class="flex flex-col leading-tight"><p class="font-medium text-gray-800 dark:text-white/90">${ssrInterpolate(user.name)}</p><span class="text-gray-500 dark:text-gray-400">${ssrInterpolate(user.email)}</span></div></div></td><td class="py-2.5 border border-gray-200 dark:border-gray-600"><div class="flex justify-center items-center px-3 whitespace-nowrap"><p class="text-gray-500 dark:text-gray-400">${ssrInterpolate(user.username)}</p></div></td><td class="py-2.5 border border-gray-200 dark:border-gray-600"><div class="flex justify-center items-center px-3 whitespace-nowrap"><p class="text-gray-500 dark:text-gray-400">${ssrInterpolate(user.roles[0]?.name || "-")}</p></div></td><td class="py-2.5 border border-gray-200 dark:border-gray-600"><div class="flex justify-center items-center px-3 whitespace-nowrap"><span class="${ssrRenderClass([
             "px-3 py-1 rounded-full text-xs font-medium",
-            user.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : user.status === "pending" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+            user.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : user.status === "pending" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" : "bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300"
           ])}">${ssrInterpolate(user.status === "active" ? "Aktif" : user.status === "pending" ? "Menunggu Verifikasi" : "Tidak Aktif")}</span></div></td><td class="py-2.5 border border-gray-200 dark:border-gray-600"><div class="flex justify-center items-center px-3 text-gray-500 whitespace-nowrap dark:text-gray-400">`);
           if (user.last_seen && isOnline(user.last_seen)) {
             _push(`<span class="px-3 py-1 text-teal-500 bg-teal-200 rounded-full dark:bg-teal-400 dark:text-teal-100"> Online </span>`);
@@ -306,7 +306,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
               _push(`<!---->`);
             }
             if (unref(can)("users.delete")) {
-              _push(`<button class="text-red-500 hover:text-red-600" title="Hapus">`);
+              _push(`<button class="text-primary-500 hover:text-primary-600" title="Hapus">`);
               _push(ssrRenderComponent(TrashIcon, null, null, _parent));
               _push(`</button>`);
             } else {
@@ -338,19 +338,19 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
           if (_push2) {
             _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="text-gray-900 dark:text-white"${_scopeId}>Nama Lengkap</label><input id="name" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama lengkap pengguna"${_scopeId}>`);
             if (unref(form).errors.name) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="username" class="text-gray-900 dark:text-white"${_scopeId}>Nama Pengguna</label><input id="username" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).username)} required placeholder="Masukkan username"${_scopeId}>`);
             if (unref(form).errors.username) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.username)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.username)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="email" class="text-gray-900 dark:text-white"${_scopeId}>Email</label><input id="email"${ssrRenderAttr("value", unref(form).email)} class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="email" placeholder="Masukkan email pengguna"${_scopeId}>`);
             if (unref(form).errors.email) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.email)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.email)}</div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -360,13 +360,13 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
             });
             _push2(`<!--]--></select>`);
             if (unref(form).errors.role) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.role)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.role)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="status" class="text-gray-900 dark:text-white"${_scopeId}>Status</label><select id="status" class="block p-2.5 w-full text-sm text-gray-600 rounded-lg border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"${_scopeId}><option value="active"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "active") : ssrLooseEqual(unref(form).status, "active")) ? " selected" : ""}${_scopeId}>Aktif</option><option value="pending"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "pending") : ssrLooseEqual(unref(form).status, "pending")) ? " selected" : ""}${_scopeId}> Menunggu Verifikasi </option><option value="inactive"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "inactive") : ssrLooseEqual(unref(form).status, "inactive")) ? " selected" : ""}${_scopeId}>Tidak Aktif</option></select>`);
             if (unref(form).errors.status) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.status)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.status)}</div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -391,7 +391,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.name ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.name), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -411,7 +411,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.username ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.username), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -430,7 +430,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.email ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.email), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -459,7 +459,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.role ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.role), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -480,7 +480,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.status ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.status), 1)) : createCommentVNode("", true)
                 ])
               ])

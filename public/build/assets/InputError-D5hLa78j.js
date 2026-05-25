@@ -1,0 +1,1 @@
+import{d as t,f as s,o as a,a as r,t as o}from"./app-DX8U9aMC.js";const m={key:0},c={class:"text-sm text-primary-600 dark:text-primary-400"},g={__name:"InputError",props:{message:[String,Array]},setup(e){return(n,i)=>e.message?(a(),t("div",m,[r("p",c,o(Array.isArray(e.message)?e.message[0]:e.message),1)])):s("",!0)}};export{g as _};

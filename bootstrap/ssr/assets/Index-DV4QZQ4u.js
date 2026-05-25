@@ -210,7 +210,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
             _push(`<!---->`);
           }
           if (unref(can)("clusters.delete")) {
-            _push(`<button class="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors" title="Hapus Cluster">`);
+            _push(`<button class="p-2 text-primary-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors" title="Hapus Cluster">`);
             _push(ssrRenderComponent(TrashIcon, { class: "w-5 h-5" }, null, _parent));
             _push(`</button>`);
           } else {
@@ -230,7 +230,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
               }
               _push(`<span class="${ssrRenderClass([
                 "absolute top-3 right-3 px-2.5 py-1 text-xs font-semibold rounded-full shadow-sm",
-                boardingHouse.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : boardingHouse.status === "maintenance" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+                boardingHouse.status === "active" ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : boardingHouse.status === "maintenance" ? "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" : "bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300"
               ])}">${ssrInterpolate(boardingHouse.status === "active" ? "Aktif" : boardingHouse.status === "maintenance" ? "Maintenance" : "Tidak Aktif")}</span>`);
               if (unref(can)("boarding_houses.view") || unref(can)("boarding_houses.edit") || unref(can)("boarding_houses.delete")) {
                 _push(`<div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">`);
@@ -262,7 +262,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   _push(`<!---->`);
                 }
                 if (unref(can)("boarding_houses.delete")) {
-                  _push(`<button class="p-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors" title="Hapus">`);
+                  _push(`<button class="p-2 text-white bg-primary-500 rounded-lg hover:bg-primary-600 transition-colors" title="Hapus">`);
                   _push(ssrRenderComponent(TrashIcon, { class: "w-5 h-5" }, null, _parent));
                   _push(`</button>`);
                 } else {
@@ -325,21 +325,21 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="text-gray-900 dark:text-white"${_scopeId}>Nama Cluster <span class="text-red-500"${_scopeId}>*</span></label><input id="name" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama cluster"${_scopeId}>`);
+            _push2(`<div class="space-y-3"${_scopeId}><div class="space-y-1 text-sm"${_scopeId}><label for="name" class="text-gray-900 dark:text-white"${_scopeId}>Nama Cluster <span class="text-primary-500"${_scopeId}>*</span></label><input id="name" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama cluster"${_scopeId}>`);
             if (unref(form).errors.name) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.name)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="address" class="text-gray-900 dark:text-white"${_scopeId}>Alamat</label><input id="address" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" type="text"${ssrRenderAttr("value", unref(form).address)} placeholder="Masukkan alamat cluster"${_scopeId}>`);
             if (unref(form).errors.address) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.address)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.address)}</div>`);
             } else {
               _push2(`<!---->`);
             }
             _push2(`</div><div class="space-y-1 text-sm"${_scopeId}><label for="description" class="text-gray-900 dark:text-white"${_scopeId}>Deskripsi</label><textarea id="description" class="w-full text-sm font-medium placeholder-gray-500 text-gray-600 rounded-lg border-gray-400 placeholder:font-normal dark:border-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" rows="3" placeholder="Masukkan deskripsi cluster"${_scopeId}>${ssrInterpolate(unref(form).description)}</textarea>`);
             if (unref(form).errors.description) {
-              _push2(`<div class="text-sm text-red-500"${_scopeId}>${ssrInterpolate(unref(form).errors.description)}</div>`);
+              _push2(`<div class="text-sm text-primary-500"${_scopeId}>${ssrInterpolate(unref(form).errors.description)}</div>`);
             } else {
               _push2(`<!---->`);
             }
@@ -353,7 +353,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                     class: "text-gray-900 dark:text-white"
                   }, [
                     createTextVNode("Nama Cluster "),
-                    createVNode("span", { class: "text-red-500" }, "*")
+                    createVNode("span", { class: "text-primary-500" }, "*")
                   ]),
                   withDirectives(createVNode("input", {
                     id: "name",
@@ -367,7 +367,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.name ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.name), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -386,7 +386,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.address ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.address), 1)) : createCommentVNode("", true)
                 ]),
                 createVNode("div", { class: "space-y-1 text-sm" }, [
@@ -405,7 +405,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
                   ]),
                   unref(form).errors.description ? (openBlock(), createBlock("div", {
                     key: 0,
-                    class: "text-sm text-red-500"
+                    class: "text-sm text-primary-500"
                   }, toDisplayString(unref(form).errors.description), 1)) : createCommentVNode("", true)
                 ])
               ])

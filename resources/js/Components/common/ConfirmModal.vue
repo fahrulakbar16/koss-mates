@@ -80,7 +80,7 @@
                         </div>
                         <div class="text-gray-700 dark:text-gray-300">
                             {{ question }}
-                            <span class="text-red-500 font-semibold">
+                            <span class="text-primary-500 font-semibold">
                                 {{ selected }}</span
                             >
                             ?

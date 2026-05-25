@@ -159,10 +159,10 @@
                                         'inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border',
                                         boardingHouse.rooms_available_count > 0
                                             ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800'
-                                            : 'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800',
+                                            : 'bg-primary-50 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800',
                                     ]">
                                         <span class="w-1.5 h-1.5 rounded-full mr-2" :class="[
-                                            boardingHouse.rooms_available_count > 0 ? 'bg-green-500' : 'bg-red-500'
+                                            boardingHouse.rooms_available_count > 0 ? 'bg-green-500' : 'bg-primary-500'
                                         ]"></span>
                                         {{ boardingHouse.rooms_available_count > 0 ? 'Tersedia' : 'Kosong' }}
                                     </span>
@@ -187,7 +187,7 @@
                                         </Link>
                                         <button v-if="can('boarding_houses.delete')"
                                             @click="openConfirmModal(boardingHouse)"
-                                            class="p-2.5 text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-xl transition-all shadow-sm"
+                                            class="p-2.5 text-primary-600 bg-primary-50 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50 rounded-xl transition-all shadow-sm"
                                             title="Hapus Data">
                                             <TrashIcon class="w-4 h-4" />
                                         </button>

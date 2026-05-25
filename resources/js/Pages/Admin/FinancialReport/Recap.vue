@@ -135,11 +135,11 @@
                     <!-- Expenses Table -->
                     <div>
                         <h3
-                            class="font-bold text-lg mb-3 text-gray-800 dark:text-white border-l-4 border-rose-500 pl-3">
+                            class="font-bold text-lg mb-3 text-gray-800 dark:text-white border-l-4 border-primary-500 pl-3">
                             Rekapitulasi Pengeluaran</h3>
                         <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                             <table class="w-full text-xs md:text-sm">
-                                <thead class="bg-rose-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                                <thead class="bg-primary-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
                                     <tr>
                                         <th class="p-3 border-b w-10 text-center">No</th>
                                         <th class="p-3 border-b text-left">Keterangan</th>
@@ -155,7 +155,7 @@
                                                 <div class="font-medium">{{ expense.category }}</div>
                                                 <div class="text-xs text-gray-500">{{ expense.description }}</div>
                                             </td>
-                                            <td class="p-2 text-right text-rose-600 dark:text-rose-400 font-mono">{{
+                                            <td class="p-2 text-right text-primary-600 dark:text-primary-400 font-mono">{{
                                                 formatCurrency(expense.amount) }}</td>
                                         </tr>
                                     </template>
@@ -169,7 +169,7 @@
                                     <tr class="bg-gray-50 dark:bg-gray-700/30 font-bold border-t-2 border-gray-300">
                                         <td colspan="2" class="p-3 text-right uppercase text-xs tracking-wider">Total
                                             Pengeluaran:</td>
-                                        <td class="p-3 text-right text-rose-600 dark:text-rose-400 font-mono">{{
+                                        <td class="p-3 text-right text-primary-600 dark:text-primary-400 font-mono">{{
                                             formatCurrency(summary.total_expense) }}
                                         </td>
                                     </tr>
@@ -198,7 +198,7 @@
                                         <td class="p-3 bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400">
                                             Total Cash Out</td>
                                         <td
-                                            class="p-3 text-right text-rose-600 dark:text-rose-400 bg-white dark:bg-gray-800 font-mono font-bold">
+                                            class="p-3 text-right text-primary-600 dark:text-primary-400 bg-white dark:bg-gray-800 font-mono font-bold">
                                             - {{ formatCurrency(summary.total_expense) }}</td>
                                     </tr>
                                     <tr>
@@ -213,7 +213,7 @@
                                             class="p-4 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white font-bold uppercase tracking-wider">
                                             Laba Bersih</td>
                                         <td
-                                            :class="['p-4 text-right font-mono text-lg font-bold bg-white dark:bg-gray-800', summary.net_profit >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-rose-600 dark:text-rose-400']">
+                                            :class="['p-4 text-right font-mono text-lg font-bold bg-white dark:bg-gray-800', summary.net_profit >= 0 ? 'text-blue-600 dark:text-blue-400' : 'text-primary-600 dark:text-primary-400']">
                                            {{ formatCurrency(summary.owner_share) }}
                                         </td>
                                     </tr>
@@ -311,7 +311,7 @@ const print = () => {
         background-color: #fdf2f8 !important;
     }
 
-    .bg-rose-50 {
+    .bg-primary-50 {
         background-color: #fff1f2 !important;
     }
 
@@ -328,7 +328,7 @@ const print = () => {
     }
 
     /* Preserve text colors */
-    .text-red-600 {
+    .text-primary-600 {
         color: #dc2626 !important;
     }
 
@@ -336,7 +336,7 @@ const print = () => {
         color: #059669 !important;
     }
 
-    .text-rose-600 {
+    .text-primary-600 {
         color: #e11d48 !important;
     }
 
@@ -348,7 +348,7 @@ const print = () => {
         color: #15803d !important;
     }
 
-    .text-red-700 {
+    .text-primary-700 {
         color: #b91c1c !important;
     }
 
@@ -357,7 +357,7 @@ const print = () => {
         background-color: #dcfce7 !important;
     }
 
-    .bg-red-100 {
+    .bg-primary-100 {
         background-color: #fee2e2 !important;
     }
 
@@ -366,11 +366,11 @@ const print = () => {
         border-color: #6366f1 !important;
     }
 
-    .border-red-500 {
+    .border-primary-500 {
         border-color: #ef4444 !important;
     }
 
-    .border-rose-500 {
+    .border-primary-500 {
         border-color: #f43f5e !important;
     }
 

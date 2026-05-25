@@ -36,36 +36,36 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2 md:col-span-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Nama Lengkap <span class="text-red-500">*</span>
+                                    Nama Lengkap <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.name" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': errors.name }" />
-                                <div v-if="errors.name" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': errors.name }" />
+                                <div v-if="errors.name" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ errors.name }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Username <span class="text-red-500">*</span>
+                                    Username <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.username" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': errors.username }" />
-                                <div v-if="errors.username" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': errors.username }" />
+                                <div v-if="errors.username" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ errors.username }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Email <span class="text-red-500">*</span>
+                                    Email <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.email" type="email"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': errors.email }" />
-                                <div v-if="errors.email" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': errors.email }" />
+                                <div v-if="errors.email" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ errors.email }}
                                 </div>
                             </div>
@@ -80,8 +80,8 @@
                                 </label>
                                 <input v-model="form.password" type="password"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': errors.password }" />
-                                <div v-if="errors.password" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': errors.password }" />
+                                <div v-if="errors.password" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ errors.password }}
                                 </div>
                             </div>
@@ -102,12 +102,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    No. Telepon <span class="text-red-500">*</span>
+                                    No. Telepon <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.phone" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': errors.phone }" />
-                                <div v-if="errors.phone" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': errors.phone }" />
+                                <div v-if="errors.phone" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ errors.phone }}
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                                     <option value="L">Laki-laki</option>
                                     <option value="P">Perempuan</option>
                                 </select>
-                                <div v-if="errors.gender" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="errors.gender" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ errors.gender }}
                                 </div>
                             </div>

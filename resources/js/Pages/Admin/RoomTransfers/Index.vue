@@ -130,12 +130,12 @@
                                         'inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border',
                                         transfer.status === 'pending' ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800' :
                                         transfer.status === 'approved' ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800' :
-                                        'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
+                                        'bg-primary-50 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800'
                                     ]">
                                         <span class="w-1.5 h-1.5 rounded-full mr-2" :class="[
                                             transfer.status === 'pending' ? 'bg-amber-500' :
                                             transfer.status === 'approved' ? 'bg-green-500' :
-                                            'bg-red-500'
+                                            'bg-primary-500'
                                         ]"></span>
                                         {{
                                             transfer.status === 'pending' ? 'Menunggu' :
@@ -164,7 +164,7 @@
                                                 </svg>
                                             </button>
                                             <button @click="openRejectModal(transfer)" :disabled="processing"
-                                                class="p-2.5 text-red-600 bg-red-50 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded-xl disabled:opacity-50 transition-all shadow-sm"
+                                                class="p-2.5 text-primary-600 bg-primary-50 hover:bg-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:hover:bg-primary-900/50 rounded-xl disabled:opacity-50 transition-all shadow-sm"
                                                 title="Tolak">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -228,7 +228,7 @@
                             Batal
                         </button>
                         <button @click="confirmReject" :disabled="processing"
-                            class="px-4 py-2.5 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 disabled:opacity-50 shadow-lg shadow-red-500/30 transition-all">
+                            class="px-4 py-2.5 text-sm font-bold text-white bg-primary-600 rounded-xl hover:bg-primary-700 disabled:opacity-50 shadow-lg shadow-primary-500/30 transition-all">
                             {{ processing ? 'Memproses...' : 'Tolak Permintaan' }}
                         </button>
                     </div>

@@ -11,7 +11,7 @@
         >
             {{ label }}
         </label>
-        <p v-if="error" class="mt-1 text-xs text-rose-600">
+        <p v-if="error" class="mt-1 text-xs text-primary-600">
             {{ error }}
         </p>
     </div>

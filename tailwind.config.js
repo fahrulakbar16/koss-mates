@@ -16,25 +16,29 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Outfit", ...defaultTheme.fontFamily.sans],
-                outfit: ["Outfit", "sans-serif"],
+                sans: ["inherit", ...defaultTheme.fontFamily.sans],
+                outfit: ["inherit", "sans-serif"],
             },
             colors: {
-                // Primary colors (using brand as primary)
+                // Primary colors (using the new KosMates blue)
                 primary: {
-                    25: "#fff5f5",
-                    50: "#ffe3e3",
-                    100: "#ffc9c9",
-                    200: "#ffa8a8",
-                    300: "#ff8787",
-                    400: "#ff6b6b",
-                    500: "#fa5252",
-                    600: "#f03e3e",
-                    700: "#e03131",
-                    800: "#c92a2a",
-                    900: "#a61e4d",
-                    950: "#85182a",
-                    DEFAULT: "#fa5252",
+                    25: "#f5f8fc",
+                    50: "#eaf1f8",
+                    100: "#d6e3f2",
+                    200: "#b3c9e6",
+                    300: "#86a7d6",
+                    400: "#5582c4",
+                    500: "#2d61b0",
+                    600: "#023E7D", // Medium Blue
+                    700: "#02326b",
+                    800: "#012A4A", // Dark Blue
+                    900: "#011f38",
+                    950: "#001224",
+                    DEFAULT: "#023E7D",
+                },
+                // Cream color from palette
+                cream: {
+                    DEFAULT: "#FFEEDD",
                 },
                 // Secondary colors (Purple)
                 secondary: {

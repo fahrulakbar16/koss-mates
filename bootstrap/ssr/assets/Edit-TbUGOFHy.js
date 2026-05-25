@@ -135,19 +135,19 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
         }),
         _: 1
       }, _parent));
-      _push(`</div><div class="h-[90%] grid-cols-12 gap-4 md:gap-6 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-600 dark:bg-white/[0.03]"><div class="flex flex-col gap-2 px-8 py-4 sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 dark:border-gray-600"><div class="font-bold text-gray-700 md:text-xl dark:text-gray-300"> Edit Kos: ${ssrInterpolate(__props.boardingHouse.name)}</div></div><div class="overflow-auto px-8 pb-8" data-simplebar><form class="max-w-4xl mx-auto py-6 space-y-6"><div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700"><h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 pb-2 border-b border-gray-200 dark:border-gray-700"> Informasi Dasar </h3><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="space-y-2"><label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Nama Kos <span class="text-red-500">*</span></label><input id="name" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama kos">`);
+      _push(`</div><div class="h-[90%] grid-cols-12 gap-4 md:gap-6 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-600 dark:bg-white/[0.03]"><div class="flex flex-col gap-2 px-8 py-4 sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 dark:border-gray-600"><div class="font-bold text-gray-700 md:text-xl dark:text-gray-300"> Edit Kos: ${ssrInterpolate(__props.boardingHouse.name)}</div></div><div class="overflow-auto px-8 pb-8" data-simplebar><form class="max-w-4xl mx-auto py-6 space-y-6"><div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700"><h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 pb-2 border-b border-gray-200 dark:border-gray-700"> Informasi Dasar </h3><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="space-y-2"><label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Nama Kos <span class="text-primary-500">*</span></label><input id="name" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="text"${ssrRenderAttr("value", unref(form).name)} required placeholder="Masukkan nama kos">`);
       if (unref(form).errors.name) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.name)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.name)}</div>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="space-y-2"><label for="owner_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Pemilik <span class="text-red-500">*</span></label><select id="owner_id" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"><option selected hidden value=""> Pilih pemilik </option><!--[-->`);
+      _push(`</div><div class="space-y-2"><label for="owner_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Pemilik <span class="text-primary-500">*</span></label><select id="owner_id" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"><option selected hidden value=""> Pilih pemilik </option><!--[-->`);
       ssrRenderList(props.owners, (owner) => {
         _push(`<option${ssrRenderAttr("value", owner.id)}${ssrIncludeBooleanAttr(Array.isArray(unref(form).owner_id) ? ssrLooseContain(unref(form).owner_id, owner.id) : ssrLooseEqual(unref(form).owner_id, owner.id)) ? " selected" : ""}>${ssrInterpolate(owner.name)}</option>`);
       });
       _push(`<!--]--></select>`);
       if (unref(form).errors.owner_id) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.owner_id)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.owner_id)}</div>`);
       } else {
         _push(`<!---->`);
       }
@@ -157,7 +157,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       });
       _push(`<!--]--></select>`);
       if (unref(form).errors.cluster_id) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.cluster_id)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.cluster_id)}</div>`);
       } else {
         _push(`<!---->`);
       }
@@ -165,7 +165,7 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       if (currentThumbnail.value) {
         _push(`<div class="mb-4"><div class="relative inline-block"><img${ssrRenderAttr("src", currentThumbnail.value)} alt="Current thumbnail" class="w-full max-w-xs h-48 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow-sm">`);
         if (thumbnailPreview.value || unref(form).thumbnail) {
-          _push(`<button type="button" class="absolute top-2 right-2 px-3 py-1.5 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors shadow-md"> Hapus </button>`);
+          _push(`<button type="button" class="absolute top-2 right-2 px-3 py-1.5 text-xs font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors shadow-md"> Hapus </button>`);
         } else {
           _push(`<!---->`);
         }
@@ -174,31 +174,31 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
         _push(`<!---->`);
       }
       if (thumbnailPreview.value && !currentThumbnail.value) {
-        _push(`<div class="mb-4"><div class="relative inline-block"><img${ssrRenderAttr("src", thumbnailPreview.value)} alt="Preview thumbnail" class="w-full max-w-xs h-48 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow-sm"><button type="button" class="absolute top-2 right-2 px-3 py-1.5 text-xs font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors shadow-md"> Hapus </button></div></div>`);
+        _push(`<div class="mb-4"><div class="relative inline-block"><img${ssrRenderAttr("src", thumbnailPreview.value)} alt="Preview thumbnail" class="w-full max-w-xs h-48 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow-sm"><button type="button" class="absolute top-2 right-2 px-3 py-1.5 text-xs font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors shadow-md"> Hapus </button></div></div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`<div class="relative"><input id="thumbnail" type="file" accept="image/*" class="block w-full text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100 dark:file:bg-primary-900/30 dark:file:text-primary-300 cursor-pointer bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"></div>`);
       if (unref(form).errors.thumbnail) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.thumbnail)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.thumbnail)}</div>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div></div><div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700"><h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 pb-2 border-b border-gray-200 dark:border-gray-700"> Kontak &amp; Lokasi </h3><div class="space-y-5"><div class="space-y-2"><label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Alamat <span class="text-red-500">*</span></label><input id="address" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="text"${ssrRenderAttr("value", unref(form).address)} required placeholder="Masukkan alamat lengkap">`);
+      _push(`</div></div><div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700"><h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 pb-2 border-b border-gray-200 dark:border-gray-700"> Kontak &amp; Lokasi </h3><div class="space-y-5"><div class="space-y-2"><label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Alamat <span class="text-primary-500">*</span></label><input id="address" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="text"${ssrRenderAttr("value", unref(form).address)} required placeholder="Masukkan alamat lengkap">`);
       if (unref(form).errors.address) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.address)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.address)}</div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div><div class="grid grid-cols-1 md:grid-cols-2 gap-5"><div class="space-y-2"><label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Telepon </label><input id="phone" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="text"${ssrRenderAttr("value", unref(form).phone)} placeholder="Masukkan nomor telepon">`);
       if (unref(form).errors.phone) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.phone)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.phone)}</div>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div><div class="space-y-2"><label class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Status <span class="text-red-500">*</span></label><select id="status" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"><option value="active"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "active") : ssrLooseEqual(unref(form).status, "active")) ? " selected" : ""}>Aktif</option><option value="inactive"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "inactive") : ssrLooseEqual(unref(form).status, "inactive")) ? " selected" : ""}>Tidak Aktif</option><option value="maintenance"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "maintenance") : ssrLooseEqual(unref(form).status, "maintenance")) ? " selected" : ""}>Maintenance</option></select>`);
+      _push(`</div><div class="space-y-2"><label class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Status <span class="text-primary-500">*</span></label><select id="status" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"><option value="active"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "active") : ssrLooseEqual(unref(form).status, "active")) ? " selected" : ""}>Aktif</option><option value="inactive"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "inactive") : ssrLooseEqual(unref(form).status, "inactive")) ? " selected" : ""}>Tidak Aktif</option><option value="maintenance"${ssrIncludeBooleanAttr(Array.isArray(unref(form).status) ? ssrLooseContain(unref(form).status, "maintenance") : ssrLooseEqual(unref(form).status, "maintenance")) ? " selected" : ""}>Maintenance</option></select>`);
       if (unref(form).errors.status) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.status)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.status)}</div>`);
       } else {
         _push(`<!---->`);
       }
@@ -212,19 +212,19 @@ const _sfc_main = /* @__PURE__ */ Object.assign({
       }
       _push(`</div><div class="grid grid-cols-2 gap-3"><div class="space-y-2"><label for="latitude" class="block text-xs font-medium text-gray-600 dark:text-gray-400"> Latitude </label><input id="latitude" class="w-full px-3 py-2 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="number" step="any"${ssrRenderAttr("value", unref(form).latitude)} placeholder="Latitude" readonly>`);
       if (unref(form).errors.latitude) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.latitude)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.latitude)}</div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div><div class="space-y-2"><label for="longitude" class="block text-xs font-medium text-gray-600 dark:text-gray-400"> Longitude </label><input id="longitude" class="w-full px-3 py-2 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500" type="number" step="any"${ssrRenderAttr("value", unref(form).longitude)} placeholder="Longitude" readonly>`);
       if (unref(form).errors.longitude) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.longitude)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.longitude)}</div>`);
       } else {
         _push(`<!---->`);
       }
       _push(`</div></div></div></div></div><div class="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 border border-gray-200 dark:border-gray-700"><h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4 pb-2 border-b border-gray-200 dark:border-gray-700"> Deskripsi </h3><div class="space-y-2"><label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300"> Deskripsi Kos </label><textarea id="description" class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500 resize-none" rows="4" placeholder="Masukkan deskripsi lengkap tentang kos...">${ssrInterpolate(unref(form).description)}</textarea>`);
       if (unref(form).errors.description) {
-        _push(`<div class="text-xs text-red-600 dark:text-red-400">${ssrInterpolate(unref(form).errors.description)}</div>`);
+        _push(`<div class="text-xs text-primary-600 dark:text-primary-400">${ssrInterpolate(unref(form).errors.description)}</div>`);
       } else {
         _push(`<!---->`);
       }

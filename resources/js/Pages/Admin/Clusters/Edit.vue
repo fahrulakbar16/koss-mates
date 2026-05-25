@@ -35,12 +35,12 @@
                     <div class="space-y-6 border-b border-gray-100 dark:border-gray-700 pb-8 last:border-0 last:pb-0">
                         <div class="space-y-2">
                             <label for="name" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Nama Cluster <span class="text-red-500">*</span>
+                                Nama Cluster <span class="text-primary-500">*</span>
                             </label>
                             <input id="name"
                                 class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
                                 type="text" v-model="form.name" required placeholder="Contoh: Cluster Melati" />
-                            <div v-if="form.errors.name" class="text-xs text-red-500 mt-1 font-medium">
+                            <div v-if="form.errors.name" class="text-xs text-primary-500 mt-1 font-medium">
                                 {{ form.errors.name }}
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <input id="address"
                                 class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
                                 type="text" v-model="form.address" placeholder="Masukkan alamat lengkap cluster" />
-                            <div v-if="form.errors.address" class="text-xs text-red-500 mt-1 font-medium">
+                            <div v-if="form.errors.address" class="text-xs text-primary-500 mt-1 font-medium">
                                 {{ form.errors.address }}
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                 class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400 resize-none"
                                 v-model="form.description" rows="3"
                                 placeholder="Tuliskan deskripsi singkat mengenai cluster ini..."></textarea>
-                            <div v-if="form.errors.description" class="text-xs text-red-500 mt-1 font-medium">
+                            <div v-if="form.errors.description" class="text-xs text-primary-500 mt-1 font-medium">
                                 {{ form.errors.description }}
                             </div>
                         </div>

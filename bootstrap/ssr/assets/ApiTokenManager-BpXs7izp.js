@@ -58,7 +58,7 @@ const _sfc_main$1 = {
       }, _attrs), {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4"${_scopeId}><div class="sm:flex sm:items-start"${_scopeId}><div class="flex justify-center items-center mx-auto bg-red-100 rounded-full shrink-0 size-12 sm:mx-0 sm:size-10"${_scopeId}><svg class="text-red-600 size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"${_scopeId}></path></svg></div><div class="mt-3 text-center sm:mt-0 sm:ms-4 sm:text-start"${_scopeId}><h3 class="text-lg font-medium text-gray-900"${_scopeId}>`);
+            _push2(`<div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4"${_scopeId}><div class="sm:flex sm:items-start"${_scopeId}><div class="flex justify-center items-center mx-auto bg-primary-100 rounded-full shrink-0 size-12 sm:mx-0 sm:size-10"${_scopeId}><svg class="text-primary-600 size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"${_scopeId}><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"${_scopeId}></path></svg></div><div class="mt-3 text-center sm:mt-0 sm:ms-4 sm:text-start"${_scopeId}><h3 class="text-lg font-medium text-gray-900"${_scopeId}>`);
             ssrRenderSlot(_ctx.$slots, "title", {}, null, _push2, _parent2, _scopeId);
             _push2(`</h3><div class="mt-4 text-sm text-gray-600"${_scopeId}>`);
             ssrRenderSlot(_ctx.$slots, "content", {}, null, _push2, _parent2, _scopeId);
@@ -69,9 +69,9 @@ const _sfc_main$1 = {
             return [
               createVNode("div", { class: "px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4" }, [
                 createVNode("div", { class: "sm:flex sm:items-start" }, [
-                  createVNode("div", { class: "flex justify-center items-center mx-auto bg-red-100 rounded-full shrink-0 size-12 sm:mx-0 sm:size-10" }, [
+                  createVNode("div", { class: "flex justify-center items-center mx-auto bg-primary-100 rounded-full shrink-0 size-12 sm:mx-0 sm:size-10" }, [
                     (openBlock(), createBlock("svg", {
-                      class: "text-red-600 size-6",
+                      class: "text-primary-600 size-6",
                       xmlns: "http://www.w3.org/2000/svg",
                       fill: "none",
                       viewBox: "0 0 24 24",
@@ -365,7 +365,7 @@ const _sfc_main = {
                 } else {
                   _push2(`<!---->`);
                 }
-                _push2(`<button class="cursor-pointer ms-6 text-sm text-red-500"${_scopeId}> Delete </button></div></div>`);
+                _push2(`<button class="cursor-pointer ms-6 text-sm text-primary-500"${_scopeId}> Delete </button></div></div>`);
               });
               _push2(`<!--]--></div>`);
             } else {
@@ -388,7 +388,7 @@ const _sfc_main = {
                           onClick: ($event) => manageApiTokenPermissions(token)
                         }, " Permissions ", 8, ["onClick"])) : createCommentVNode("", true),
                         createVNode("button", {
-                          class: "cursor-pointer ms-6 text-sm text-red-500",
+                          class: "cursor-pointer ms-6 text-sm text-primary-500",
                           onClick: ($event) => confirmApiTokenDeletion(token)
                         }, " Delete ", 8, ["onClick"])
                       ])

@@ -389,7 +389,7 @@ const getImageUrl = (boardingHouse) => {
                                 <span>{{ kos.rooms_count }} Kamar</span>
                             </div>
                             <div class="flex items-center gap-1.5"
-                                :class="kos.rooms_available_count > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500'">
+                                :class="kos.rooms_available_count > 0 ? 'text-green-600 dark:text-green-400' : 'text-primary-500'">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -406,7 +406,7 @@ const getImageUrl = (boardingHouse) => {
                             Tersedia
                         </span>
                         <span v-else
-                            class="text-xs font-bold px-3 py-1.5 bg-red-50 text-red-700 rounded-lg border border-red-100 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800 tracking-wide uppercase">
+                            class="text-xs font-bold px-3 py-1.5 bg-primary-50 text-primary-700 rounded-lg border border-primary-100 dark:bg-primary-900/20 dark:text-primary-400 dark:border-primary-800 tracking-wide uppercase">
                             Penuh
                         </span>
                         <Link :href="route('boarding-houses.public.show', kos.id)"

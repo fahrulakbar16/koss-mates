@@ -67,7 +67,7 @@
             color: #4b5563;
         }
 
-        .text-rose-600 {
+        .text-primary-600 {
             color: #e11d48;
         }
 

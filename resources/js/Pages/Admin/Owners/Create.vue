@@ -36,60 +36,60 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Nama Lengkap <span class="text-red-500">*</span>
+                                    Nama Lengkap <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.name" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.name }" required autofocus />
-                                <div v-if="form.errors.name" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.name }" required autofocus />
+                                <div v-if="form.errors.name" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.name }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Username <span class="text-red-500">*</span>
+                                    Username <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.username" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.username }" required />
-                                <div v-if="form.errors.username" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.username }" required />
+                                <div v-if="form.errors.username" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.username }}
                                 </div>
                             </div>
 
                             <div class="space-y-2 md:col-span-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Email <span class="text-red-500">*</span>
+                                    Email <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.email" type="email"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.email }" required />
-                                <div v-if="form.errors.email" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.email }" required />
+                                <div v-if="form.errors.email" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.email }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Password <span class="text-red-500">*</span>
+                                    Password <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.password" type="password"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.password }" required />
-                                <div v-if="form.errors.password" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.password }" required />
+                                <div v-if="form.errors.password" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.password }}
                                 </div>
                             </div>
 
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                    Konfirmasi Password <span class="text-red-500">*</span>
+                                    Konfirmasi Password <span class="text-primary-500">*</span>
                                 </label>
                                 <input v-model="form.password_confirmation" type="password"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
                                     required />
-                                <div v-if="form.errors.password_confirmation" class="text-xs text-red-500 mt-1 font-medium">
+                                <div v-if="form.errors.password_confirmation" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.password_confirmation }}
                                 </div>
                             </div>
@@ -106,8 +106,8 @@
                                 </label>
                                 <input v-model="form.bank_name" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.bank_name }" placeholder="Contoh: BCA" />
-                                <div v-if="form.errors.bank_name" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.bank_name }" placeholder="Contoh: BCA" />
+                                <div v-if="form.errors.bank_name" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.bank_name }}
                                 </div>
                             </div>
@@ -118,8 +118,8 @@
                                 </label>
                                 <input v-model="form.bank_account_number" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.bank_account_number }" />
-                                <div v-if="form.errors.bank_account_number" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.bank_account_number }" />
+                                <div v-if="form.errors.bank_account_number" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.bank_account_number }}
                                 </div>
                             </div>
@@ -130,8 +130,8 @@
                                 </label>
                                 <input v-model="form.bank_account_name" type="text"
                                     class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500 placeholder:font-normal placeholder:text-gray-400"
-                                    :class="{ 'border-red-500': form.errors.bank_account_name }" />
-                                <div v-if="form.errors.bank_account_name" class="text-xs text-red-500 mt-1 font-medium">
+                                    :class="{ 'border-primary-500': form.errors.bank_account_name }" />
+                                <div v-if="form.errors.bank_account_name" class="text-xs text-primary-500 mt-1 font-medium">
                                     {{ form.errors.bank_account_name }}
                                 </div>
                             </div>

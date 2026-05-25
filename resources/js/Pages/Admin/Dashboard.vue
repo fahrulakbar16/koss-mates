@@ -30,7 +30,7 @@
                         'text-xs font-medium flex items-center gap-1',
                         metrics.income_percentage >= 0
                             ? 'text-green-600 dark:text-green-400'
-                            : 'text-red-600 dark:text-red-400'
+                            : 'text-primary-600 dark:text-primary-400'
                     ]">
                         <component :is="metrics.income_percentage >= 0 ? TrendingUpIcon : TrendingDownIcon"
                             class="w-3 h-3" />
@@ -50,7 +50,7 @@
                         'text-xs font-medium flex items-center gap-1',
                         metrics.expense_percentage <= 0
                             ? 'text-green-600 dark:text-green-400'
-                            : 'text-red-600 dark:text-red-400'
+                            : 'text-primary-600 dark:text-primary-400'
                     ]">
                         <component :is="metrics.expense_percentage <= 0 ? TrendingDownIcon : TrendingUpIcon"
                             class="w-3 h-3" />
@@ -108,7 +108,7 @@
                     {{ metrics.new_reports }} Laporan
                 </h2>
                 <div class="flex items-center gap-1">
-                    <span class="text-xs font-medium text-red-600 dark:text-red-400">
+                    <span class="text-xs font-medium text-primary-600 dark:text-primary-400">
                         Perlu ditindaklanjuti
                     </span>
                 </div>
@@ -287,10 +287,10 @@
                                 class="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-2xl hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-all group">
                                 <div class="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110"
                                     :class="report.status === 'pending'
-                                        ? 'bg-red-50 dark:bg-red-900/20'
+                                        ? 'bg-primary-50 dark:bg-primary-900/20'
                                         : 'bg-yellow-50 dark:bg-yellow-900/20'">
                                     <AlertCircleIcon class="w-6 h-6" :class="report.status === 'pending'
-                                        ? 'text-red-500 dark:text-red-400'
+                                        ? 'text-primary-500 dark:text-primary-400'
                                         : 'text-yellow-500 dark:text-yellow-400'" />
                                 </div>
                                 <div class="flex-1 min-w-0">

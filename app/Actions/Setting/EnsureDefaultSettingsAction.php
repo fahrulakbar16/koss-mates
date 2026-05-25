@@ -28,7 +28,7 @@ class EnsureDefaultSettingsAction
             ],
             [
                 'key' => 'site_name',
-                'value' => 'Tharahub',
+                'value' => 'kosmates',
                 'type' => 'text',
                 'group' => 'general',
                 'description' => 'Nama website',

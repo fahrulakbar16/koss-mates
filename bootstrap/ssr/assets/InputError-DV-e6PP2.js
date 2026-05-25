@@ -9,7 +9,7 @@ const _sfc_main = {
   setup(__props) {
     return (_ctx, _push, _parent, _attrs) => {
       if (__props.message) {
-        _push(`<div${ssrRenderAttrs(_attrs)}><p class="text-sm text-red-600 dark:text-red-400">${ssrInterpolate(Array.isArray(__props.message) ? __props.message[0] : __props.message)}</p></div>`);
+        _push(`<div${ssrRenderAttrs(_attrs)}><p class="text-sm text-primary-600 dark:text-primary-400">${ssrInterpolate(Array.isArray(__props.message) ? __props.message[0] : __props.message)}</p></div>`);
       } else {
         _push(`<!---->`);
       }

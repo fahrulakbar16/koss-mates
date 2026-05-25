@@ -338,7 +338,7 @@ const getStatusClass = (status) => {
         case 'cancel':
         case 'incomplete':
             return {
-                class: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+                class: 'bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-400',
                 label: 'Belum Lunas'
             };
         default:

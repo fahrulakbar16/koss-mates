@@ -10,7 +10,7 @@
         $favicon = \App\Models\Setting::get('logo_favicon');
         $faviconUrl = $favicon && is_string($favicon)
             ? (str_starts_with($favicon, 'http') ? $favicon : asset('storage/' . $favicon))
-            : asset('/images/logo/logo.png');
+            : asset('/KosMates/Logo Kosmate.png');
     @endphp
     <link rel="shortcut icon" href="{{ $faviconUrl }}" />
 

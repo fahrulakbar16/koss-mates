@@ -101,7 +101,7 @@
                                     </template>
                                     <template v-else>
                                         <img :src="previewUrl" class="mx-auto h-48 w-auto object-contain rounded-xl shadow-md" />
-                                        <button type="button" @click.stop="removePhoto" class="mt-4 px-4 py-2 text-sm font-semibold text-rose-500 bg-rose-50 dark:bg-rose-500/10 rounded-full hover:bg-rose-100 dark:hover:bg-rose-500/20 transition-colors">
+                                        <button type="button" @click.stop="removePhoto" class="mt-4 px-4 py-2 text-sm font-semibold text-primary-500 bg-primary-50 dark:bg-primary-500/10 rounded-full hover:bg-primary-100 dark:hover:bg-primary-500/20 transition-colors">
                                             Hapus Foto
                                         </button>
                                     </template>

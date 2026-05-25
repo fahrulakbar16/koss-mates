@@ -243,14 +243,14 @@ async function submitAll() {
                         <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Nama Lengkap</label>
                         <input v-model="profileForm.name" type="text"
                             class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition" />
-                        <p v-if="profileForm.errors.name" class="text-xs text-rose-500 font-medium mt-1">{{
+                        <p v-if="profileForm.errors.name" class="text-xs text-primary-500 font-medium mt-1">{{
                             profileForm.errors.name }}</p>
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Alamat Email</label>
                         <input v-model="profileForm.email" type="email"
                             class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition" />
-                        <p v-if="profileForm.errors.email" class="text-xs text-rose-500 font-medium mt-1">{{
+                        <p v-if="profileForm.errors.email" class="text-xs text-primary-500 font-medium mt-1">{{
                             profileForm.errors.email }}</p>
                     </div>
                 </div>
@@ -267,7 +267,7 @@ async function submitAll() {
                             <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Sandi Baru</label>
                             <input v-model="passwordForm.password" type="password"
                                 class="w-full px-4 py-2 border-slate-200 rounded-lg text-slate-800 font-semibold focus:ring-2 focus:ring-primary focus:border-primary transition text-sm" />
-                            <p v-if="passwordForm.errors.password" class="text-xs text-rose-500 font-medium mt-1">{{
+                            <p v-if="passwordForm.errors.password" class="text-xs text-primary-500 font-medium mt-1">{{
                                 passwordForm.errors.password }}</p>
                         </div>
                         <div class="space-y-1">

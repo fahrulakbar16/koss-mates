@@ -63,7 +63,7 @@
                             <!-- File Upload Area -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                                    Foto Kamar <span class="text-red-500">*</span>
+                                    Foto Kamar <span class="text-primary-500">*</span>
                                 </label>
 
                                 <!-- Upload Button (when no image selected) -->
@@ -97,7 +97,7 @@
                                         <img :src="preview" alt="Preview" class="w-full h-64 object-cover" />
                                     </div>
                                     <button type="button" @click="removeImage"
-                                        class="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow-lg transition-colors">
+                                        class="absolute top-3 right-3 bg-primary-500 hover:bg-primary-600 text-white rounded-full p-2 shadow-lg transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M6 18L18 6M6 6l12 12" />
@@ -112,7 +112,7 @@
                                 </div>
 
                                 <!-- Error Message -->
-                                <p v-if="form.errors.foto_kamar" class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                <p v-if="form.errors.foto_kamar" class="mt-2 text-sm text-primary-600 dark:text-primary-400">
                                     {{ form.errors.foto_kamar }}
                                 </p>
                             </div>

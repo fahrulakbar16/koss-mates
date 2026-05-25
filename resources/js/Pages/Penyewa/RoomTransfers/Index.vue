@@ -78,8 +78,8 @@
                                     Disetujui
                                 </span>
                                 <span v-else-if="transfer.status === 'rejected'"
-                                    class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-black bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800 uppercase tracking-widest">
-                                    <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                    class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-black bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 border border-primary-200 dark:border-primary-800 uppercase tracking-widest">
+                                    <span class="w-2 h-2 bg-primary-500 rounded-full mr-2"></span>
                                     Ditolak
                                 </span>
                             </div>

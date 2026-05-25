@@ -19,7 +19,7 @@
             <div class="flex flex-wrap items-center gap-2">
                 <button v-if="tenant.rooms[0]?.status === 'booked' && (is('Superadmin') || is('Pengelola'))"
                     @click="confirmCancelBooking(tenant.rooms[0])"
-                    class="inline-flex gap-2 items-center px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-lg shadow-red-600/30 transition-all duration-300 transform active:scale-95">
+                    class="inline-flex gap-2 items-center px-4 py-2 text-sm text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-600/30 transition-all duration-300 transform active:scale-95">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -154,7 +154,7 @@
                                             tenant.rooms[0].status === 'checked_in' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800' :
                                             tenant.rooms[0].status === 'booked' ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800' :
                                             tenant.rooms[0].status === 'checked_out' ? 'bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700' :
-                                            'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
+                                            'bg-primary-50 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800'
                                         ]">
                                             {{ tenant.rooms[0].status === 'checked_in' ? 'Ditempati' : tenant.rooms[0].status === 'booked' ? 'Dipesan' : tenant.rooms[0].status === 'checked_out' ? 'Sudah Keluar' : 'Dibatalkan' }}
                                         </span>
@@ -233,7 +233,7 @@
                                         room.status === 'checked_in' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800' :
                                         room.status === 'booked' ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800' :
                                         room.status === 'checked_out' ? 'bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700' :
-                                        'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
+                                        'bg-primary-50 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800'
                                     ]">
                                         {{ room.status === 'checked_in' ? 'Ditempati' : room.status === 'booked'
                                             ? 'Dipesan' : room.status === 'checked_out' ? 'Sudah Keluar' :
@@ -298,13 +298,13 @@
 
                         <div v-else class="space-y-3">
                             <div v-for="transaction in tenant.pending_transactions" :key="transaction.id"
-                                class="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 sm:p-5 hover:border-red-300 dark:hover:border-red-700 hover:shadow-md transition-all duration-300">
+                                class="group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 sm:p-5 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md transition-all duration-300">
 
                                 <div class="absolute top-5 right-5 flex gap-2 items-center">
                                     <span :class="[
                                         'inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border',
                                         transaction.status === 'incomplete' ? 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:border-orange-800' :
-                                        'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
+                                        'bg-primary-50 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800'
                                     ]">
                                         {{ transaction.status === 'incomplete' ? 'Belum Selesai' : 'Pending' }}
                                     </span>
@@ -320,7 +320,7 @@
 
                                 <div class="pr-24">
                                     <div class="flex items-center gap-2 mb-1">
-                                        <h4 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
+                                        <h4 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                                             {{ transaction.transaction_code }}
                                         </h4>
                                     </div>
@@ -345,7 +345,7 @@
 
                                         <div class="flex flex-col gap-1">
                                             <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-0.5">Total Tagihan</span>
-                                            <span class="text-sm font-bold text-red-600 dark:text-red-400">
+                                            <span class="text-sm font-bold text-primary-600 dark:text-primary-400">
                                                 Rp {{ transaction.total_price?.toLocaleString('id-ID') }}
                                             </span>
                                             <div class="flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-400">
@@ -369,8 +369,8 @@
     <div v-if="showCancelModal"
         class="fixed inset-0 z-[100] overflow-y-auto bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 max-w-md w-full p-8 transform transition-all scale-100">
-            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 mb-6 border border-red-200 dark:border-red-800/50">
-                <svg class="h-8 w-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-100 dark:bg-primary-900/30 mb-6 border border-primary-200 dark:border-primary-800/50">
+                <svg class="h-8 w-8 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
             </div>
@@ -387,7 +387,7 @@
                     Batal
                 </button>
                 <button @click="cancelBooking"
-                    class="w-full px-4 py-3 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow-lg shadow-red-600/30 transition-all active:scale-95">
+                    class="w-full px-4 py-3 text-sm font-bold text-white bg-primary-600 rounded-xl hover:bg-primary-700 shadow-lg shadow-primary-600/30 transition-all active:scale-95">
                     Ya, Batalkan
                 </button>
             </div>

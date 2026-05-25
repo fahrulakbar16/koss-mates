@@ -91,7 +91,7 @@
 
                         <button v-if="report.status !== 'rejected' && report.status !== 'resolved'"
                             @click="openRejectModal" :disabled="processing"
-                            class="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-red-600 bg-white border-2 border-red-50 hover:bg-red-50 hover:border-red-100 dark:bg-gray-800 dark:text-red-400 dark:border-red-900/30 dark:hover:bg-red-900/20 rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 disabled:scale-100">
+                            class="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold text-primary-600 bg-white border-2 border-primary-50 hover:bg-primary-50 hover:border-primary-100 dark:bg-gray-800 dark:text-primary-400 dark:border-primary-900/30 dark:hover:bg-primary-900/20 rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 disabled:scale-100">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12" />
@@ -102,7 +102,7 @@
                         <div v-if="report.status === 'resolved' || report.status === 'rejected'"
                             class="text-center p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
                             <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                                Status laporan ini sudah <span class="font-bold uppercase tracking-wide px-1" :class="report.status === 'resolved' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">{{ report.status_label }}</span>.
+                                Status laporan ini sudah <span class="font-bold uppercase tracking-wide px-1" :class="report.status === 'resolved' ? 'text-green-600 dark:text-green-400' : 'text-primary-600 dark:text-primary-400'">{{ report.status_label }}</span>.
                             </p>
                         </div>
                     </div>
@@ -260,8 +260,8 @@
         <div v-if="showRejectModal"
             class="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
             <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 max-w-md w-full p-8 transform transition-all scale-100">
-                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-50 dark:bg-red-900/30 mb-6 border border-red-100 dark:border-red-800">
-                    <svg class="h-8 w-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-50 dark:bg-primary-900/30 mb-6 border border-primary-100 dark:border-primary-800">
+                    <svg class="h-8 w-8 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                 </div>
@@ -275,10 +275,10 @@
 
                 <div class="mb-8">
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-2">
-                        Deskripsikan Alasan Penolakan <span class="text-red-500">*</span>
+                        Deskripsikan Alasan Penolakan <span class="text-primary-500">*</span>
                     </label>
                     <textarea v-model="adminNotes" rows="3"
-                        class="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all resize-none font-medium"
+                        class="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all resize-none font-medium"
                         placeholder="Jelaskan alasan laporan di luar tanggung jawab pengelola..."></textarea>
                 </div>
 
@@ -288,7 +288,7 @@
                         Batal
                     </button>
                     <button @click="confirmReject" :disabled="processing || !adminNotes.trim()"
-                        class="w-full px-4 py-3 font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 disabled:opacity-50 shadow-sm hover:shadow-red-600/20 hover:shadow-md transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900">
+                        class="w-full px-4 py-3 font-bold text-white bg-primary-600 rounded-xl hover:bg-primary-700 disabled:opacity-50 shadow-sm hover:shadow-primary-600/20 hover:shadow-md transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
                         {{ processing ? 'Memproses...' : 'Tolak Laporan' }}
                     </button>
                 </div>
@@ -354,7 +354,7 @@ const getStatusClass = (status) => {
         case 'resolved':
             return 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800';
         case 'rejected':
-            return 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800';
+            return 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 border border-primary-200 dark:border-primary-800';
         default:
             return 'bg-gray-50 text-gray-700 dark:bg-gray-800/50 dark:text-gray-300 border border-gray-200 dark:border-gray-700';
     }

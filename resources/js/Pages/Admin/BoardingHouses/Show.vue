@@ -81,7 +81,7 @@
                                         </button>
                                         <button v-if="can('boarding_houses.delete')"
                                             @click="openConfirmBoardingHouseModal"
-                                            class="group p-3 text-red-600 bg-white border border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 dark:bg-gray-800 dark:border-gray-700 dark:text-red-400 dark:hover:text-red-300 dark:hover:bg-gray-700 dark:hover:border-red-800 rounded-xl transition-all shadow-sm hover:shadow-lg hover:-translate-y-1"
+                                            class="group p-3 text-primary-600 bg-white border border-gray-200 hover:bg-primary-50 hover:text-primary-700 hover:border-primary-200 dark:bg-gray-800 dark:border-gray-700 dark:text-primary-400 dark:hover:text-primary-300 dark:hover:bg-gray-700 dark:hover:border-primary-800 rounded-xl transition-all shadow-sm hover:shadow-lg hover:-translate-y-1"
                                             title="Hapus Kos">
                                             <TrashIcon class="w-5 h-5 transition-transform group-hover:scale-110" />
                                         </button>
@@ -276,7 +276,7 @@
                                 <div
                                     class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
                                     <button v-if="can('boarding_houses.edit')" @click="deleteImage(image)"
-                                        class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-lg"
+                                        class="p-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
                                         title="Hapus gambar">
                                         <TrashIcon class="w-5 h-5" />
                                     </button>
@@ -315,11 +315,11 @@
                                     <div class="absolute top-5 right-5 flex items-center gap-2">
                                         <span :class="[
                                             'w-2 h-2 rounded-full animate-pulse',
-                                            room.status === 'occupied' ? 'bg-blue-500' : (room.status === 'maintenance' ? 'bg-red-500' : (room.status === 'booked' ? 'bg-amber-500' : 'bg-emerald-500'))
+                                            room.status === 'occupied' ? 'bg-blue-500' : (room.status === 'maintenance' ? 'bg-primary-500' : (room.status === 'booked' ? 'bg-amber-500' : 'bg-emerald-500'))
                                         ]"></span>
                                         <span :class="[
                                             'text-xs font-bold uppercase tracking-wider',
-                                            room.status === 'occupied' ? 'text-blue-600 dark:text-blue-400' : (room.status === 'maintenance' ? 'text-red-600 dark:text-red-400' : (room.status === 'booked' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'))
+                                            room.status === 'occupied' ? 'text-blue-600 dark:text-blue-400' : (room.status === 'maintenance' ? 'text-primary-600 dark:text-primary-400' : (room.status === 'booked' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'))
                                         ]">
                                             {{ room.status === 'occupied' ? 'Terisi' : (room.status === 'maintenance' ? 'Maintenance' : (room.status === 'booked' ? 'Booked' : 'Tersedia')) }}
                                         </span>
@@ -379,7 +379,7 @@
                                             Detail
                                         </Link>
                                         <button v-if="room.status === 'booked' && can('rooms.edit')" @click="openCancelBookingModal(room)"
-                                            class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-red-600 dark:bg-red-500 rounded-lg hover:bg-red-700 dark:hover:bg-red-600 transition-colors shadow-lg"
+                                            class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-primary-600 dark:bg-primary-500 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg"
                                             title="Batalkan Booking">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -398,7 +398,7 @@
                                                 <EditIcon class="w-4 h-4" />
                                             </button>
                                             <button v-if="can('rooms.delete')" @click="openConfirmModal(room)"
-                                                class="p-2 text-red-600 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+                                                class="p-2 text-primary-600 bg-primary-50 dark:bg-primary-900/20 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/40 transition-colors"
                                                 title="Hapus Kamar">
                                                 <TrashIcon class="w-4 h-4" />
                                             </button>
@@ -424,8 +424,8 @@
                                     <div class="flex-1">
                                         <div class="flex items-start gap-3">
                                             <div
-                                                class="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
-                                                <MoneyIcon class="w-6 h-6 text-red-600 dark:text-red-400" />
+                                                class="w-12 h-12 rounded-xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center flex-shrink-0">
+                                                <MoneyIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
                                             </div>
                                             <div class="flex-1">
                                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
@@ -448,7 +448,7 @@
                                                     </span>
                                                 </div>
                                                 <div class="mt-3 flex items-center gap-3">
-                                                    <p class="text-2xl font-bold text-red-600 dark:text-red-400">
+                                                    <p class="text-2xl font-bold text-primary-600 dark:text-primary-400">
                                                         {{ formatCurrency(expense.amount) }}
                                                     </p>
                                                     <a v-if="expense.receipt_path"
@@ -476,7 +476,7 @@
                                             <EditIcon class="w-4 h-4" />
                                         </button>
                                         <button @click="deleteExpense(expense)"
-                                            class="p-2 text-red-600 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+                                            class="p-2 text-primary-600 bg-primary-50 dark:bg-primary-900/20 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/40 transition-colors"
                                             title="Hapus Pengeluaran">
                                             <TrashIcon class="w-4 h-4" />
                                         </button>
@@ -509,12 +509,12 @@
                 <div class="space-y-5">
                     <div class="space-y-2">
                         <label for="room_number" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Nomor Kamar <span class="text-red-500">*</span>
+                            Nomor Kamar <span class="text-primary-500">*</span>
                         </label>
                         <input id="room_number"
                             class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all placeholder:text-gray-400"
                             type="number" v-model="form.number" required placeholder="Contoh: 01" />
-                        <div v-if="form.errors.number" class="text-xs text-red-500 font-medium mt-1">
+                        <div v-if="form.errors.number" class="text-xs text-primary-500 font-medium mt-1">
                             {{ form.errors.number }}
                         </div>
                     </div>
@@ -532,7 +532,7 @@
                                 <span
                                     class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 font-medium">Orang</span>
                             </div>
-                            <div v-if="form.errors.capacity" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="form.errors.capacity" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ form.errors.capacity }}
                             </div>
                         </div>
@@ -547,7 +547,7 @@
                                 class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all placeholder:text-gray-400"
                                 v-model="form.description" rows="3"
                                 placeholder="Tambahkan catatan tentang kamar ini..."></textarea>
-                            <div v-if="form.errors.description" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="form.errors.description" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ form.errors.description }}
                             </div>
                         </div>
@@ -568,7 +568,7 @@
                                     {{ facility }}
                                 </button>
                             </div>
-                            <div v-if="form.errors.facilities" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="form.errors.facilities" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ form.errors.facilities }}
                             </div>
                         </div>
@@ -591,13 +591,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-2">
                             <label for="batch_count" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Jumlah Kamar <span class="text-red-500">*</span>
+                                Jumlah Kamar <span class="text-primary-500">*</span>
                             </label>
                             <input id="batch_count"
                                 class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
                                 type="number" min="1" max="50" v-model.number="batchForm.count" required
                                 placeholder="Contoh: 10" />
-                            <div v-if="batchForm.errors.count" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="batchForm.errors.count" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ batchForm.errors.count }}
                             </div>
                         </div>
@@ -610,7 +610,7 @@
                             <input id="batch_start_number"
                                 class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all"
                                 type="number" min="1" v-model.number="batchForm.start_number" placeholder="Otomatis" />
-                            <div v-if="batchForm.errors.start_number" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="batchForm.errors.start_number" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ batchForm.errors.start_number }}
                             </div>
                         </div>
@@ -644,7 +644,7 @@
                                     {{ facility }}
                                 </button>
                             </div>
-                            <div v-if="batchForm.errors.facilities" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="batchForm.errors.facilities" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ batchForm.errors.facilities }}
                             </div>
                         </div>
@@ -691,7 +691,7 @@
                                     </div>
                                 </div>
                                 <button type="button" @click="removeBatchPriceItem(index)"
-                                    class="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all">
+                                    class="p-2 text-gray-400 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-all">
                                     <TrashIcon class="w-4 h-4" />
                                 </button>
                             </div>
@@ -753,7 +753,7 @@
                                 class="group relative aspect-square rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
                                 <img :src="preview" :alt="`Preview ${index + 1}`" class="w-full h-full object-cover" />
                                 <button type="button" @click="removeGalleryPreview(index)"
-                                    class="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors opacity-0 group-hover:opacity-100 shadow-lg">
+                                    class="absolute top-2 right-2 p-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors opacity-0 group-hover:opacity-100 shadow-lg">
                                     <TrashIcon class="w-4 h-4" />
                                 </button>
                                 <div
@@ -764,7 +764,7 @@
                         </div>
 
                         <div v-if="galleryForm.errors.images"
-                            class="flex items-center gap-2 px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-sm font-medium">
+                            class="flex items-center gap-2 px-4 py-3 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 rounded-xl text-sm font-medium">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -783,13 +783,13 @@
                     <div class="space-y-2">
                         <label for="expense_description"
                             class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Deskripsi Pengeluaran <span class="text-red-500">*</span>
+                            Deskripsi Pengeluaran <span class="text-primary-500">*</span>
                         </label>
                         <input id="expense_description"
                             class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all placeholder:text-gray-400"
                             type="text" v-model="expenseForm.description" required
                             placeholder="Contoh: Perbaikan AC Kamar 101" />
-                        <div v-if="expenseForm.errors.description" class="text-xs text-red-500 font-medium mt-1">
+                        <div v-if="expenseForm.errors.description" class="text-xs text-primary-500 font-medium mt-1">
                             {{ expenseForm.errors.description }}
                         </div>
                     </div>
@@ -798,7 +798,7 @@
                         <div class="space-y-2">
                             <label for="expense_amount"
                                 class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Jumlah <span class="text-red-500">*</span>
+                                Jumlah <span class="text-primary-500">*</span>
                             </label>
                             <div class="relative">
                                 <span
@@ -808,7 +808,7 @@
                                     type="number" step="0.01" min="0" v-model.number="expenseForm.amount" required
                                     placeholder="0" />
                             </div>
-                            <div v-if="expenseForm.errors.amount" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="expenseForm.errors.amount" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ expenseForm.errors.amount }}
                             </div>
                         </div>
@@ -816,12 +816,12 @@
                         <div class="space-y-2">
                             <label for="expense_date"
                                 class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Tanggal <span class="text-red-500">*</span>
+                                Tanggal <span class="text-primary-500">*</span>
                             </label>
                             <input id="expense_date"
                                 class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
                                 type="date" v-model="expenseForm.date" required />
-                            <div v-if="expenseForm.errors.date" class="text-xs text-red-500 font-medium mt-1">
+                            <div v-if="expenseForm.errors.date" class="text-xs text-primary-500 font-medium mt-1">
                                 {{ expenseForm.errors.date }}
                             </div>
                         </div>
@@ -838,7 +838,7 @@
                                 {{ room.name }} {{ room.number ? `- No. ${room.number}` : '' }}
                             </option>
                         </select>
-                        <div v-if="expenseForm.errors.room_id" class="text-xs text-red-500 font-medium mt-1">
+                        <div v-if="expenseForm.errors.room_id" class="text-xs text-primary-500 font-medium mt-1">
                             {{ expenseForm.errors.room_id }}
                         </div>
                     </div>
@@ -866,7 +866,7 @@
                                     <img v-if="receiptPreview && !receiptPreview.endsWith('.pdf')" :src="receiptPreview"
                                         alt="Receipt preview" class="w-full h-full object-contain rounded-lg" />
                                     <div v-else class="flex flex-col items-center justify-center h-full">
-                                        <svg class="w-16 h-16 text-red-500 mb-2" fill="none" stroke="currentColor"
+                                        <svg class="w-16 h-16 text-primary-500 mb-2" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
@@ -876,7 +876,7 @@
                                         </p>
                                     </div>
                                     <button type="button" @click.prevent="removeReceipt"
-                                        class="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors shadow-lg">
+                                        class="absolute top-2 right-2 p-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors shadow-lg">
                                         <TrashIcon class="w-4 h-4" />
                                     </button>
                                 </div>
@@ -884,7 +884,7 @@
                                     @change="handleReceiptChange" />
                             </label>
                         </div>
-                        <div v-if="expenseForm.errors.receipt" class="text-xs text-red-500 font-medium mt-1">
+                        <div v-if="expenseForm.errors.receipt" class="text-xs text-primary-500 font-medium mt-1">
                             {{ expenseForm.errors.receipt }}
                         </div>
                     </div>

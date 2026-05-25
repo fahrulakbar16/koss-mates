@@ -58,7 +58,7 @@
                                         placeholder="Tambahkan Nama Paket (Opsional)..." />
                                 </div>
                                 <button type="button" @click="removePriceItem(index)"
-                                    class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
+                                    class="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl transition-all"
                                     title="Hapus Harga">
                                     <TrashIcon class="w-5 h-5" />
                                 </button>
@@ -67,7 +67,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                                 <div class="space-y-1.5">
                                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                        Durasi (Bulan) <span class="text-red-500">*</span>
+                                        Durasi (Bulan) <span class="text-primary-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="number" min="1" step="1" v-model.number="priceItem.duration"
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="space-y-1.5">
                                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                        Harga Jual (Rp) <span class="text-red-500">*</span>
+                                        Harga Jual (Rp) <span class="text-primary-500">*</span>
                                     </label>
                                     <div class="relative">
                                         <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">Rp</span>
@@ -127,7 +127,7 @@
                                             </div>
                                         </div>
                                         <button type="button" @click="removeAddon(priceItem, aIndex)"
-                                            class="p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+                                            class="p-1.5 text-gray-400 hover:text-primary-500 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all">
                                             <TrashIcon class="w-4 h-4" />
                                         </button>
                                     </div>
@@ -148,7 +148,7 @@
                 </button>
 
                 <div v-if="priceForm.errors.prices"
-                    class="flex items-center gap-2 px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl text-sm font-medium">
+                    class="flex items-center gap-2 px-4 py-3 bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 rounded-xl text-sm font-medium">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

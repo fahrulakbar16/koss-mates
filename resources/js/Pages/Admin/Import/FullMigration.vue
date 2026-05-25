@@ -81,7 +81,7 @@ const downloadFile = (content, filename) => {
                 <div class="md:col-span-1">
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-2xl p-6 border border-gray-100 dark:border-gray-700">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <DocumentTextIcon class="w-6 h-6 mr-2 text-red-500" />
+                            <DocumentTextIcon class="w-6 h-6 mr-2 text-primary-500" />
                             Panduan Import
                         </h3>
 
@@ -90,11 +90,11 @@ const downloadFile = (content, filename) => {
                                 <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Umum:</h4>
                                 <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                                     <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-5 h-5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 mr-3">1</span>
+                                        <span class="flex-shrink-0 w-5 h-5 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 mr-3">1</span>
                                         Gunakan format CSV dengan delimiter koma (,).
                                     </li>
                                     <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-5 h-5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 mr-3">2</span>
+                                        <span class="flex-shrink-0 w-5 h-5 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 mr-3">2</span>
                                         Format tanggal: YYYY-MM-DD atau DD/MM/YYYY.
                                     </li>
                                 </ul>
@@ -118,7 +118,7 @@ const downloadFile = (content, filename) => {
                                 <h4 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Pengeluaran:</h4>
                                 <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                                     <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-5 h-5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 mr-3">3</span>
+                                        <span class="flex-shrink-0 w-5 h-5 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full flex items-center justify-center text-xs font-bold mt-0.5 mr-3">3</span>
                                         Mencatat biaya operasional atau pemeliharaan unit.
                                     </li>
                                 </ul>
@@ -140,7 +140,7 @@ const downloadFile = (content, filename) => {
                             :class="[
                                 'flex-1 py-3 px-4 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2',
                                 importType === 'migration'
-                                    ? 'bg-red-600 text-white shadow-lg shadow-red-100 dark:shadow-none'
+                                    ? 'bg-primary-600 text-white shadow-lg shadow-primary-100 dark:shadow-none'
                                     : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                             ]"
                         >
@@ -152,7 +152,7 @@ const downloadFile = (content, filename) => {
                             :class="[
                                 'flex-1 py-3 px-4 rounded-xl font-bold transition-all duration-200 flex items-center justify-center gap-2',
                                 importType === 'expense'
-                                    ? 'bg-red-600 text-white shadow-lg shadow-red-100 dark:shadow-none'
+                                    ? 'bg-primary-600 text-white shadow-lg shadow-primary-100 dark:shadow-none'
                                     : 'text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                             ]"
                         >
@@ -164,7 +164,7 @@ const downloadFile = (content, filename) => {
                     <!-- Upload Card -->
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
                         <form @submit.prevent="submit">
-                            <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-3xl p-12 transition-colors hover:border-red-400 group relative">
+                            <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-3xl p-12 transition-colors hover:border-primary-400 group relative">
                                 <input
                                     type="file"
                                     @change="handleFileUpload"
@@ -173,8 +173,8 @@ const downloadFile = (content, filename) => {
                                 />
 
                                 <div class="text-center">
-                                    <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-2xl inline-block mb-4 group-hover:scale-110 transition-transform duration-300">
-                                        <CloudArrowUpIcon class="text-red-500 w-12 h-12" />
+                                    <div class="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-2xl inline-block mb-4 group-hover:scale-110 transition-transform duration-300">
+                                        <CloudArrowUpIcon class="text-primary-500 w-12 h-12" />
                                     </div>
                                     <p class="text-xl font-bold text-gray-900 dark:text-white mb-1">
                                         {{ form.file ? form.file.name : 'Pilih File CSV' }}
@@ -189,7 +189,7 @@ const downloadFile = (content, filename) => {
                                 <button
                                     type="submit"
                                     :disabled="!form.file || processing"
-                                    class="px-8 py-4 text-white rounded-2xl font-bold flex items-center shadow-lg transition-all hover:-translate-y-1 active:translate-y-0 bg-red-600 hover:bg-red-700 shadow-red-200 disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
+                                    class="px-8 py-4 text-white rounded-2xl font-bold flex items-center shadow-lg transition-all hover:-translate-y-1 active:translate-y-0 bg-primary-600 hover:bg-primary-700 shadow-primary-200 disabled:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
                                 >
                                     <ArrowPathIcon v-if="processing" class="w-5 h-5 mr-2 animate-spin" />
                                     Mulai Import {{ importType === 'migration' ? 'Data' : 'Pengeluaran' }}
@@ -210,19 +210,19 @@ const downloadFile = (content, filename) => {
                                 </div>
                                 <p class="text-2xl font-black text-emerald-700 dark:text-emerald-300">{{ results.success }}</p>
                             </div>
-                            <div class="bg-rose-50 dark:bg-rose-900/20 p-4 rounded-2xl border border-rose-100 dark:border-rose-800/30">
-                                <div class="flex items-center text-rose-600 dark:text-rose-400 mb-1">
+                            <div class="bg-primary-50 dark:bg-primary-900/20 p-4 rounded-2xl border border-primary-100 dark:border-primary-800/30">
+                                <div class="flex items-center text-primary-600 dark:text-primary-400 mb-1">
                                     <ExclamationCircleIcon class="w-5 h-5 mr-2" />
                                     <span class="font-bold">Gagal</span>
                                 </div>
-                                <p class="text-2xl font-black text-rose-700 dark:text-rose-300">{{ results.error }}</p>
+                                <p class="text-2xl font-black text-primary-700 dark:text-primary-300">{{ results.error }}</p>
                             </div>
                         </div>
 
                         <div v-if="results.messages.length > 0" class="space-y-3">
                             <p class="text-sm font-bold text-gray-700 dark:text-gray-300">Detail Error:</p>
                             <div class="max-h-60 overflow-y-auto space-y-2 pr-2 custom-scrollbar">
-                                <div v-for="(msg, i) in results.messages" :key="i" class="text-xs p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg text-rose-600 dark:text-rose-400 border-l-4 border-rose-500">
+                                <div v-for="(msg, i) in results.messages" :key="i" class="text-xs p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg text-primary-600 dark:text-primary-400 border-l-4 border-primary-500">
                                     {{ msg }}
                                 </div>
                             </div>

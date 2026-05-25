@@ -67,37 +67,37 @@ const _sfc_main = {
         }
         _push(`</div><p class="text-sm text-gray-500">Pratinjau foto profil</p></div><div class="p-8"><div class="grid grid-cols-1 gap-4"><label class="space-y-1"><span class="text-sm text-gray-700">Name</span><input${ssrRenderAttr("value", unref(profileForm).name)} type="text" autocomplete="name" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">`);
         if (unref(profileForm).errors.name) {
-          _push(`<span class="text-sm text-red-600">${ssrInterpolate(unref(profileForm).errors.name)}</span>`);
+          _push(`<span class="text-sm text-primary-600">${ssrInterpolate(unref(profileForm).errors.name)}</span>`);
         } else {
           _push(`<!---->`);
         }
         _push(`</label><label class="space-y-1"><span class="text-sm text-gray-700">Email Address</span><input${ssrRenderAttr("value", unref(profileForm).email)} type="email" autocomplete="email" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">`);
         if (unref(profileForm).errors.email) {
-          _push(`<span class="text-sm text-red-600">${ssrInterpolate(unref(profileForm).errors.email)}</span>`);
+          _push(`<span class="text-sm text-primary-600">${ssrInterpolate(unref(profileForm).errors.email)}</span>`);
         } else {
           _push(`<!---->`);
         }
         _push(`</label><label class="space-y-1"><span class="text-sm text-gray-700">Old Password</span><input${ssrRenderAttr("value", unref(passwordForm).current_password)} type="password" autocomplete="current-password" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">`);
         if (unref(passwordForm).errors.current_password) {
-          _push(`<span class="text-sm text-red-600">${ssrInterpolate(unref(passwordForm).errors.current_password)}</span>`);
+          _push(`<span class="text-sm text-primary-600">${ssrInterpolate(unref(passwordForm).errors.current_password)}</span>`);
         } else {
           _push(`<!---->`);
         }
         _push(`</label><label class="space-y-1"><span class="text-sm text-gray-700">New Password</span><input${ssrRenderAttr("value", unref(passwordForm).password)} type="password" autocomplete="new-password" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">`);
         if (unref(passwordForm).errors.password) {
-          _push(`<span class="text-sm text-red-600">${ssrInterpolate(unref(passwordForm).errors.password)}</span>`);
+          _push(`<span class="text-sm text-primary-600">${ssrInterpolate(unref(passwordForm).errors.password)}</span>`);
         } else {
           _push(`<!---->`);
         }
         _push(`</label><label class="space-y-1"><span class="text-sm text-gray-700">Confirm Password</span><input${ssrRenderAttr("value", unref(passwordForm).password_confirmation)} type="password" autocomplete="new-password" class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">`);
         if (unref(passwordForm).errors.password_confirmation) {
-          _push(`<span class="text-sm text-red-600">${ssrInterpolate(unref(passwordForm).errors.password_confirmation)}</span>`);
+          _push(`<span class="text-sm text-primary-600">${ssrInterpolate(unref(passwordForm).errors.password_confirmation)}</span>`);
         } else {
           _push(`<!---->`);
         }
         _push(`</label><div class="space-y-1"><span class="text-sm text-gray-700">Change Profile Photo</span><div class="flex items-center gap-3"><label class="px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md cursor-pointer hover:bg-indigo-700"> Choose File <input type="file" accept="image/*" class="hidden"></label><span class="text-sm text-gray-600 truncate">${ssrInterpolate(unref(profileForm).photo ? unref(profileForm).photo.name : "No file chosen")}</span></div>`);
         if (unref(profileForm).errors.photo) {
-          _push(`<span class="text-sm text-red-600">${ssrInterpolate(unref(profileForm).errors.photo)}</span>`);
+          _push(`<span class="text-sm text-primary-600">${ssrInterpolate(unref(profileForm).errors.photo)}</span>`);
         } else {
           _push(`<!---->`);
         }

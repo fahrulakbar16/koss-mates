@@ -1,7 +1,11 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 defineOptions({
     layout: PublicLayout,
@@ -33,40 +37,79 @@ const props = defineProps({
 });
 
 const searchQuery = ref('');
-let scrollObserver = null;
+let scrollTriggers = [];
 
 onMounted(() => {
-    // Setup Intersection Observer for scroll animations
     setupScrollAnimations();
 });
 
 onUnmounted(() => {
-    if (scrollObserver) {
-        scrollObserver.disconnect();
-    }
+    scrollTriggers.forEach(t => t.kill());
 });
 
 const setupScrollAnimations = () => {
-    const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    nextTick(() => {
+        // Hero Content
+        gsap.to('.stagger-reveal.max-w-2xl > *', {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: 'power3.out',
+            delay: 0.2
+        });
 
-    scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                // Use requestAnimationFrame for smoother class addition
-                requestAnimationFrame(() => {
-                    entry.target.classList.add('animate-reveal');
+        // Hero Image
+        gsap.to('.animate-slide-in-right', {
+            opacity: 1,
+            x: 0,
+            duration: 1.2,
+            ease: 'power3.out',
+            delay: 0.4
+        });
+
+        // Stagger groups - animate all children
+        gsap.utils.toArray('.stagger-reveal').forEach((section) => {
+            if (section.classList.contains('max-w-2xl')) return; // skip hero
+
+            const elements = section.children;
+            if (elements.length > 0) {
+                const st = ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top 80%',
+                    animation: gsap.to(elements, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: 'blur(0px)',
+                        duration: 1,
+                        stagger: 0.15,
+                        ease: 'power3.out'
+                    })
                 });
-                scrollObserver.unobserve(entry.target);
+                scrollTriggers.push(st);
             }
         });
-    }, observerOptions);
 
-    // Initial check for elements already in view
-    document.querySelectorAll('.scroll-reveal').forEach((el) => {
-        scrollObserver.observe(el);
+        // Individual scroll reveals
+        gsap.utils.toArray('.scroll-reveal').forEach((el) => {
+            // Animate it individually if it's not a direct child of stagger-reveal
+            if (!el.parentElement || !el.parentElement.classList.contains('stagger-reveal')) {
+                const st = ScrollTrigger.create({
+                    trigger: el,
+                    start: 'top 85%',
+                    animation: gsap.to(el, {
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                        filter: 'blur(0px)',
+                        duration: 1,
+                        ease: 'power3.out'
+                    })
+                });
+                scrollTriggers.push(st);
+            }
+        });
     });
 };
 
@@ -95,10 +138,10 @@ const siteUrl = computed(() => {
     if (typeof window !== 'undefined') {
         return window.location.origin;
     }
-    return 'https://Tharahub.com'; // Fallback URL
+    return 'https://Kostmates.com'; // Fallback URL
 });
 
-const seoTitle = 'Tharahub - Temukan Kos Ideal Anda dengan Mudah';
+const seoTitle = 'Kostmates - Temukan Kos Ideal Anda dengan Mudah';
 const seoDescription = 'Platform modern untuk mencari, mengelola, dan menyewa kos di seluruh Indonesia. Temukan kos impian Anda dengan fitur lengkap, foto detail, lokasi strategis, dan harga transparan. Terpercaya & Aman.';
 const seoKeywords = 'kos, kost, boarding house, sewa kos, cari kos, kos murah, kos dekat kampus, kos strategis, platform kos, kos indonesia, sewa kamar, kos terpercaya';
 const seoImage = computed(() => {
@@ -113,7 +156,7 @@ const websiteStructuredData = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'Tharahub',
+        name: 'Kostmates',
         url: siteUrl.value,
         description: seoDescription,
         potentialAction: {
@@ -131,14 +174,14 @@ const organizationStructuredData = computed(() => {
     return JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: 'Tharahub',
+        name: 'Kostmates',
         url: siteUrl.value,
-        logo: `${siteUrl.value}/images/logo/Tharahub-logo.png`,
+        logo: `${siteUrl.value}/KosMates/Asset 2.png`,
         description: seoDescription,
         sameAs: [
-            'https://www.facebook.com/Tharahub',
-            'https://www.instagram.com/Tharahub',
-            'https://twitter.com/Tharahub'
+            'https://www.facebook.com/Kostmates',
+            'https://www.instagram.com/Kostmates',
+            'https://twitter.com/Kostmates'
         ],
         contactPoint: {
             '@type': 'ContactPoint',
@@ -156,7 +199,7 @@ const organizationStructuredData = computed(() => {
         <meta name="title" :content="seoTitle" />
         <meta name="description" :content="seoDescription" />
         <meta name="keywords" :content="seoKeywords" />
-        <meta name="author" content="Tharahub" />
+        <meta name="author" content="Kostmates" />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="Indonesian" />
         <meta name="revisit-after" content="7 days" />
@@ -170,8 +213,8 @@ const organizationStructuredData = computed(() => {
         <meta property="og:image" :content="seoImage" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Tharahub - Platform Pencarian Kos Terpercaya" />
-        <meta property="og:site_name" content="Tharahub" />
+        <meta property="og:image:alt" content="Kostmates - Platform Pencarian Kos Terpercaya" />
+        <meta property="og:site_name" content="Kostmates" />
         <meta property="og:locale" content="id_ID" />
 
         <!-- Twitter -->
@@ -180,7 +223,7 @@ const organizationStructuredData = computed(() => {
         <meta name="twitter:title" :content="seoTitle" />
         <meta name="twitter:description" :content="seoDescription" />
         <meta name="twitter:image" :content="seoImage" />
-        <meta name="twitter:image:alt" content="Tharahub - Platform Pencarian Kos Terpercaya" />
+        <meta name="twitter:image:alt" content="Kostmates - Platform Pencarian Kos Terpercaya" />
 
         <!-- Additional Meta Tags -->
         <meta name="theme-color" content="#fa5252" />
@@ -200,10 +243,10 @@ const organizationStructuredData = computed(() => {
             <!-- Background Decorations -->
             <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <div
-                    class="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-50/50 dark:bg-primary-900/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-parallax">
+                    class="absolute top-0 right-0 w-[800px] h-[800px] bg-primary-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-parallax">
                 </div>
                 <div
-                    class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50/50 dark:bg-blue-900/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 animate-parallax" style="animation-delay: -5s">
+                    class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 animate-parallax" style="animation-delay: -5s">
                 </div>
             </div>
 
@@ -212,7 +255,7 @@ const organizationStructuredData = computed(() => {
                     <!-- Left: Content -->
                     <div class="animate-reveal stagger-reveal max-w-2xl">
                         <div
-                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-sm font-medium mb-6 border border-primary-100 dark:border-primary-800">
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 text-primary-600 text-sm font-medium mb-6 border border-primary-100 ">
                             <span class="relative flex h-2 w-2">
                                 <span
                                     class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
@@ -222,14 +265,14 @@ const organizationStructuredData = computed(() => {
                         </div>
 
                         <h1
-                            class="text-4xl sm:text-5xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-[1.1] mb-6 tracking-tight">
+                            class="text-4xl sm:text-5xl lg:text-7xl font-bold text-gray-900 leading-[1.1] mb-6 tracking-tight">
                             Temukan Kos <br />
                             <span
                                 class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-500">Impianmu</span>
                             Disini
                         </h1>
 
-                        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed max-w-lg">
+                        <p class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg">
                             Dapatkan kenyamanan tempat tinggal terbaik dengan harga transparan dan lokasi strategis di
                             seluruh Indonesia.
                         </p>
@@ -240,7 +283,7 @@ const organizationStructuredData = computed(() => {
                                 class="absolute -inset-1 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200">
                             </div>
                             <div
-                                class="relative flex items-center bg-white dark:bg-gray-800 rounded-2xl shadow-xl dark:shadow-none p-2 border border-gray-100 dark:border-gray-700">
+                                class="relative flex items-center bg-white rounded-2xl shadow-xl p-2 border border-gray-100 ">
                                 <div class="flex-1 flex items-center px-4">
                                     <svg class="w-6 h-6 text-gray-400 mr-3" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
@@ -249,7 +292,7 @@ const organizationStructuredData = computed(() => {
                                     </svg>
                                     <input v-model="searchQuery" type="text"
                                         placeholder="Cari lokasi, kampus, atau area..."
-                                        class="w-full bg-transparent border-none p-2 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-0 text-base" />
+                                        class="w-full bg-transparent border-none p-2 text-gray-900 placeholder-gray-400 focus:ring-0 text-base" />
                                 </div>
                                 <button
                                     class="btn-premium px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl shadow-lg shadow-primary-600/30">
@@ -259,22 +302,22 @@ const organizationStructuredData = computed(() => {
                         </div>
 
                         <!-- Stats/Trusted -->
-                        <div class="mt-10 flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="mt-10 flex items-center gap-6 text-sm text-gray-500 ">
                             <div class="flex -space-x-3">
                                 <img src="https://ui-avatars.com/api/?name=A+B&background=random"
-                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900"
+                                    class="w-8 h-8 rounded-full border-2 border-white "
                                     alt="User" />
                                 <img src="https://ui-avatars.com/api/?name=C+D&background=random"
-                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900"
+                                    class="w-8 h-8 rounded-full border-2 border-white "
                                     alt="User" />
                                 <img src="https://ui-avatars.com/api/?name=E+F&background=random"
-                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900"
+                                    class="w-8 h-8 rounded-full border-2 border-white "
                                     alt="User" />
                                 <div
-                                    class="w-8 h-8 rounded-full border-2 border-white dark:border-gray-900 bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-xs font-bold">
+                                    class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-xs font-bold">
                                     +2k</div>
                             </div>
-                            <p>Telah dipercaya oleh <span class="font-bold text-gray-900 dark:text-white">2,000+</span>
+                            <p>Telah dipercaya oleh <span class="font-bold text-gray-900 ">2,000+</span>
                                 pencari kos</p>
                         </div>
                     </div>
@@ -282,7 +325,7 @@ const organizationStructuredData = computed(() => {
                     <!-- Right: Hero Image - Creative Layout -->
                     <div class="hidden lg:block relative animate-slide-in-right">
                         <div
-                            class="relative w-full aspect-[4/5] rounded-[32px] overflow-hidden shadow-2xl border-[8px] border-white dark:border-gray-800 transform rotate-2 hover:rotate-0 transition-transform duration-700">
+                            class="relative w-full aspect-[4/5] rounded-[32px] overflow-hidden shadow-2xl border-[8px] border-white transform rotate-2 hover:rotate-0 transition-transform duration-700">
                             <template v-if="featuredBoardingHouse">
                                 <img :src="featuredBoardingHouse.hero_image" :alt="featuredBoardingHouse.name"
                                     class="w-full h-full object-cover" />
@@ -304,17 +347,17 @@ const organizationStructuredData = computed(() => {
                                 </div>
                             </template>
                             <div v-else
-                                class="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                class="w-full h-full bg-gray-100 flex items-center justify-center">
                                 <p class="text-gray-400">Featured Image</p>
                             </div>
                         </div>
 
                         <!-- Floating Card Decoration -->
                         <div
-                            class="absolute -bottom-10 -left-10 bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 animate-bounce-slow max-w-[200px]">
+                            class="absolute -bottom-10 -left-10 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 animate-bounce-slow max-w-[200px]">
                             <div class="flex items-center gap-3">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+                                    class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 ">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -322,7 +365,7 @@ const organizationStructuredData = computed(() => {
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-500 font-medium">Status</p>
-                                    <p class="text-sm font-bold text-gray-900 dark:text-white">Terverifikasi</p>
+                                    <p class="text-sm font-bold text-gray-900 ">Terverifikasi</p>
                                 </div>
                             </div>
                         </div>
@@ -332,13 +375,13 @@ const organizationStructuredData = computed(() => {
         </section>
 
         <!-- Recommendations Section -->
-        <section class="py-20 bg-gray-50 dark:bg-gray-900/50">
+        <section class="py-20 bg-gray-50 ">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Section Header -->
                 <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 scroll-reveal stagger-reveal">
                     <div>
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Rekomendasi Pilihan</h2>
-                        <p class="text-gray-500 dark:text-gray-400">Kos terbaik yang paling banyak dicari minggu ini</p>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Rekomendasi Pilihan</h2>
+                        <p class="text-gray-500 ">Kos terbaik yang paling banyak dicari minggu ini</p>
                     </div>
 
                     <div class="flex items-center gap-4">
@@ -360,7 +403,7 @@ const organizationStructuredData = computed(() => {
                     <TransitionGroup name="kos-list" tag="div" class="contents">
                         <div v-for="(kos, index) in recommendedBoardingHouses" :key="kos.id"
                             :style="{ '--delay': (index * 0.1) + 's' }"
-                            class="scroll-reveal card-premium group relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800">
+                            class="scroll-reveal card-premium group relative bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 ">
                             <!-- Image -->
                             <div class="relative h-64 overflow-hidden">
                                 <img :src="getImageUrl(kos)" :alt="kos.name"
@@ -383,12 +426,12 @@ const organizationStructuredData = computed(() => {
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-2">
                                     <h3
-                                        class="text-lg font-bold text-gray-900 dark:text-white line-clamp-1 flex-1 pr-2 group-hover:text-primary-600 transition-colors">
+                                        class="text-lg font-bold text-gray-900 line-clamp-1 flex-1 pr-2 group-hover:text-primary-600 transition-colors">
                                         {{ kos.name }}
                                     </h3>
                                 </div>
 
-                                <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center gap-2 text-gray-500 text-sm mb-4">
                                     <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -400,9 +443,9 @@ const organizationStructuredData = computed(() => {
                                 </div>
 
                                 <div
-                                    class="pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                                    class="pt-4 border-t border-gray-100 flex justify-between items-center">
                                     <span
-                                        class="text-xs font-medium px-2.5 py-1 bg-green-100 text-green-700 rounded-md dark:bg-green-900/30 dark:text-green-400">Tersedia</span>
+                                        class="text-xs font-medium px-2.5 py-1 bg-green-100 text-green-700 rounded-md ">Tersedia</span>
                                     <Link :href="route('boarding-houses.public.show', kos.id)"
                                         class="text-sm font-semibold text-primary-600 hover:text-primary-700 flex items-center gap-1 group/btn">
                                         Detail
@@ -420,15 +463,15 @@ const organizationStructuredData = computed(() => {
 
                 <!-- Empty State -->
                 <div v-else
-                    class="text-center py-20 bg-white dark:bg-gray-800 rounded-3xl border border-dashed border-gray-300 dark:border-gray-700">
+                    class="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300 ">
                     <div
-                        class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                        class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <p class="text-gray-500 dark:text-gray-400 text-lg">Tidak ada kos yang ditemukan untuk kriteria ini.
+                    <p class="text-gray-500 text-lg">Tidak ada kos yang ditemukan untuk kriteria ini.
                     </p>
                 </div>
             </div>
@@ -474,15 +517,15 @@ const organizationStructuredData = computed(() => {
         </section>
 
         <!-- Features Section -->
-        <section id="features" class="py-24 bg-white dark:bg-gray-900 scroll-mt-20">
+        <section id="features" class="py-24 bg-white scroll-mt-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16 scroll-reveal stagger-reveal">
                     <span class="text-primary-600 font-semibold tracking-wide uppercase text-sm">Keunggulan
                         Kami</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                        Kenapa Harus <span class="text-primary-600">Tharahub?</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">
+                        Kenapa Harus <span class="text-primary-600">Kostmates?</span>
                     </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
                         Kami menyediakan fitur terbaik untuk memudahkan pengalaman pencarian tempat tinggal
                         Anda
                         yang aman dan nyaman.
@@ -490,45 +533,45 @@ const organizationStructuredData = computed(() => {
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-reveal">
-                    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 card-premium border border-gray-100 dark:border-gray-700 scroll-reveal"
+                    <div class="group bg-white rounded-2xl p-8 card-premium border border-gray-100 scroll-reveal"
                         style="--delay: 0s">
                         <div
-                            class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                            class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                             <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Pencarian Cepat
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Pencarian Cepat
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed">
                             Filter canggih membantu Anda menemukan kos impian berdasarkan lokasi, harga, dan
                             fasilitas dalam hitungan detik.
                         </p>
                     </div>
 
-                    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 card-premium border border-gray-100 dark:border-gray-700 scroll-reveal"
+                    <div class="group bg-white rounded-2xl p-8 card-premium border border-gray-100 scroll-reveal"
                         style="--delay: 0.1s">
                         <div
-                            class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                            class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                             <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Informasi Lengkap
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Informasi Lengkap
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed">
                             Setiap listing dilengkapi foto berkualitas tinggi, detail fasilitas, dan
                             deskripsi
                             lengkap yang transparan.
                         </p>
                     </div>
 
-                    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 card-premium border border-gray-100 dark:border-gray-700 scroll-reveal"
+                    <div class="group bg-white rounded-2xl p-8 card-premium border border-gray-100 scroll-reveal"
                         style="--delay: 0.2s">
                         <div
-                            class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                            class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                             <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -536,62 +579,62 @@ const organizationStructuredData = computed(() => {
                                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Lokasi Strategis
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Lokasi Strategis
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed">
                             Kami mengkurasi kos di area-area strategis, dekat dengan kampus, perkantoran,
                             dan akses
                             transportasi umum.
                         </p>
                     </div>
 
-                    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 card-premium border border-gray-100 dark:border-gray-700 scroll-reveal"
+                    <div class="group bg-white rounded-2xl p-8 card-premium border border-gray-100 scroll-reveal"
                         style="--delay: 0.3s">
                         <div
-                            class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                            class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                             <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
 
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Harga Transparan
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Harga Transparan
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed">
                             Tidak ada biaya tersembunyi. Harga yang Anda lihat adalah harga yang Anda bayar,
                             lengkap
                             dengan rinciannya.
                         </p>
                     </div>
 
-                    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 card-premium border border-gray-100 dark:border-gray-700 scroll-reveal"
+                    <div class="group bg-white rounded-2xl p-8 card-premium border border-gray-100 scroll-reveal"
                         style="--delay: 0.4s">
                         <div
-                            class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                            class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                             <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Terverifikasi</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Terverifikasi</h3>
+                        <p class="text-gray-600 leading-relaxed">
                             Setiap mitra kos telah melewati proses verifikasi ketat untuk menjamin keamanan
                             dan
                             kenyamanan Anda.
                         </p>
                     </div>
 
-                    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 card-premium border border-gray-100 dark:border-gray-700 scroll-reveal"
+                    <div class="group bg-white rounded-2xl p-8 card-premium border border-gray-100 scroll-reveal"
                         style="--delay: 0.5s">
                         <div
-                            class="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                            class="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
                             <svg class="w-7 h-7 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Support 24/7</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Support 24/7</h3>
+                        <p class="text-gray-600 leading-relaxed">
                             Tim CS kami siap membantu keluhan dan pertanyaan Anda kapanpun dibutuhkan.
                         </p>
                     </div>
@@ -600,15 +643,15 @@ const organizationStructuredData = computed(() => {
         </section>
 
         <!-- How It Works Section -->
-        <section id="how-it-works" class="py-24 bg-gray-50 dark:bg-gray-900/50 scroll-mt-20">
+        <section id="how-it-works" class="py-24 bg-gray-50 scroll-mt-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-20 scroll-reveal stagger-reveal">
                     <span class="text-primary-600 font-semibold tracking-wide uppercase text-sm">Langkah
                         Mudah</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-4">
-                        Cara Kerja di <span class="text-primary-600">Tharahub</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">
+                        Cara Kerja di <span class="text-primary-600">Kostmates</span>
                     </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
                         Cukup ikuti 3 langkah sederhana ini untuk mendapatkan tempat tinggal yang Anda
                         inginkan.
                     </p>
@@ -617,16 +660,16 @@ const organizationStructuredData = computed(() => {
                 <div class="relative grid md:grid-cols-3 gap-12 stagger-reveal">
                     <!-- Connecting Line (Desktop) -->
                     <div
-                        class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-200 dark:bg-gray-700 -z-10">
+                        class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-200 -z-10">
                     </div>
 
                     <div class="relative text-center scroll-reveal group" style="--delay: 0s">
                         <div
-                            class="w-24 h-24 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-8 shadow-theme-sm border-[6px] border-gray-50 dark:border-gray-900 group-hover:scale-110 transition-transform duration-500">
+                            class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-theme-sm border-[6px] border-gray-50 group-hover:scale-110 transition-transform duration-500">
                             <span class="text-4xl font-bold text-primary-600">1</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Cari & Filter</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed px-4">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Cari & Filter</h3>
+                        <p class="text-gray-600 leading-relaxed px-4">
                             Gunakan pencarian pintar kami untuk menemukan kos yang sesuai dengan budget dan
                             preferensi lokasi Anda.
                         </p>
@@ -634,12 +677,12 @@ const organizationStructuredData = computed(() => {
 
                     <div class="relative text-center scroll-reveal group" style="--delay: 0.2s">
                         <div
-                            class="w-24 h-24 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-8 shadow-theme-sm border-[6px] border-gray-50 dark:border-gray-900 group-hover:scale-110 transition-transform duration-500">
+                            class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-theme-sm border-[6px] border-gray-50 group-hover:scale-110 transition-transform duration-500">
                             <span class="text-4xl font-bold text-primary-600">2</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Survey & Booking
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Survey & Booking
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed px-4">
+                        <p class="text-gray-600 leading-relaxed px-4">
                             Lihat detail kos, foto, dan video. Jika cocok, langsung ajukan survey atau
                             booking
                             secara online.
@@ -648,11 +691,11 @@ const organizationStructuredData = computed(() => {
 
                     <div class="relative text-center scroll-reveal group" style="--delay: 0.4s">
                         <div
-                            class="w-24 h-24 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-8 shadow-theme-sm border-[6px] border-gray-50 dark:border-gray-900 group-hover:scale-110 transition-transform duration-500">
+                            class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-theme-sm border-[6px] border-gray-50 group-hover:scale-110 transition-transform duration-500">
                             <span class="text-4xl font-bold text-primary-600">3</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Deal & Huni</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed px-4">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Deal & Huni</h3>
+                        <p class="text-gray-600 leading-relaxed px-4">
                             Lakukan pembayaran aman lewat platform, dapatkan konfirmasi, dan kos siap untuk
                             Anda
                             huni.
@@ -663,48 +706,48 @@ const organizationStructuredData = computed(() => {
         </section>
 
         <!-- FAQ Section -->
-        <section id="faq" class="py-24 bg-white dark:bg-gray-900 scroll-mt-20">
+        <section id="faq" class="py-24 bg-white scroll-mt-20">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16 scroll-reveal stagger-reveal">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                         Pertanyaan Umum
                     </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400">
+                    <p class="text-lg text-gray-600 ">
                         Kami rangkum beberapa hal yang sering ditanyakan pengguna.
                     </p>
                 </div>
 
                 <div class="space-y-6 stagger-reveal">
-                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors scroll-reveal"
+                    <div class="bg-gray-50 rounded-2xl p-8 hover:bg-gray-100 :bg-gray-750 transition-colors scroll-reveal"
                         style="--delay: 0s">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                        <h3 class="text-lg font-bold text-gray-900 mb-3">
                             Apakah ada biaya admin saat booking?
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Tidak, Tharahub 100% bebas biaya admin untuk penyewa. Harga yang tertera adalah
+                        <p class="text-gray-600 leading-relaxed">
+                            Tidak, Kostmates 100% bebas biaya admin untuk penyewa. Harga yang tertera adalah
                             harga
                             murni dari pemilik kos tanpa markup tersembunyi.
                         </p>
                     </div>
 
-                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors scroll-reveal"
+                    <div class="bg-gray-50 rounded-2xl p-8 hover:bg-gray-100 :bg-gray-750 transition-colors scroll-reveal"
                         style="--delay: 0.1s">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                        <h3 class="text-lg font-bold text-gray-900 mb-3">
                             Bagaimana sistem pembayarannya?
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed">
                             Kami mendukung berbagai metode pembayaran mulai dari Transfer Bank, E-Wallet
                             (OVO,
                             GoPay, Dana), hingga kartu kredit untuk memudahkan transaksi Anda.
                         </p>
                     </div>
 
-                    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors scroll-reveal"
+                    <div class="bg-gray-50 rounded-2xl p-8 hover:bg-gray-100 :bg-gray-750 transition-colors scroll-reveal"
                         style="--delay: 0.2s">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">
+                        <h3 class="text-lg font-bold text-gray-900 mb-3">
                             Apakah uang bisa kembali jika batal?
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p class="text-gray-600 leading-relaxed">
                             Kebijakan refund bergantung pada aturan masing-masing pemilik kos yang tertera
                             di
                             halaman detail. Namun, kami akan membantu mediasi jika terjadi kendala.
@@ -735,7 +778,7 @@ const organizationStructuredData = computed(() => {
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center stagger-reveal">
                     <Link v-if="canRegister" :href="route('register')"
-                        class="btn-premium px-10 py-4 text-lg font-bold bg-white text-primary-700 rounded-xl shadow-xl scroll-reveal" style="--delay: 0.1s">
+                        class="btn-premium px-10 py-4 text-lg font-bold bg-white text-primary-700 rounded-full shadow-xl scroll-reveal" style="--delay: 0.1s">
                         Mulai Cari Gratis
                     </Link>
                     <Link v-if="canLogin" :href="route('login')"
@@ -768,51 +811,17 @@ const organizationStructuredData = computed(() => {
     opacity: 0;
     filter: blur(8px);
     transform: translateY(20px) scale(0.98);
-    transition:
-        opacity 1.2s var(--ease-premium),
-        transform 1.2s var(--ease-premium),
-        filter 1.2s var(--ease-premium);
-    transition-delay: var(--delay, 0s);
-    will-change: transform, opacity, filter;
-}
-
-.scroll-reveal.animate-reveal {
-    opacity: 1;
-    filter: blur(0);
-    transform: translateY(0) scale(1);
 }
 
 /* Staggered Children Logic */
 .stagger-reveal > * {
     opacity: 0;
     transform: translateY(15px);
-    transition: opacity 1s var(--ease-premium), transform 1s var(--ease-premium);
 }
 
-.animate-reveal.stagger-reveal > *:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
-.animate-reveal.stagger-reveal > *:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
-.animate-reveal.stagger-reveal > *:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
-.animate-reveal.stagger-reveal > *:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
-
-/* Hero Section Entrance - Premium */
-@keyframes heroPremiumEntrance {
-    from {
-        opacity: 0;
-        filter: blur(12px);
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        filter: blur(0);
-        transform: translateY(0) scale(1);
-    }
-}
-
-.animate-fade-in,
-.animate-slide-in-left,
 .animate-slide-in-right {
-    animation: heroPremiumEntrance 1.4s var(--ease-premium) forwards;
-    animation-delay: var(--delay, 0.5s);
+    opacity: 0;
+    transform: translateX(50px);
 }
 
 /* Interactive Elements - Magnetic Feel */

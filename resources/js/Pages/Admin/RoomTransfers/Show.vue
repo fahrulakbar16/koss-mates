@@ -14,7 +14,7 @@
                         <span :class="{
                             'bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-800': transfer.status === 'pending',
                             'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800': transfer.status === 'approved',
-                            'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800': transfer.status === 'rejected',
+                            'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 border border-primary-200 dark:border-primary-800': transfer.status === 'rejected',
                         }" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                             {{ transfer.status }}
                         </span>
@@ -189,7 +189,7 @@
                                 Setujui Permintaan
                             </button>
                             <button @click="openRejectModal" :disabled="processing"
-                                class="w-full flex justify-center items-center px-4 py-3 bg-white text-red-600 border-2 border-red-50 hover:bg-red-50 hover:border-red-100 dark:bg-gray-800 dark:text-red-400 dark:border-red-900/30 dark:hover:bg-red-900/20 font-bold rounded-xl disabled:opacity-50 transition-all active:scale-[0.98]">
+                                class="w-full flex justify-center items-center px-4 py-3 bg-white text-primary-600 border-2 border-primary-50 hover:bg-primary-50 hover:border-primary-100 dark:bg-gray-800 dark:text-primary-400 dark:border-primary-900/30 dark:hover:bg-primary-900/20 font-bold rounded-xl disabled:opacity-50 transition-all active:scale-[0.98]">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M6 18L18 6M6 6l12 12" />
@@ -214,8 +214,8 @@
         <div v-if="showRejectModal"
             class="fixed inset-0 z-50 overflow-y-auto bg-gray-900/60 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300">
             <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 max-w-md w-full p-8 transform transition-all scale-100">
-                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-50 dark:bg-red-900/30 mb-6 border border-red-100 dark:border-red-800">
-                    <svg class="h-8 w-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-primary-50 dark:bg-primary-900/30 mb-6 border border-primary-100 dark:border-primary-800">
+                    <svg class="h-8 w-8 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                 </div>
@@ -235,7 +235,7 @@
                         Batal
                     </button>
                     <button @click="confirmReject" :disabled="processing"
-                        class="w-full px-4 py-3 font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 disabled:opacity-50 shadow-sm hover:shadow-red-600/20 hover:shadow-md transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900">
+                        class="w-full px-4 py-3 font-bold text-white bg-primary-600 rounded-xl hover:bg-primary-700 disabled:opacity-50 shadow-sm hover:shadow-primary-600/20 hover:shadow-md transition-all active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
                         {{ processing ? 'Memproses...' : 'Ya, Tolak' }}
                     </button>
                 </div>

@@ -1,0 +1,1 @@
+import{_ as a}from"./FlashMessage-D00S9Q3B.js";import{d as s,o,a as r,b as t,r as n}from"./app-DX8U9aMC.js";const c={class:"min-h-screen"},d={__name:"FullScreenLayout",setup(_){return(e,l)=>(o(),s("div",c,[r("main",null,[t(a),n(e.$slots,"default")])]))}};export{d as _};

@@ -33,10 +33,10 @@ const close = () => {
         <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
             <div class="sm:flex sm:items-start">
                 <div
-                    class="flex justify-center items-center mx-auto bg-red-100 rounded-full shrink-0 size-12 sm:mx-0 sm:size-10"
+                    class="flex justify-center items-center mx-auto bg-primary-100 rounded-full shrink-0 size-12 sm:mx-0 sm:size-10"
                 >
                     <svg
-                        class="text-red-600 size-6"
+                        class="text-primary-600 size-6"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
