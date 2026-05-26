@@ -111,7 +111,6 @@
                     <div class="col-span-1 md:col-span-2 lg:col-span-1">
                         <Link href="/" class="flex items-center gap-3 mb-6">
                             <img src="/KosMates/Asset 2.png" alt="Kostmates Logo" class="h-10 w-auto object-contain" />
-                            <span class="text-2xl font-bold text-gray-900 ">Kostmates</span>
                         </Link>
                         <p class="text-gray-500 leading-relaxed mb-6">
                             Sahabat terbaik pencari kos di Indonesia. Aman, Mudah, dan Terpercaya sejak
