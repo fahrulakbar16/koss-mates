@@ -15,9 +15,10 @@
     <link rel="shortcut icon" href="{{ $faviconUrl }}" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=outfit:100,200,300,400,500,600,700,800,900&display=swap"
-        rel="stylesheet" />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600&display=swap">
 
     <!-- Scripts -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

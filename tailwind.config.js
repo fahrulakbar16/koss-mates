@@ -16,8 +16,9 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["inherit", ...defaultTheme.fontFamily.sans],
-                outfit: ["inherit", "sans-serif"],
+                sans: ["Inter", ...defaultTheme.fontFamily.sans],
+                inter: ["Inter", "sans-serif"],
+                clash: ["Clash Grotesk", "sans-serif"],
             },
             colors: {
                 // Primary colors (using the new KosMates blue)
