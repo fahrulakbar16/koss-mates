@@ -2,8 +2,7 @@
 
     <Head title="Dashboard" />
 
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-8 sm:py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <div class="flex flex-col gap-8 px-4 sm:px-6 lg:px-8 py-8 h-full">
             <!-- Header -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div>
@@ -20,7 +19,7 @@
         <!-- Top Metrics -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Monthly Income -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
                 <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Total Pemasukan Bulan Ini</p>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     {{ formatCurrency(metrics.monthly_income) }}
@@ -40,7 +39,7 @@
             </div>
 
             <!-- Monthly Expenses -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
                 <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Total Pengeluaran Bulan Ini</p>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     {{ formatCurrency(metrics.monthly_expenses) }}
@@ -60,7 +59,7 @@
             </div>
 
             <!-- Laba Bersih (Owner Share) -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
                 <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Laba Bersih</p>
                 <h2 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
                     {{ formatCurrency(metrics.owner_share) }}
@@ -74,7 +73,7 @@
             </div>
 
             <!-- Porsi Pengelola -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
                 <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Porsi Pengelola</p>
                 <h2 class="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
                     {{ formatCurrency(metrics.management_share) }}
@@ -88,7 +87,7 @@
             </div>
 
             <!-- Occupied Rooms -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
                 <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Kamar Terisi</p>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     {{ metrics.occupied_rooms }}/{{ metrics.total_rooms }}
@@ -102,7 +101,7 @@
             </div>
 
             <!-- New Reports -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-200 dark:border-gray-700 shadow-xl">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-md">
                 <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">Laporan Baru</p>
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     {{ metrics.new_reports }} Laporan
@@ -121,7 +120,7 @@
             <div class="lg:col-span-8">
                 <!-- Transactions -->
                 <div
-                    class="bg-white h-full dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden">
+                    class="bg-white h-full dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden">
                     <!-- Header with Tabs -->
                     <div
                         class="p-6 sm:p-8 border-b border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -212,7 +211,7 @@
             <div class="lg:col-span-4">
                 <!-- Boarding House Status -->
                 <div
-                    class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden text-center lg:text-left h-full">
+                    class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden text-center lg:text-left h-full">
                     <div class="p-6 sm:p-8 border-b border-gray-100 dark:border-gray-700">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white">Status Unit</h3>
                     </div>
@@ -272,7 +271,7 @@
             <!-- Left Column: Reports (Span 8) -->
             <div class="lg:col-span-8">
                 <!-- Reports & Requests -->
-                <div class="bg-white h-full dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden h-full">
+                <div class="bg-white h-full dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden h-full">
                     <div class="p-6 sm:p-8 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white">Laporan & Permintaan</h3>
                         <Link v-if="can('users.view')" :href="route('admin.damage-reports.index')"
@@ -327,7 +326,7 @@
             <div class="lg:col-span-4">
                 <!-- Activity Logs -->
                 <div
-                    class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden h-full">
+                    class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-xl transition-all hover:shadow-2xl overflow-hidden h-full">
                     <div class="p-6 sm:p-8 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white">Aktivitas</h3>
                         <Link v-if="can('users.view')" :href="route('activity-logs.index')"
@@ -371,7 +370,6 @@
             </div>
         </div>
     </div>
-</div>
 </template>
 
 <script setup>
