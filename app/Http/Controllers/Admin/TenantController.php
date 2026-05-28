@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateTenantRequest;
 use App\Http\Resources\Tenant\TenantResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TenantController extends Controller
@@ -52,6 +53,7 @@ class TenantController extends Controller
      */
     public function show($id)
     {
+        $viewer = Auth::user();
         $tenant = User::with([
             'tenant',
             'rooms' => function ($query) {
@@ -65,6 +67,17 @@ class TenantController extends Controller
             }
         ])->findOrFail($id);
 
+        if ($viewer->hasRole('Pengelola')) {
+            $belongsToViewer = $tenant->rooms()
+                ->whereHas('room.boardingHouse', fn($q) => $q->where('pengelola_id', $viewer->id))
+                ->exists();
+            abort_unless($belongsToViewer, 403, 'Anda tidak memiliki akses ke data penyewa ini');
+        } elseif ($viewer->hasRole('Pemilik')) {
+            $belongsToViewer = $tenant->rooms()
+                ->whereHas('room.boardingHouse', fn($q) => $q->where('owner_id', $viewer->id))
+                ->exists();
+            abort_unless($belongsToViewer, 403, 'Anda tidak memiliki akses ke data penyewa ini');
+        }
 
         return Inertia::render('Admin/Tenants/Show', [
             'tenant' => [

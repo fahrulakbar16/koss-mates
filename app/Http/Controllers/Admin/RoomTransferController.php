@@ -7,17 +7,26 @@ use App\Http\Requests\Admin\RoomTransferActionRequest;
 use App\Http\Resources\RoomTransferResource;
 use App\Models\RoomTransfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class RoomTransferController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $query = RoomTransfer::with([
             'userRoom.user',
             'userRoom.room', // Old room
             'room.boardingHouse' // New room
         ]);
+
+        if ($user->hasRole('Pengelola')) {
+            $query->whereHas('room.boardingHouse', fn($q) => $q->where('pengelola_id', $user->id));
+        } elseif ($user->hasRole('Pemilik')) {
+            $query->whereHas('room.boardingHouse', fn($q) => $q->where('owner_id', $user->id));
+        }
 
         if ($request->filled('search')) {
             $search = $request->input('search');

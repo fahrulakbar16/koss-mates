@@ -35,11 +35,10 @@ class GetTenantsWithRooms
             });
         }
 
-        // Filter for Pemilik
-        if ($user && $user->hasRole('Pemilik')) {
-            $query->whereHas('rooms.room.boardingHouse', function ($q) use ($user) {
-                $q->where('owner_id', $user->id);
-            });
+        if ($user && $user->hasRole('Pengelola')) {
+            $query->whereHas('rooms.room.boardingHouse', fn($q) => $q->where('pengelola_id', $user->id));
+        } elseif ($user && $user->hasRole('Pemilik')) {
+            $query->whereHas('rooms.room.boardingHouse', fn($q) => $q->where('owner_id', $user->id));
         }
 
         return $query->orderBy('name')
