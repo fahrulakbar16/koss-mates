@@ -54,7 +54,7 @@ class BoardingHouseController extends Controller
         }
 
         Log::info('Data boarding house', $data);
-        app(StoreBoardingHouseAction::class)->execute($data);
+        app(StoreBoardingHouseAction::class)->execute($data, auth()->user());
 
         return $this->apiResponse(null, 'Boarding house berhasil ditambahkan');
     }

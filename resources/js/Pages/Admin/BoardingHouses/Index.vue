@@ -261,7 +261,7 @@ const { can } = useAuth();
 const breadcrumbs = [{ label: "Properti" }, { label: "Boarding House" }];
 
 const search = ref(props.search || "");
-const clusterFilter = ref(props.cluster_id || "");
+const clusterFilter = ref(props.cluster_id ? Number(props.cluster_id) : "");
 const genderFilter = ref(props.gender || "");
 
 let timeout = null;

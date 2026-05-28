@@ -16,7 +16,6 @@ class UpdateUserAction
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'status' => $data['status'],
         ]);
 
         // Sync role

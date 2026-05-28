@@ -86,8 +86,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::post('/bookings', [\App\Http\Controllers\Public\BookingController::class, 'store'])->name('bookings.store')->middleware('auth');
 Route::post('/midtrans/callback', [\App\Http\Controllers\Public\PaymentCallbackController::class, 'handle'])->name('midtrans.callback');
 
-// Roles
-Route::prefix('roles')->group(function () {
+// Roles — Superadmin only
+Route::prefix('roles')->middleware(['auth', 'role:Superadmin'])->group(function () {
     Route::get('/', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
     Route::post('/', [RoleController::class, 'store'])->name('roles.store');
@@ -98,8 +98,8 @@ Route::prefix('roles')->group(function () {
     Route::get('/{role}/stats', [RoleController::class, 'stats'])->name('roles.stats');
 });
 
-// Users
-Route::prefix('users')->group(function () {
+// Users — Superadmin only
+Route::prefix('users')->middleware(['auth', 'role:Superadmin'])->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('users.index');
     Route::get('/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/', [UserController::class, 'store'])->name('users.store');
@@ -109,15 +109,16 @@ Route::prefix('users')->group(function () {
     Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
-// Settings
-Route::prefix('settings')->group(function () {
+// Settings — Superadmin only
+Route::prefix('settings')->middleware(['auth', 'role:Superadmin'])->group(function () {
     Route::get('/', [SettingController::class, 'index'])->name('settings.index');
     Route::put('/', [SettingController::class, 'update'])->name('settings.update');
     Route::post('/update-multiple', [SettingController::class, 'updateMultiple'])->name('settings.update-multiple');
 });
 
 // WhatsApp Configuration
-Route::prefix('whatsapp-config')->middleware(['auth'])->group(function () {
+// WhatsApp Config — Superadmin only
+Route::prefix('whatsapp-config')->middleware(['auth', 'role:Superadmin'])->group(function () {
     Route::get('/', [\App\Http\Controllers\WhatsAppConfigController::class, 'index'])->name('whatsapp-config.index');
     Route::get('/status', [\App\Http\Controllers\WhatsAppConfigController::class, 'getStatus'])->name('whatsapp-config.status');
     Route::post('/qr-code', [\App\Http\Controllers\WhatsAppConfigController::class, 'getQRCode'])->name('whatsapp-config.qr-code');

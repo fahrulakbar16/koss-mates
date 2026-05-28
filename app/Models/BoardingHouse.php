@@ -16,6 +16,7 @@ class BoardingHouse extends Model
 
     protected $fillable = [
         'owner_id',
+        'pengelola_id',
         'cluster_id',
         'thumbnail',
         'number',
@@ -41,6 +42,11 @@ class BoardingHouse extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function pengelola(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'pengelola_id');
     }
 
     /**

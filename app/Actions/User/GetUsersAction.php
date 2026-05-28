@@ -17,12 +17,7 @@ class GetUsersAction
         $sortDirection = $request->get('sortDirection', 'desc');
         $search = $request->input('search');
         $role = $request->input('role');
-        $status = $request->input('status');
         $perPage = $request->input('per_page', 10);
-
-        if ($status == "all") {
-            $status = null;
-        }
 
         $users = User::with('roles')
             ->when($search, function ($query, $search) {
@@ -36,9 +31,6 @@ class GetUsersAction
                 $query->whereHas('roles', function ($q) use ($role) {
                     $q->where('name', $role);
                 });
-            })
-            ->when($status, function ($query, $status) {
-                $query->where('status', $status);
             })
             ->orderBy($sortBy, $sortDirection)
             ->paginate($perPage)

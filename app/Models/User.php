@@ -107,11 +107,27 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all notifications for the user
+     * Boarding houses owned by this user (as Pemilik)
      */
     public function boardingHouses(): HasMany
     {
         return $this->hasMany(BoardingHouse::class, 'owner_id');
+    }
+
+    /**
+     * Boarding houses managed by this user (as Pengelola)
+     */
+    public function managedBoardingHouses(): HasMany
+    {
+        return $this->hasMany(BoardingHouse::class, 'pengelola_id');
+    }
+
+    /**
+     * Clusters managed by this user (as Pengelola)
+     */
+    public function managedClusters(): HasMany
+    {
+        return $this->hasMany(\App\Models\Cluster::class, 'pengelola_id');
     }
 
     /**

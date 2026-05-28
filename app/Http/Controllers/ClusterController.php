@@ -63,7 +63,7 @@ class ClusterController extends Controller
     {
         // abort_unless(Gate::allows('clusters.create'), 403, 'Anda tidak memiliki akses untuk menambah cluster');
 
-        app(StoreClusterAction::class)->execute($request->validated());
+        app(StoreClusterAction::class)->execute($request->validated(), Auth::user());
 
         return redirect()->route('dashboard')->with('success', 'Cluster berhasil ditambahkan');
     }

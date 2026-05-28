@@ -22,6 +22,18 @@ use Inertia\Inertia;
 class BoardingHouseController extends Controller
 {
     /**
+     * Clusters visible to the current user.
+     */
+    private function scopedClusters()
+    {
+        $user = Auth::user();
+        return Cluster::select('id', 'name')
+            ->when($user->hasRole('Pengelola'), fn($q) => $q->where('pengelola_id', $user->id))
+            ->when($user->hasRole('Pemilik'), fn($q) => $q->whereHas('boardingHouses', fn($q2) => $q2->where('owner_id', $user->id)))
+            ->get();
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
@@ -34,7 +46,7 @@ class BoardingHouseController extends Controller
 
         $boardingHouses = app(GetBoardingHousePaginate::class)->execute($request->all() + ['paginate' => true], Auth::user());
 
-        $clusters = Cluster::all();
+        $clusters = $this->scopedClusters();
         $owners = User::whereHas('roles', function ($query) {
             $query->where('name', '!=', 'Penyewa');
         })->get();
@@ -56,7 +68,7 @@ class BoardingHouseController extends Controller
     {
         // abort_unless(Gate::allows('boarding_houses.create'), 403, 'Anda tidak memiliki akses untuk menambah boarding house');
 
-        $clusters = Cluster::all();
+        $clusters = $this->scopedClusters();
         $owners = User::whereHas('roles', function ($query) {
             $query->where('name', 'Pemilik');
         })->get();
@@ -78,7 +90,7 @@ class BoardingHouseController extends Controller
         // abort_unless(Gate::allows('boarding_houses.edit'), 403, 'Anda tidak memiliki akses untuk mengubah boarding house');
 
         $boardingHouse->load('cluster', 'owner');
-        $clusters = Cluster::all();
+        $clusters = $this->scopedClusters();
         $owners = User::whereHas('roles', function ($query) {
             $query->where('name', '!=', 'Penyewa');
         })->get();
@@ -103,7 +115,7 @@ class BoardingHouseController extends Controller
             $data['thumbnail'] = $request->file('thumbnail')->store('boarding-houses', 'public');
         }
 
-        $boardingHouse = app(StoreBoardingHouseAction::class)->execute($data);
+        $boardingHouse = app(StoreBoardingHouseAction::class)->execute($data, Auth::user());
 
         LogActivityHelper::addToLog('Menambah kos: ' . $boardingHouse->name, $data);
 

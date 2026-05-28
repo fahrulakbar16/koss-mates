@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -15,7 +16,13 @@ class Cluster extends Model
         'name',
         'description',
         'address',
+        'pengelola_id',
     ];
+
+    public function pengelola(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'pengelola_id');
+    }
 
     /**
      * Get all boarding houses in this cluster

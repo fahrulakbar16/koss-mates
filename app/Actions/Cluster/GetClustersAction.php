@@ -17,11 +17,15 @@ class GetClustersAction
         $perPage = $request->input('per_page', 10);
         $cursor = $request->input('cursor');
         $isPemilik = $user->hasRole('Pemilik');
+        $isPengelola = $user->hasRole('Pengelola');
 
-        $query = Cluster::with(['boardingHouses' => function ($query) use ($isPemilik, $user) {
+        $query = Cluster::with(['boardingHouses' => function ($query) use ($isPemilik, $isPengelola, $user) {
             $query->with('images', 'owner')
                 ->when($isPemilik, function ($query) use ($user) {
                     $query->where('owner_id', $user->id);
+                })
+                ->when($isPengelola, function ($query) use ($user) {
+                    $query->where('pengelola_id', $user->id);
                 })
                 ->withCount('rooms')
                 ->orderBy('created_at', 'desc');
@@ -30,6 +34,9 @@ class GetClustersAction
                 $query->whereHas('boardingHouses', function ($query) use ($user) {
                     $query->where('owner_id', $user->id);
                 });
+            })
+            ->when($isPengelola, function ($query) use ($user) {
+                $query->where('pengelola_id', $user->id);
             })
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%")

@@ -18,12 +18,6 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth:sanctum',
-        ];
-    }
     /**
      * Display a listing of the resource.
      */
@@ -35,7 +29,6 @@ class UserController extends Controller
         $sortDirection = $request->get('sortDirection', 'desc');
         $search = $request->input('search');
         $role = $request->input('role');
-        $status = $request->input('status');
 
         $result = app(GetUsersAction::class)->execute($request);
         $users = $result['users'];
@@ -47,7 +40,6 @@ class UserController extends Controller
             'roles' => $roles,
             'search' => $search,
             'role' => $role,
-            'status' => $status,
             'sortBy' => $sortBy,
             'sortDirection' => $sortDirection,
         ]);

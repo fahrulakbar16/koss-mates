@@ -107,11 +107,16 @@ class HandleInertiaRequests extends Middleware
             'midtrans_client_key' => config('services.midtrans.client_key'),
             'midtrans_is_production' => (bool) config('services.midtrans.is_production'),
             'clusters' => Auth::check() && Auth::user()->hasAnyRole(['Superadmin', 'Pengelola', 'Pemilik'])
-                ? Cluster::select('id', 'name')->when(Auth::user()->hasRole('Pemilik'), function ($query) {
-                    return $query->whereHas('boardingHouses', function ($query) {
-                        $query->where('owner_id', Auth::id());
-                    });
-                })->get()
+                ? Cluster::select('id', 'name')
+                    ->when(Auth::user()->hasRole('Pemilik'), function ($query) {
+                        return $query->whereHas('boardingHouses', function ($query) {
+                            $query->where('owner_id', Auth::id());
+                        });
+                    })
+                    ->when(Auth::user()->hasRole('Pengelola'), function ($query) {
+                        return $query->where('pengelola_id', Auth::id());
+                    })
+                    ->get()
                 : [],
             'pendingCounts' => $this->getPendingCounts($request),
         ]);
@@ -149,7 +154,6 @@ class HandleInertiaRequests extends Middleware
         }
 
         $clusterId = $request->query('cluster_id');
-        // ... existing admin counts ...
 
         // Check-in Requests
         $counts['checkin_requests'] = UserRooms::where('status', 'checkin_open')
@@ -158,40 +162,48 @@ class HandleInertiaRequests extends Middleware
             ->whereHas('room.boardingHouse', function ($q) use ($user) {
                 if ($user->hasRole('Pemilik')) {
                     $q->where('owner_id', $user->id);
+                } elseif ($user->hasRole('Pengelola')) {
+                    $q->where('pengelola_id', $user->id);
                 }
             })->count();
 
         // Room Transfer Requests
         $counts['room_transfers'] = RoomTransfer::where('status', 'pending')
-            ->whereHas('room.boardingHouse', function ($q) use ($clusterId, $user) {
+            ->whereHas('room.boardingHouse', function ($q) use ($user) {
                 if ($user->hasRole('Pemilik')) {
                     $q->where('owner_id', $user->id);
+                } elseif ($user->hasRole('Pengelola')) {
+                    $q->where('pengelola_id', $user->id);
                 }
             })->count();
 
         // Damage Reports
         $counts['damage_reports'] = DamageReport::where('status', 'pending')
-            ->whereHas('userRoom.room.boardingHouse', function ($q) use ($clusterId, $user) {
-
+            ->whereHas('userRoom.room.boardingHouse', function ($q) use ($user) {
                 if ($user->hasRole('Pemilik')) {
                     $q->where('owner_id', $user->id);
+                } elseif ($user->hasRole('Pengelola')) {
+                    $q->where('pengelola_id', $user->id);
                 }
             })->count();
 
         // Refunds
         $counts['refunds'] = Refund::whereIn('status', ['pending', 'process', 'menunggu konfirmasi'])
-            ->whereHas('boardingHouse', function ($q) use ($clusterId, $user) {
-
+            ->whereHas('boardingHouse', function ($q) use ($user) {
                 if ($user->hasRole('Pemilik')) {
                     $q->where('owner_id', $user->id);
+                } elseif ($user->hasRole('Pengelola')) {
+                    $q->where('pengelola_id', $user->id);
                 }
             })->count();
 
         // Unpaid Tenants
         $counts['unpaid_tenants'] = \App\Models\Transaction::whereIn('status', ['pending', 'incomplete'])
-            ->whereHas('userRoom.boardingHouse', function ($q) use ($clusterId, $user) {
+            ->whereHas('userRoom.boardingHouse', function ($q) use ($user) {
                 if ($user->hasRole('Pemilik')) {
                     $q->where('owner_id', $user->id);
+                } elseif ($user->hasRole('Pengelola')) {
+                    $q->where('pengelola_id', $user->id);
                 }
             })
             ->distinct('user_id')
