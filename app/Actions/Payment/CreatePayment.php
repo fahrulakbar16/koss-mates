@@ -48,9 +48,9 @@ class CreatePayment
             ]);
 
             // Generate Midtrans Snap Token
-            $snapToken = $this->generateSnapToken($payment);
+            [$snapToken, $orderId] = $this->generateSnapToken($payment);
 
-            $payment->update(['snap_token' => $snapToken]);
+            $payment->update(['snap_token' => $snapToken, 'order_id' => $orderId]);
 
             DB::commit();
 
@@ -68,12 +68,13 @@ class CreatePayment
         }
     }
 
-    private function generateSnapToken(payment $payment)
+    private function generateSnapToken(payment $payment): array
     {
         \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
         \Midtrans\Config::$isProduction = config('services.midtrans.is_production', false);
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
+        \Midtrans\Config::$overrideNotifUrl = route('midtrans.callback');
 
         $orderId = 'PAY-' . $payment->id . '-' . time();
 
@@ -103,6 +104,6 @@ class CreatePayment
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-        return $snapToken;
+        return [$snapToken, $orderId];
     }
 }
