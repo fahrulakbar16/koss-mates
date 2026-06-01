@@ -1,1 +1,0 @@
-import{y as s,h as t,e as a,J as r,g as m}from"./app-oCWtS4Xf.js";const o={key:0},c={class:"text-sm text-primary-600 dark:text-primary-400"},y={__name:"InputError",props:{message:[String,Array]},setup(e){return(n,i)=>e.message?(s(),t("div",o,[a("p",c,r(Array.isArray(e.message)?e.message[0]:e.message),1)])):m("",!0)}};export{y as _};
