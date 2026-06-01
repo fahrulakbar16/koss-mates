@@ -18,6 +18,7 @@ class payment extends Model
         'payment_date',
         'proof',
         'snap_token',
+        'order_id',
         'gateway_response',
     ];
 

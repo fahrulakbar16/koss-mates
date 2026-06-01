@@ -8,6 +8,7 @@ use App\Http\Requests\DamageReport\UpdateDamageReportRequest;
 use App\Http\Resources\DamageReport\DamageReportResource;
 use App\Models\DamageReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -18,8 +19,16 @@ class DamageReportController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $query = DamageReport::with(['user', 'userRoom.room.boardingHouse'])
             ->orderBy('created_at', 'desc');
+
+        if ($user->hasRole('Pengelola')) {
+            $query->whereHas('userRoom.room.boardingHouse', fn($q) => $q->where('pengelola_id', $user->id));
+        } elseif ($user->hasRole('Pemilik')) {
+            $query->whereHas('userRoom.room.boardingHouse', fn($q) => $q->where('owner_id', $user->id));
+        }
 
         // Filter by status if provided
         if ($request->has('status') && $request->status !== 'all') {

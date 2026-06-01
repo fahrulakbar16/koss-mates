@@ -84,7 +84,7 @@ const page = usePage();
 
 // Watch flash messages
 watch(
-    () => page.props.flash.success,
+    () => page.props.flash?.success,
     (message) => {
         if (message) {
             successMessage.value = message;
@@ -95,7 +95,7 @@ watch(
 );
 
 watch(
-    () => page.props.flash.error,
+    () => page.props.flash?.error,
     (message) => {
         if (message) {
             errorMessage.value = message;

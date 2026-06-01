@@ -26,7 +26,6 @@ class StoreUserRequest extends FormRequest
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'role' => ['required', 'string', 'exists:roles,name'],
-            'status' => ['required', 'string', 'in:active,inactive,pending'],
         ];
     }
 
@@ -46,8 +45,6 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'Email sudah digunakan.',
             'role.required' => 'Role wajib dipilih.',
             'role.exists' => 'Role yang dipilih tidak valid.',
-            'status.required' => 'Status wajib dipilih.',
-            'status.in' => 'Status harus salah satu dari: active, inactive, pending.',
         ];
     }
 }

@@ -504,7 +504,6 @@ onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside);
 });
 
-console.log("=== PAGE PROPS ===", page.props.settings);
 // Website settings
 const logoUrl = computed(() => page.props.settings?.logo_main_url || page.props.settings?.logo[1].value || '/images/logo/logo.png');
 // const siteName = computed(() => page.props.settings?.site_name || page.props.settings?.general[1].value || 'Starter Project');
@@ -526,12 +525,7 @@ const pendingCount = computed(() => pendingSubmissions.value.total || 0);
 
 // Helper function to get pending count by submission type
 function getPendingCountByType(type) {
-    const count = pendingSubmissions.value.by_type?.[type] || 0;
-    console.log(
-        `getPendingCountByType(${type}) = ${count}`,
-        pendingSubmissions.value.by_type
-    );
-    return count;
+    return pendingSubmissions.value.by_type?.[type] || 0;
 }
 
 const pendingCounts = computed(() => page.props.pendingCounts || {});
@@ -609,7 +603,6 @@ const { isExpanded, isMobileOpen, isHovered, openSubmenu } = useSidebar();
 // Menu untuk Penyewa
 const penyewaMenuGroups = computed(() => {
     const user = page.props.auth?.user;
-    console.log(user.tenant);
     return [
     {
         title: "",
@@ -658,60 +651,96 @@ const penyewaMenuGroups = computed(() => {
     },
 ]});
 
-// Menu untuk Admin/Non-Penyewa
+const sharedAdminItems = [
+    {
+        icon: GridIcon,
+        name: "Dashboard",
+        path: "/dashboard",
+    },
+    {
+        icon: MoneyIcon,
+        name: "Transaksi",
+        path: "/admin/transactions",
+    },
+    {
+        icon: HomeIcon,
+        name: "Properti",
+        path: "/boarding-houses",
+    },
+    {
+        icon: ChecklistIcon,
+        name: "Permintaan Check-in",
+        path: "/admin/checkin-requests",
+    },
+    {
+        icon: ArrowCircleIcon,
+        name: "Permintaan Pindah Kamar",
+        path: "/admin/room-transfers",
+    },
+    {
+        icon: WarningIcon,
+        name: "Laporan Kerusakan",
+        path: "/admin/damage-reports",
+    },
+    {
+        icon: UserGroupIcon,
+        name: "Akun Penyewa",
+        path: "/admin/tenants",
+    },
+    {
+        icon: UserGroupIcon,
+        name: "Akun Pemilik",
+        path: "/admin/owners",
+    },
+    {
+        icon: MoneyIcon,
+        name: "Pengembalian Dana",
+        path: "/admin/refunds",
+    },
+];
+
+// Menu untuk Pengelola — tanpa akses Konfigurasi WA, Settings, Jabatan
 const pengelolaMenuGroups = [
     {
         title: "",
+        items: sharedAdminItems,
+    },
+    {
+        title: "Laporan",
         items: [
             {
-                icon: GridIcon,
-                name: "Dashboard",
-                path: "/dashboard",
+                icon: MoneyIcon,
+                name: "Laporan Keuangan",
+                path: "/admin/financial-reports",
             },
+        ],
+    },
+];
+
+// Menu untuk Superadmin — semua fitur + Manajemen Pengelola + Konfigurasi
+const superadminMenuGroups = [
+    {
+        title: "",
+        items: sharedAdminItems,
+    },
+    {
+        title: "Laporan",
+        items: [
             {
                 icon: MoneyIcon,
-                name: "Transaksi",
-                path: "/admin/transactions",
-            },
-            {
-                icon: HomeIcon,
-                name: "Properti",
-                path: "/boarding-houses",
-            },
-            {
-                icon: ChecklistIcon,
-                name: "Permintaan Check-in",
-                path: "/admin/checkin-requests",
-            },
-            {
-                icon: ArrowCircleIcon,
-                name: "Permintaan Pindah Kamar",
-                path: "/admin/room-transfers",
-            },
-            {
-                icon: WarningIcon,
-                name: "Laporan Kerusakan",
-                path: "/admin/damage-reports",
-            },
-            {
-                icon: UserGroupIcon,
-                name: "Akun Penyewa",
-                path: "/admin/tenants",
-            }, {
-                icon: UserGroupIcon,
-                name: "Akun Pemilik",
-                path: "/admin/owners",
-            },
-            {
-                icon: MoneyIcon,
-                name: "Pengembalian Dana",
-                path: "/admin/refunds",
+                name: "Laporan Keuangan",
+                path: "/admin/financial-reports",
             },
         ],
     },
     {
         title: "Konfigurasi",
         items: [
+            {
+                icon: UserGroupIcon,
+                name: "Manajemen Pengelola",
+                path: "/users?role=Pengelola",
+            },
             {
                 icon: ChatIcon,
                 name: "Konfigurasi WA",
@@ -721,16 +750,6 @@ const pengelolaMenuGroups = [
                 icon: SettingIcon,
                 name: "Pengaturan Website",
                 path: "/settings",
-            },
-        ],
-    },
-    {
-        title: "Laporan",
-        items: [
-            {
-                icon: MoneyIcon,
-                name: "Laporan Keuangan",
-                path: "/admin/financial-reports",
             },
         ],
     },
@@ -781,6 +800,9 @@ const menuGroups = computed(() => {
     }
     if (is('Pemilik')) {
         return pemilikMenuGroups;
+    }
+    if (is('Superadmin')) {
+        return superadminMenuGroups;
     }
     return pengelolaMenuGroups;
 });

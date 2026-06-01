@@ -17,8 +17,7 @@ class StoreUserAction
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'status' => $data['status'],
-            'password' => Hash::make('password'), // Default password
+            'password' => Hash::make('password'),
         ]);
 
         // Assign role

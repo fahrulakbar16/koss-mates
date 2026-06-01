@@ -27,12 +27,12 @@ class GetDashboardMetricsAction
             $previousMonthStart = Carbon::now()->subMonth()->startOfMonth();
             $previousMonthEnd = Carbon::now()->subMonth()->endOfMonth();
 
-            // Check if user is an owner (Pemilik)
             $isPemilik = $user && $user->hasRole('Pemilik');
+            $isPengelola = $user && $user->hasRole('Pengelola');
 
-            // Get boarding house IDs for this cluster (if cluster filter is applied)
+            // Build boarding house ID scope for this user
             $boardingHouseIds = null;
-            if ($clusterId || $isPemilik) {
+            if ($clusterId || $isPemilik || $isPengelola) {
                 $query = BoardingHouse::query();
 
                 if ($clusterId) {
@@ -41,6 +41,8 @@ class GetDashboardMetricsAction
 
                 if ($isPemilik) {
                     $query->where('owner_id', $user->id);
+                } elseif ($isPengelola) {
+                    $query->where('pengelola_id', $user->id);
                 }
 
                 $boardingHouseIds = $query->pluck('id');
@@ -158,6 +160,9 @@ class GetDashboardMetricsAction
                 ->when($isPemilik, function ($query) use ($user) {
                     $query->where('owner_id', $user->id);
                 })
+                ->when($isPengelola, function ($query) use ($user) {
+                    $query->where('pengelola_id', $user->id);
+                })
                 ->get()
                 ->map(function ($bh) {
                     $totalRooms = $bh->rooms->count();
@@ -177,11 +182,16 @@ class GetDashboardMetricsAction
                 });
 
             // Clusters for filter
-            $clusters = Cluster::withCount(['boardingHouses' => function ($query) use ($user, $isPemilik) {
+            $clusters = Cluster::withCount(['boardingHouses' => function ($query) use ($user, $isPemilik, $isPengelola) {
                 if ($isPemilik) {
                     $query->where('owner_id', $user->id);
+                } elseif ($isPengelola) {
+                    $query->where('pengelola_id', $user->id);
                 }
             }])
+            ->when($isPengelola, function ($query) use ($user) {
+                $query->where('pengelola_id', $user->id);
+            })
                 ->having('boarding_houses_count', '>', 0)
                 ->get()
                 ->map(function ($cluster) {
@@ -255,7 +265,7 @@ class GetDashboardMetricsAction
             // Recent Activities
             $recentActivities = LogActivity::with('user')
                 ->latest()
-                ->when($user && !$user->hasAnyRole(['Superadmin', 'Pengelola']), function ($query) use ($user) {
+                ->when($user && !$user->hasAnyRole(['Superadmin']), function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
                 ->take(4)

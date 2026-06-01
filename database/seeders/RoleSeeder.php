@@ -13,15 +13,22 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create basic roles
         Role::firstOrCreate(['name' => 'Penyewa', 'guard_name' => 'web']);
         Role::firstOrCreate(['name' => 'Pemilik', 'guard_name' => 'web']);
-        $pengelola = Role::firstOrCreate(['name' => 'Pengelola', 'guard_name' => 'web']);
 
-        // Superadmin gets all permissions
+        // Superadmin has all permissions
         $superadmin = Role::firstOrCreate(['name' => 'Superadmin', 'guard_name' => 'web']);
         $superadmin->syncPermissions(Permission::all());
-        $pengelola->syncPermissions(Permission::all());
 
+        // Pengelola cannot manage roles, global settings, or whatsapp config
+        $superadminOnlyPermissions = [
+            'roles.view', 'roles.create', 'roles.edit', 'roles.delete',
+            'settings.view', 'settings.edit',
+            'whatsapp_config.view', 'whatsapp_config.edit',
+        ];
+        $pengelola = Role::firstOrCreate(['name' => 'Pengelola', 'guard_name' => 'web']);
+        $pengelola->syncPermissions(
+            Permission::whereNotIn('name', $superadminOnlyPermissions)->get()
+        );
     }
 }

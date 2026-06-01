@@ -37,7 +37,7 @@ class ClusterController extends Controller
      */
     public function store(StoreClusterRequest $request)
     {
-        app(StoreClusterAction::class)->execute($request->validated());
+        app(StoreClusterAction::class)->execute($request->validated(), Auth::user());
 
         return $this->apiResponse(null, 'Cluster berhasil ditambahkan');
     }

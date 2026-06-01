@@ -11,16 +11,22 @@ class GetBoardingHousePaginate
         $lat = $data['lat'] ?? null;
         $lng = $data['long'] ?? null;
         $isPemilik = $user ? $user->hasRole('Pemilik') : false;
+        $isPengelola = $user ? $user->hasRole('Pengelola') : false;
 
         $query = BoardingHouse::with(['cluster', 'owner', 'images', 'rooms.prices'])
             ->withCount(['rooms','roomsAvailable'])
             ->when($isPemilik, function ($query) use ($user) {
                 $query->where('owner_id', $user->id);
             })
+            ->when($isPengelola, function ($query) use ($user) {
+                $query->where('pengelola_id', $user->id);
+            })
             ->when($data['search'] ?? null, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('address', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('address', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%");
+                });
             })
             ->when($data['cluster_id'] ?? null, function ($query, $clusterId) {
                 $query->where('cluster_id', $clusterId);

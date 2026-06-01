@@ -29,7 +29,6 @@ class UpdateUserRequest extends FormRequest
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($userId)],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($userId)],
             'role' => ['required', 'string', 'exists:roles,name'],
-            'status' => ['required', 'string', 'in:active,inactive,pending'],
         ];
     }
 
@@ -49,8 +48,6 @@ class UpdateUserRequest extends FormRequest
             'email.unique' => 'Email sudah digunakan.',
             'role.required' => 'Role wajib dipilih.',
             'role.exists' => 'Role yang dipilih tidak valid.',
-            'status.required' => 'Status wajib dipilih.',
-            'status.in' => 'Status harus salah satu dari: active, inactive, pending.',
         ];
     }
 }
