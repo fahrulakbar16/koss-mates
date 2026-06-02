@@ -27,6 +27,7 @@ class UpdateBoardingHouseRequest extends FormRequest
 
         return [
             'owner_id' => ['required', 'exists:users,id'],
+            'pengelola_id' => ['nullable', 'exists:users,id'],
             'cluster_id' => ['nullable', 'exists:clusters,id'],
             'thumbnail' => ['nullable', 'image', 'max:2048'],
             'number' => [

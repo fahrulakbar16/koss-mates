@@ -33,9 +33,12 @@ class GetRoomTransferFormResourcesAction
                 return $userRoom;
             });
 
-        $boardingHouses = BoardingHouse::with(['rooms' => function ($query) {
-            $query->where('status', 'available')->with('prices');
-        }])->get();
+        $boardingHouseIds = $userRooms->pluck('boarding_house_id')->filter()->unique()->values()->toArray();
+
+        $boardingHouses = BoardingHouse::whereIn('id', $boardingHouseIds)
+            ->with(['rooms' => function ($query) {
+                $query->where('status', 'available')->with('prices');
+            }])->get();
 
         return [
             'userRooms' => $userRooms,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Pengelola;
 
 use App\Actions\RoomTransfer\ProcessRoomTransferAction;
+use App\Helpers\PengelolaScopeHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoomTransferActionRequest;
 use App\Http\Resources\RoomTransferResource;
@@ -19,11 +20,18 @@ class RoomTransferController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user);
+
         $query = RoomTransfer::with([
             'userRoom.user',
-            'userRoom.room', // Old room
-            'room.boardingHouse' // New room
+            'userRoom.room',
+            'room.boardingHouse'
         ]);
+
+        if ($boardingHouseIds !== null) {
+            $query->whereHas('userRoom', fn($q) => $q->whereIn('boarding_house_id', $boardingHouseIds));
+        }
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -46,11 +54,18 @@ class RoomTransferController extends Controller
      */
     public function show($id)
     {
-        $transfer = RoomTransfer::with([
+        $user = auth()->user();
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user);
+
+        $query = RoomTransfer::with([
             'userRoom.user',
-            'userRoom.room', // Old room
-            'room.boardingHouse', // New room
-        ])->findOrFail($id);
+            'userRoom.room',
+            'room.boardingHouse',
+        ]);
+        if ($boardingHouseIds !== null) {
+            $query->whereHas('userRoom', fn($q) => $q->whereIn('boarding_house_id', $boardingHouseIds));
+        }
+        $transfer = $query->findOrFail($id);
 
         return $this->apiResponse(new RoomTransferResource($transfer), 'Data Berhasil Diambil');
     }
@@ -60,7 +75,14 @@ class RoomTransferController extends Controller
      */
     public function action(RoomTransferActionRequest $request, $id)
     {
-        $transfer = RoomTransfer::findOrFail($id);
+        $user = auth()->user();
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user);
+
+        $query = RoomTransfer::query();
+        if ($boardingHouseIds !== null) {
+            $query->whereHas('userRoom', fn($q) => $q->whereIn('boarding_house_id', $boardingHouseIds));
+        }
+        $transfer = $query->findOrFail($id);
 
         if ($transfer->status !== 'pending') {
             return response()->json([

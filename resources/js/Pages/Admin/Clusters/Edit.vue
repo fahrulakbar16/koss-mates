@@ -57,6 +57,22 @@
                             </div>
                         </div>
 
+                        <div v-if="isSuperadmin" class="space-y-2">
+                            <label for="pengelola_id" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                Pengelola
+                            </label>
+                            <select id="pengelola_id" v-model="form.pengelola_id"
+                                class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500">
+                                <option value="">Tidak ada pengelola</option>
+                                <option v-for="pengelola in props.pengelolas" :key="pengelola.id" :value="pengelola.id">
+                                    {{ pengelola.name }}
+                                </option>
+                            </select>
+                            <div v-if="form.errors.pengelola_id" class="text-xs text-primary-500 mt-1 font-medium">
+                                {{ form.errors.pengelola_id }}
+                            </div>
+                        </div>
+
                         <div class="space-y-2">
                             <label for="description" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Deskripsi
@@ -99,6 +115,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import BackIcon from "@/Components/icons/BackIcon.vue";
+import { useAuth } from "@/Composables/useAuth";
 import { useForm, Head, Link } from "@inertiajs/vue3";
 
 defineOptions({
@@ -107,12 +124,17 @@ defineOptions({
 
 const props = defineProps({
     cluster: Object,
+    pengelolas: Array,
 });
+
+const { is } = useAuth();
+const isSuperadmin = is('Superadmin');
 
 const form = useForm({
     name: props.cluster.name,
     address: props.cluster.address || "",
     description: props.cluster.description || "",
+    pengelola_id: props.cluster.pengelola_id || "",
 });
 
 function updateCluster() {

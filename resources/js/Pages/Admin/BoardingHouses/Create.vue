@@ -87,6 +87,22 @@
                                     {{ form.errors.cluster_id[0] }}
                                 </div>
                             </div>
+
+                            <div v-if="isSuperadmin" class="space-y-2 md:col-span-2">
+                                <label for="pengelola_id" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                    Pengelola
+                                </label>
+                                <select id="pengelola_id" v-model="form.pengelola_id"
+                                    class="w-full px-4 py-2.5 text-sm font-medium text-gray-900 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:border-primary-500">
+                                    <option value="">Tidak ada pengelola</option>
+                                    <option v-for="pengelola in props.pengelolas" :key="pengelola.id" :value="pengelola.id">
+                                        {{ pengelola.name }}
+                                    </option>
+                                </select>
+                                <div v-if="form.errors.pengelola_id" class="text-xs text-primary-500 mt-1 font-medium">
+                                    {{ form.errors.pengelola_id[0] }}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -348,10 +364,12 @@ defineOptions({
 const props = defineProps({
     clusters: Array,
     owners: Array,
+    pengelolas: Array,
     cluster_id: String,
 });
 
-const { can } = useAuth();
+const { can, is } = useAuth();
+const isSuperadmin = is('Superadmin');
 
 const breadcrumbs = [
     { label: "Properti" },
@@ -361,6 +379,7 @@ const breadcrumbs = [
 
 const form = useForm({
     owner_id: "",
+    pengelola_id: "",
     cluster_id: props.cluster_id || "",
     thumbnail: null,
     number: "",

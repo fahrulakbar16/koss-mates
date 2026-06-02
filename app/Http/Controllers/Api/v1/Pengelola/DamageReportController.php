@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Pengelola;
 
 use App\Actions\DamageReport\UpdateDamageReportStatus;
+use App\Helpers\PengelolaScopeHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DamageReport\UpdateDamageReportRequest;
 use App\Http\Resources\DamageReport\DamageReportResource;
@@ -19,10 +20,16 @@ class DamageReportController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user);
+
         $query = DamageReport::with(['user', 'userRoom.room.boardingHouse'])
             ->orderBy('created_at', 'desc');
 
-        // Filter by status if provided
+        if ($boardingHouseIds !== null) {
+            $query->whereHas('userRoom', fn($q) => $q->whereIn('boarding_house_id', $boardingHouseIds));
+        }
+
         if ($request->has('status') && $request->status !== 'all') {
             $query->where('status', $request->status);
         }
@@ -37,7 +44,14 @@ class DamageReportController extends Controller
      */
     public function show($damageReportId)
     {
-        $damageReport = DamageReport::with(['user.tenant', 'userRoom.room.boardingHouse'])->findOrFail($damageReportId);
+        $user = auth()->user();
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user);
+
+        $query = DamageReport::with(['user.tenant', 'userRoom.room.boardingHouse']);
+        if ($boardingHouseIds !== null) {
+            $query->whereHas('userRoom', fn($q) => $q->whereIn('boarding_house_id', $boardingHouseIds));
+        }
+        $damageReport = $query->findOrFail($damageReportId);
 
         return $this->apiResponse(new DamageReportResource($damageReport), 'Data Berhasil Diambil');
     }
@@ -47,7 +61,14 @@ class DamageReportController extends Controller
      */
     public function updateStatus(UpdateDamageReportRequest $request, $damageReportId)
     {
-        $damageReport = DamageReport::findOrFail($damageReportId);
+        $user = auth()->user();
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user);
+
+        $query = DamageReport::query();
+        if ($boardingHouseIds !== null) {
+            $query->whereHas('userRoom', fn($q) => $q->whereIn('boarding_house_id', $boardingHouseIds));
+        }
+        $damageReport = $query->findOrFail($damageReportId);
         $updatedReport = app(UpdateDamageReportStatus::class)->execute(
             $damageReport,
             $request->validated()

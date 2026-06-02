@@ -36,6 +36,8 @@ class GetBoardingHouseFinancialList
 
         if ($user->hasRole('Pemilik')) {
             $query->where('owner_id', $user->id);
+        } elseif ($user->hasRole('Pengelola')) {
+            $query->where('pengelola_id', $user->id);
         }
 
         if ($search) {

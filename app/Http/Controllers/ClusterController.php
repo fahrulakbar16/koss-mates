@@ -51,9 +51,11 @@ class ClusterController extends Controller
      */
     public function create()
     {
-        // abort_unless(Gate::allows('clusters.create'), 403, 'Anda tidak memiliki akses untuk menambah cluster');
+        $pengelolas = User::whereHas('roles', fn($q) => $q->where('name', 'Pengelola'))->get(['id', 'name']);
 
-        return Inertia::render('Admin/Clusters/Create');
+        return Inertia::render('Admin/Clusters/Create', [
+            'pengelolas' => $pengelolas,
+        ]);
     }
 
     /**
@@ -73,10 +75,11 @@ class ClusterController extends Controller
      */
     public function edit(Cluster $cluster)
     {
-        // abort_unless(Gate::allows('clusters.edit'), 403, 'Anda tidak memiliki akses untuk mengubah cluster');
+        $pengelolas = User::whereHas('roles', fn($q) => $q->where('name', 'Pengelola'))->get(['id', 'name']);
 
         return Inertia::render('Admin/Clusters/Edit', [
-            'cluster' => $cluster
+            'cluster' => $cluster,
+            'pengelolas' => $pengelolas,
         ]);
     }
 
@@ -87,7 +90,7 @@ class ClusterController extends Controller
     {
         // abort_unless(Gate::allows('clusters.edit'), 403, 'Anda tidak memiliki akses untuk mengubah cluster');
 
-        app(UpdateClusterAction::class)->execute($cluster, $request->validated());
+        app(UpdateClusterAction::class)->execute($cluster, $request->validated(), Auth::user());
 
         return redirect()->route('dashboard')->with('success', 'Cluster berhasil diperbarui');
     }
