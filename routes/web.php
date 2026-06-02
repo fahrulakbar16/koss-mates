@@ -199,6 +199,15 @@ Route::prefix('admin/transactions')->middleware(['auth'])->group(function () {
     Route::post('/expense', [\App\Http\Controllers\Admin\TransactionController::class, 'storeExpense'])->name('admin.transactions.store-expense');
 });
 
+// Video Demo
+Route::middleware(['auth', 'role:Pengelola|Superadmin'])->group(function () {
+    Route::get('/admin/video-demo', [\App\Http\Controllers\Admin\VideoDemoController::class, 'index'])
+        ->name('admin.video-demo');
+    Route::get('/admin/video-demo/stream/{filename}', [\App\Http\Controllers\Admin\VideoDemoController::class, 'stream'])
+        ->where('filename', '[a-zA-Z0-9_\-]+')
+        ->name('admin.video-demo.stream');
+});
+
 // Import Management
 Route::prefix('admin/import')->middleware(['auth'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\ImportController::class, 'index'])->name('admin.import.index');

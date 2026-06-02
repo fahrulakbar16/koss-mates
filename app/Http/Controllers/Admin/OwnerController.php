@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BoardingHouse;
 use App\Models\User;
 use App\Models\Owner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Requests\Admin\StoreOwnerRequest;
 use App\Http\Requests\Admin\UpdateOwnerRequest;
@@ -16,7 +18,16 @@ class OwnerController extends Controller
 {
     public function index(Request $request)
     {
+        $user  = Auth::user();
         $query = User::role('Pemilik')->with(['owner']);
+
+        if ($user->hasRole('Pengelola')) {
+            $ownerIds = BoardingHouse::where('pengelola_id', $user->id)
+                ->whereNotNull('owner_id')
+                ->distinct()
+                ->pluck('owner_id');
+            $query->whereIn('id', $ownerIds);
+        }
 
         if ($request->search) {
             $search = $request->search;

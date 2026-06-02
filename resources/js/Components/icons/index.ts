@@ -72,6 +72,7 @@ import ClockIcon from "./ClockIcon.vue";
 import BackIcon from "./BackIcon.vue";
 import WrenchIcon from "./WrenchIcon.vue";
 import BedIcon from "./BedIcon.vue";
+import VideoIcon from "./VideoIcon.vue";
 
 export {
     GridIcon,
@@ -147,4 +148,5 @@ export {
     BackIcon,
     WrenchIcon,
     BedIcon,
+    VideoIcon,
 };

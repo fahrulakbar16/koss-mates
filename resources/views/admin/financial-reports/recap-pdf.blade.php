@@ -538,7 +538,7 @@
                         <td class="text-gray-600 font-bold">
                             {{ \Carbon\Carbon::parse($log->transaction_date)->format('d M Y') }}
                         </td>
-                        <td class="font-bold text-primary">{{ $log->transaction->user->name }}</td>
+                        <td class="font-bold text-primary">{{ $log->transaction?->user?->name ?? '-' }}</td>
                         <td>
                             <div class="font-bold text-sm">
                                 {{ $log->description }}
@@ -558,8 +558,7 @@
                 @empty
                     <tr>
                         <td colspan="5" class="text-center"
-                            style="padding: 60px; color: #94a3b8; font-style: italic;">
-                            <img src="https://via.placeholder.com/40" style="opacity: 0.2; margin-bottom: 10px;"><br>
+                            style="padding: 40px; color: #94a3b8; font-style: italic;">
                             Belum ada riwayat transaksi yang tercatat untuk kamar ini pada periode {{ $periodLabel }}.
                         </td>
                     </tr>

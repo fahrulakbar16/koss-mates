@@ -235,10 +235,10 @@
     </div>
 
     <div class="room-info-card">
-        <div class="room-name">{{ $room->name }}</div>
+        <div class="room-name">{{ $room['name'] }}</div>
         <div class="room-details">
-            Kategori: {{ $room->category }}
-            <span class="status-badge">{{ $room->status }}</span>
+            Kategori: {{ $room['category'] }}
+            <span class="status-badge">{{ $room['status'] }}</span>
         </div>
     </div>
 
