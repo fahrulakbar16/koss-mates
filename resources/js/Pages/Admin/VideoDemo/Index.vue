@@ -32,6 +32,8 @@
                         <video
                             class="w-full h-full"
                             controls
+                            controlsList="nodownload"
+                            @contextmenu.prevent
                             src="/copy_59F7FFD2-F3F0-4A7F-BEB4-FD834C1BFD2E.mov"
                         ></video>
                     </div>
