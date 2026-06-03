@@ -35,7 +35,7 @@ class GetBoardingHouseRecap
 
         $expensesQuery = TransactionLog::where('boarding_house_id', $boardingHouse->id)
             ->where('type', 'expense')
-            ->orderBy('transaction_date', 'asc');
+            ->orderBy('transaction_date', 'desc');
 
         if ($useDateRange) {
             $expensesQuery->whereBetween('transaction_date', [$startDate, $endDate]);

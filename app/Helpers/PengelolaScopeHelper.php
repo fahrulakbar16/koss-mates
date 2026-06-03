@@ -26,21 +26,32 @@ class PengelolaScopeHelper
 
     /**
      * Get boarding house IDs accessible to a user.
-     * Returns null for Superadmin (no filter needed — see all).
+     * Returns null for Superadmin with no cluster filter (no restriction needed).
+     * Pass $clusterId to also restrict to a specific cluster.
      */
-    public static function getBoardingHouseIds(?User $user): ?array
+    public static function getBoardingHouseIds(?User $user, ?int $clusterId = null): ?array
     {
-        if (!$user || $user->hasRole('Superadmin')) return null;
+        $isSuperadmin = !$user || $user->hasRole('Superadmin');
 
-        if ($user->hasRole('Pemilik')) {
-            return BoardingHouse::where('owner_id', $user->id)->pluck('id')->toArray();
+        if ($isSuperadmin && !$clusterId) return null;
+
+        $query = BoardingHouse::query();
+
+        if (!$isSuperadmin) {
+            if ($user->hasRole('Pemilik')) {
+                $query->where('owner_id', $user->id);
+            } elseif ($user->hasRole('Pengelola')) {
+                $query->where('pengelola_id', $user->id);
+            } else {
+                return null;
+            }
         }
 
-        if ($user->hasRole('Pengelola')) {
-            return BoardingHouse::where('pengelola_id', $user->id)->pluck('id')->toArray();
+        if ($clusterId) {
+            $query->where('cluster_id', $clusterId);
         }
 
-        return null;
+        return $query->pluck('id')->toArray();
     }
 
     /**

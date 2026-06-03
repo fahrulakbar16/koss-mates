@@ -348,6 +348,7 @@ import {
     ChevronRightIcon,
     WarningIcon,
     LogoutIcon,
+    VideoIcon,
 } from "@/Components/icons";
 import { useSidebar } from "@/Composables/useSidebar";
 import { computed, ref, onMounted, onBeforeUnmount, nextTick } from "vue";
@@ -712,6 +713,16 @@ const pengelolaMenuGroups = [
                 icon: MoneyIcon,
                 name: "Laporan Keuangan",
                 path: "/admin/financial-reports",
+            },
+        ],
+    },
+    {
+        title: "Panduan",
+        items: [
+            {
+                icon: VideoIcon,
+                name: "Video Demo",
+                path: "/admin/video-demo",
             },
         ],
     },

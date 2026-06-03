@@ -31,9 +31,18 @@ class FinancialReportController extends Controller
     {
         $boardingHouses = app(GetBoardingHouseFinancialList::class)->execute($request->validated(), $request->user());
 
+        $user = $request->user();
+        $clusterQuery = \App\Models\Cluster::orderBy('name');
+
+        if ($user->hasRole('Pemilik')) {
+            $clusterQuery->whereHas('boardingHouses', fn($q) => $q->where('owner_id', $user->id));
+        } elseif ($user->hasRole('Pengelola')) {
+            $clusterQuery->where('pengelola_id', $user->id);
+        }
+
         return Inertia::render('Admin/FinancialReport/Index', [
             'boardingHouses' => BoardingHouseFinancialResource::collection($boardingHouses)->response()->getData(true),
-            'clusters' => \App\Models\Cluster::orderBy('name')->get(['id', 'name']),
+            'clusters' => $clusterQuery->get(['id', 'name']),
             'filters' => $request->validated(),
         ]);
     }
@@ -133,7 +142,7 @@ class FinancialReportController extends Controller
         $recapData = app(GetBoardingHouseRecap::class)->execute($boardingHouse, $request->validated());
         $tenants = TenantRecapResource::collection($recapData['tenants'])->toArray($request);
 
-        $totalIncome = collect($tenants)->where('payment_status', 'Lunas')->sum('amount');
+        $totalIncome  = $recapData['income'];
         $totalExpense = $recapData['expenses']->sum('amount');
 
         $monthNames = [
@@ -236,7 +245,7 @@ class FinancialReportController extends Controller
         $detailData = app(GetRoomTransactionDetail::class)->execute($room, $request->validated());
 
         $data = [
-            'room' => new RoomDetailResource($room),
+            'room' => (new RoomDetailResource($room))->toArray($request),
             'transactions' => TransactionResource::collection($detailData['transactions'])->toArray($request),
             'totalIncome' => $detailData['total_income'],
             'filters' => $request->validated(),

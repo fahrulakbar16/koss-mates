@@ -27,7 +27,11 @@ class GetTransactionByBoardingHouse
             }
             $q->whereIn('type', ['payment', 'income'])
                 ->where('status', 'completed');
-        }], 'amount')->with(['transactionLogs','transactionLogs.transaction.user','transactionLogs.room'])->get();
+        }], 'amount')->with([
+            'transactionLogs' => fn($q) => $q->orderBy('transaction_date', 'desc'),
+            'transactionLogs.transaction.user',
+            'transactionLogs.room',
+        ])->get();
 
         return $transactions;
     }

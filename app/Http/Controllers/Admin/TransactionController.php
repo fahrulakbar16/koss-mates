@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\PengelolaScopeHelper;
 use App\Http\Controllers\Controller;
 use App\Models\BoardingHouse;
 use App\Models\TransactionLog;
@@ -12,6 +13,7 @@ use App\Http\Requests\Transaction\StoreExpenseRequest;
 use App\Actions\Transaction\StoreIncome;
 use App\Actions\Transaction\StoreExpense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
@@ -20,12 +22,23 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
+        $user      = Auth::user();
+        $clusterId = $request->cluster_id ? (int) $request->cluster_id : null;
+
+        $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user, $clusterId);
+
         $query = TransactionLog::with(['room', 'boardingHouse', 'transaction'])
-            ->latest('created_at');
+            ->latest('transaction_date');
+
+        if ($boardingHouseIds !== null) {
+            $query->whereIn('boarding_house_id', $boardingHouseIds);
+        }
 
         if ($request->search) {
-            $query->where('description', 'like', '%' . $request->search . '%')
+            $query->where(function ($q) use ($request) {
+                $q->where('description', 'like', '%' . $request->search . '%')
                   ->orWhere('reference_number', 'like', '%' . $request->search . '%');
+            });
         }
 
         if ($request->type) {
@@ -41,7 +54,9 @@ class TransactionController extends Controller
 
         $transactions = $query->paginate(10)->withQueryString();
 
-        $boardingHouses = BoardingHouse::with('rooms')->get();
+        $boardingHousesQuery = BoardingHouse::with('rooms');
+        PengelolaScopeHelper::applyBoardingHouseScope($boardingHousesQuery, $user);
+        $boardingHouses = $boardingHousesQuery->get();
 
         return Inertia::render('Admin/Transaction/Index', [
             'transactions' => $transactions,
