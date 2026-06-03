@@ -69,15 +69,14 @@ class BoardingHouseController extends Controller
         // abort_unless(Gate::allows('boarding_houses.create'), 403, 'Anda tidak memiliki akses untuk menambah boarding house');
 
         $clusters = $this->scopedClusters();
-        $owners = User::whereHas('roles', function ($query) {
-            $query->where('name', 'Pemilik');
-        })->get();
-
+        $owners = User::whereHas('roles', fn($q) => $q->where('name', 'Pemilik'))->get(['id', 'name']);
+        $pengelolas = User::whereHas('roles', fn($q) => $q->where('name', 'Pengelola'))->get(['id', 'name']);
         $clusterId = $request->input('cluster_id');
 
         return Inertia::render('Admin/BoardingHouses/Create', [
             'clusters' => $clusters,
             'owners' => $owners,
+            'pengelolas' => $pengelolas,
             'cluster_id' => $clusterId,
         ]);
     }
@@ -91,14 +90,14 @@ class BoardingHouseController extends Controller
 
         $boardingHouse->load('cluster', 'owner');
         $clusters = $this->scopedClusters();
-        $owners = User::whereHas('roles', function ($query) {
-            $query->where('name', '!=', 'Penyewa');
-        })->get();
+        $owners = User::whereHas('roles', fn($q) => $q->where('name', '!=', 'Penyewa'))->get(['id', 'name']);
+        $pengelolas = User::whereHas('roles', fn($q) => $q->where('name', 'Pengelola'))->get(['id', 'name']);
 
         return Inertia::render('Admin/BoardingHouses/Edit', [
             'boardingHouse' => $boardingHouse,
             'clusters' => $clusters,
             'owners' => $owners,
+            'pengelolas' => $pengelolas,
         ]);
     }
 
@@ -137,7 +136,7 @@ class BoardingHouseController extends Controller
             $data['remove_thumbnail'] = true;
         }
 
-        app(UpdateBoardingHouseAction::class)->execute($boardingHouse, $data);
+        app(UpdateBoardingHouseAction::class)->execute($boardingHouse, $data, Auth::user());
 
         LogActivityHelper::addToLog('Mengubah kos: ' . $boardingHouse->name, $data);
 

@@ -25,6 +25,7 @@ class UpdateClusterRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'address' => ['nullable', 'string', 'max:255'],
+            'pengelola_id' => ['nullable', 'exists:users,id'],
         ];
     }
 
