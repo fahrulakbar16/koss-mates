@@ -30,24 +30,12 @@
 
                 <div class="p-6">
                     <!-- Protected video player -->
-                    <div class="relative aspect-video w-full rounded-xl overflow-hidden bg-black select-none">
+                    <div class="aspect-video w-full rounded-xl overflow-hidden bg-black">
                         <video
                             class="w-full h-full"
                             controls
-                            controlsList="nodownload nofullscreen noremoteplayback"
-                            disablePictureInPicture
-                            @contextmenu.prevent
-                            preload="metadata"
-                        >
-                            <source :src="video.url" type="video/mp4" />
-                            Browser Anda tidak mendukung pemutaran video.
-                        </video>
-                        <!-- Transparent overlay to catch right-click on video area -->
-                        <div
-                            class="absolute inset-0 pointer-events-none select-none"
-                            @contextmenu.prevent
-                            style="user-select: none; -webkit-user-select: none;"
-                        ></div>
+                            :src="video.url"
+                        ></video>
                     </div>
                 </div>
             </div>
@@ -96,7 +84,6 @@ defineProps({
 </script>
 
 <style scoped>
-/* Prevent text selection on the video area */
 video {
     -webkit-user-select: none;
     user-select: none;
