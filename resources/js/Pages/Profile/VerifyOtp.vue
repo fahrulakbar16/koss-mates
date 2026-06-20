@@ -44,7 +44,7 @@ const submit = () => {
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                     </svg>
                                 </div>
-                                <span class="text-2xl font-black tracking-tight dark:text-white">Tharahub</span>
+                                <span class="text-2xl font-black tracking-tight dark:text-white">KosMates</span>
                             </Link>
                         </div>
 
@@ -107,7 +107,7 @@ const submit = () => {
 
                 <!-- Footer Info -->
                 <div class="mt-8 text-center text-sm text-gray-400 dark:text-gray-500 font-medium">
-                    © {{ new Date().getFullYear() }} Tharahub Platform. All rights reserved.
+                    © {{ new Date().getFullYear() }} KosMates Platform. All rights reserved.
                 </div>
             </div>
         </div>

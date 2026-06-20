@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404: Halaman Tidak Ditemukan | Tharahub</title>
+    <title>404: Halaman Tidak Ditemukan | KosMates</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -64,7 +64,7 @@
         </div>
 
         <div class="mt-16 pt-8 border-t border-gray-200">
-            <p class="text-sm text-gray-400">&copy; {{ date('Y') }} Tharahub. All rights reserved.</p>
+            <p class="text-sm text-gray-400">&copy; {{ date('Y') }} KosMates. All rights reserved.</p>
         </div>
     </div>
 </body>

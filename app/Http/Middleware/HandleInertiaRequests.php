@@ -56,7 +56,7 @@ class HandleInertiaRequests extends Middleware
         $settings = [
             'logo_main' => $logoMain,
             'logo_favicon' => $logoFavicon,
-            'site_name' => Setting::get('site_name', 'Tharahub'),
+            'site_name' => Setting::get('site_name', 'KosMates'),
             'site_description' => Setting::get('site_description', 'Manajemen kos online'),
             'contact_email' => Setting::get('contact_email'),
             'contact_phone' => Setting::get('contact_phone'),
@@ -76,7 +76,7 @@ class HandleInertiaRequests extends Middleware
                 ? $logoMain
                 : asset('storage/' . $logoMain);
         } else {
-            $settings['logo_main_url'] = '/images/logo/Tharahub.png';
+            $settings['logo_main_url'] = '/images/logo/KosMates.png';
         }
 
         if ($logoFavicon && is_string($logoFavicon)) {
@@ -84,7 +84,7 @@ class HandleInertiaRequests extends Middleware
                 ? $logoFavicon
                 : asset('storage/' . $logoFavicon);
         } else {
-            $settings['logo_favicon_url'] = '/images/logo/Tharahub.png';
+            $settings['logo_favicon_url'] = '/images/logo/KosMates.png';
         }
 
         return array_merge(parent::share($request), [
@@ -108,15 +108,15 @@ class HandleInertiaRequests extends Middleware
             'midtrans_is_production' => (bool) config('services.midtrans.is_production'),
             'clusters' => Auth::check() && Auth::user()->hasAnyRole(['Superadmin', 'Pengelola', 'Pemilik'])
                 ? Cluster::select('id', 'name')
-                    ->when(Auth::user()->hasRole('Pemilik'), function ($query) {
-                        return $query->whereHas('boardingHouses', function ($query) {
-                            $query->where('owner_id', Auth::id());
-                        });
-                    })
-                    ->when(Auth::user()->hasRole('Pengelola'), function ($query) {
-                        return $query->where('pengelola_id', Auth::id());
-                    })
-                    ->get()
+                ->when(Auth::user()->hasRole('Pemilik'), function ($query) {
+                    return $query->whereHas('boardingHouses', function ($query) {
+                        $query->where('owner_id', Auth::id());
+                    });
+                })
+                ->when(Auth::user()->hasRole('Pengelola'), function ($query) {
+                    return $query->where('pengelola_id', Auth::id());
+                })
+                ->get()
                 : [],
             'pendingCounts' => $this->getPendingCounts($request),
         ]);

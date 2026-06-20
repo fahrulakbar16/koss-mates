@@ -301,7 +301,7 @@
     </div>
 
     <div class="footer">
-        Laporan ini dihasilkan secara otomatis melalui Sistem Tharahub <br>
+        Laporan ini dihasilkan secara otomatis melalui Sistem KosMates <br>
         Terakhir diperbarui: {{ $currentDateTime }}
     </div>
 </body>

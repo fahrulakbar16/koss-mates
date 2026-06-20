@@ -91,7 +91,7 @@ const statusText = computed(() => {
                         <a href="https://wa.me/your-number" target="_blank"
                             class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-600 transition-colors">WhatsApp
                             Media</a>
-                        <a href="mailto:support@Tharahub.com"
+                        <a href="mailto:support@KosMates.com"
                             class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-600 transition-colors">Email
                             Support</a>
                     </div>

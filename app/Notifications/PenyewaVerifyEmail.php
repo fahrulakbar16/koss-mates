@@ -23,7 +23,7 @@ class PenyewaVerifyEmail extends Notification
         $verificationUrl = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->subject('Verifikasi Alamat Email Anda - Tharahub')
+            ->subject('Verifikasi Alamat Email Anda - KosMates')
             ->markdown('emails.penyewa.verify', ['url' => $verificationUrl]);
     }
 

@@ -247,7 +247,7 @@ onUnmounted(() => {
 
 <template>
 
-    <Head :title="`${boardingHouse.name} - Tharahub`" />
+    <Head :title="`${boardingHouse.name} - KosMates`" />
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <!-- Image Gallery -->
@@ -865,7 +865,7 @@ onUnmounted(() => {
                                 </div>
                                 <div>
                                     <div class="font-bold text-gray-900 dark:text-white">Masuk / Daftar</div>
-                                    <div class="text-xs text-gray-500">Akses akun Tharahub Anda</div>
+                                    <div class="text-xs text-gray-500">Akses akun KosMates Anda</div>
                                 </div>
                             </div>
 

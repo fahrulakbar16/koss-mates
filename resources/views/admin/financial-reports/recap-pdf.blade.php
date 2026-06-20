@@ -470,7 +470,7 @@
                     <div class="text-xs font-bold"
                         style="color: #64748b; margin-bottom: 25px; text-decoration: underline;">VALIDASI MANAJEMEN
                     </div>
-                    <div class="text-xs" style="font-style: italic;">Dicetak via Tharahub &bull;
+                    <div class="text-xs" style="font-style: italic;">Dicetak via KosMates &bull;
                         {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</div>
                 </div>
             </td>

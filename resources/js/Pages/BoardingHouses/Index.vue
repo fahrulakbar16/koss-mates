@@ -197,7 +197,7 @@ const getImageUrl = (boardingHouse) => {
 
 <template>
 
-    <Head title="Daftar Kos - Tharahub" />
+    <Head title="Daftar Kos - KosMates" />
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Page Header -->
