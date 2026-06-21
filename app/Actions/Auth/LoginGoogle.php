@@ -11,7 +11,7 @@ class LoginGoogle
 {
     public function execute($data)
     {
-        $apiKey = env('FIREBASE_API_KEY');
+        $apiKey = config('services.firebase.api_key');
 
         // Kirim ID token ke Firebase REST API untuk verifikasi
         $response = Http::post("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key={$apiKey}", [

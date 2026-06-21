@@ -63,4 +63,8 @@ return [
         'base_url' => env('FONNTE_BASE_URL', 'https://api.fonnte.com'),
     ],
 
+    'firebase' => [
+        'api_key' => env('FIREBASE_API_KEY'),
+    ],
+
 ];
