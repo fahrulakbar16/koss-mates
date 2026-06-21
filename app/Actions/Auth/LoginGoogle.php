@@ -5,6 +5,7 @@ namespace App\Actions\Auth;
 use App\Exceptions\CustomException;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class LoginGoogle
 {
@@ -18,6 +19,7 @@ class LoginGoogle
         ]);
 
         if ($response->failed()) {
+            Log::info($response->body());
             throw new CustomException('Token Firebase tidak valid', 401);
         }
 
