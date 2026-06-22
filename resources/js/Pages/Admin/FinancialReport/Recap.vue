@@ -8,7 +8,7 @@
 
             <!-- Toolbar (Hidden on print) -->
             <div
-                class="bg-gray-100 dark:bg-gray-700 p-4 flex justify-between items-center print:hidden border-b border-gray-200 dark:border-gray-600">
+                class="bg-gray-100 dark:bg-gray-700 p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 print:hidden border-b border-gray-200 dark:border-gray-600">
                 <div class="flex items-center gap-3">
                     <Link :href="route('admin.financial-reports.index')"
                         class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center gap-1">
@@ -18,10 +18,10 @@
                         </svg>
                         Kembali
                     </Link>
-                    <h1 class="text-lg font-bold text-gray-800 dark:text-white">Rekap Data</h1>
+                    <h1 class="text-lg font-bold text-gray-800 dark:text-white ml-auto sm:ml-0">Rekap Data</h1>
                 </div>
                 <button @click="print"
-                    class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
+                    class="w-full sm:w-auto justify-center bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors shadow-sm">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

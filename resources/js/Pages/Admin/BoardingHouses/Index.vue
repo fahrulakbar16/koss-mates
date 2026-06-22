@@ -21,7 +21,7 @@
             <!-- Filter & Search Bar -->
             <div
                 class="p-5 border-b border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div class="flex items-center gap-2">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                     <select v-model="clusterFilter"
                         class="w-full sm:w-44 px-3 py-2.5 text-sm text-gray-800 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-300 dark:bg-gray-900/50 dark:border-gray-600 dark:text-white dark:focus:border-primary-500">
                         <option value="">Semua Cluster</option>
@@ -47,9 +47,9 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-3 items-center w-full sm:w-auto">
+                <div class="flex w-full sm:w-auto">
                     <Link v-if="can('boarding_houses.create')" :href="route('boarding-houses.create', { cluster_id: clusterFilter })"
-                        class="inline-flex gap-2 items-center px-5 py-2.5 text-white rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transition-all duration-300 transform hover:-translate-y-0.5">
+                        class="inline-flex justify-center gap-2 items-center w-full sm:w-auto px-5 py-2.5 text-white rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transition-all duration-300 transform hover:-translate-y-0.5">
                         <PlusSquareIcon class="w-5 h-5" />
                         <span class="font-medium">Tambah Boarding House</span>
                     </Link>

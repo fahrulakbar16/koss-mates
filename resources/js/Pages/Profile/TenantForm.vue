@@ -39,14 +39,14 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden mt-8">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden mt-8">
         <!-- Header Section -->
-        <div class="px-8 py-5 flex items-center justify-between border-b border-slate-100 bg-slate-50/50">
+        <div class="px-4 sm:px-8 py-5 flex items-center justify-between border-b border-slate-100 bg-slate-50/50">
             <div>
                 <h3 class="text-lg font-bold text-slate-900">Biodata Penyewa</h3>
                 <p class="text-sm text-slate-500">Lengkapi informasi identitas dan kontak darurat Anda.</p>
             </div>
-            <div class="p-2 bg-primary-50 rounded-lg">
+            <div class="p-2 bg-primary-50 rounded-lg flex-shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -55,7 +55,7 @@ const submit = () => {
             </div>
         </div>
 
-        <form @submit.prevent="submit" class="p-10 space-y-8">
+        <form @submit.prevent="submit" class="px-6 py-10 sm:p-10 space-y-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
                 <!-- Phone -->
                 <div class="space-y-1">

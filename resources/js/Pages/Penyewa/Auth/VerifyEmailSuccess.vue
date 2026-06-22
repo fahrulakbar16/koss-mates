@@ -24,7 +24,7 @@ const props = defineProps({
 
             <div class="flex-1 flex flex-col items-center justify-center p-6 relative z-10 w-full">
                 <!-- Main Card -->
-                <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-3xl shadow-2xl shadow-gray-200/50 dark:shadow-black/50 overflow-hidden border border-gray-100 dark:border-gray-800 animate-in fade-in zoom-in-95 duration-500">
+                <div class="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-black/50 overflow-hidden border border-gray-100 dark:border-gray-800 animate-in fade-in zoom-in-95 duration-500">
 
                     <div class="p-8 sm:p-10">
                         <!-- Logo Header -->

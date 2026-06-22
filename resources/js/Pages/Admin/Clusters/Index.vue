@@ -38,7 +38,7 @@
                 @scroll="handleScroll">
                 <div v-if="allClusters.length > 0" class="space-y-8 py-6">
                     <div v-for="cluster in allClusters" :key="cluster.id"
-                        class="group/cluster p-6 sm:p-8 rounded-3xl border border-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700 shadow-xl shadow-gray-200/40 dark:shadow-none hover:shadow-2xl hover:shadow-gray-200/60 transition-all duration-300 relative overflow-hidden">
+                        class="group/cluster p-6 sm:p-8 rounded-2xl border border-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700 shadow-xl shadow-gray-200/40 dark:shadow-none hover:shadow-2xl hover:shadow-gray-200/60 transition-all duration-300 relative overflow-hidden">
                         <!-- Decorative gradient background -->
                         <div
                             class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-blue-500 to-purple-500 opacity-0 group-hover/cluster:opacity-100 transition-opacity duration-300">

@@ -26,7 +26,7 @@
 
         <!-- Welcome Card -->
         <div
-            class="relative overflow-hidden bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl shadow-xl shadow-primary-500/20 p-8 text-white">
+            class="relative overflow-hidden bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl shadow-xl shadow-primary-500/20 p-8 text-white">
             <div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
                     <h2 class="text-3xl font-bold mb-3">
@@ -50,7 +50,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Total Sewa -->
             <div
-                class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-theme-sm hover:shadow-theme-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
+                class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-theme-sm hover:shadow-theme-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
                 <div class="flex items-center gap-5">
                     <div
                         class="p-4 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
@@ -69,7 +69,7 @@
 
             <!-- Sewa Aktif -->
             <div
-                class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-theme-sm hover:shadow-theme-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
+                class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-theme-sm hover:shadow-theme-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
                 <div class="flex items-center gap-5">
                     <div
                         class="p-4 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
@@ -88,7 +88,7 @@
 
             <!-- Pembayaran Pending -->
             <div
-                class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-theme-sm hover:shadow-theme-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
+                class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-theme-sm hover:shadow-theme-md transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
                 <div class="flex items-center gap-5">
                     <div
                         class="p-4 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300">
@@ -115,7 +115,7 @@
                 </h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <Link :href="route('penyewa.rooms.index')"
-                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl shadow-sm hover:shadow-lg hover:border-primary-500/50 hover:-translate-y-1 transition-all duration-300 group">
+                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:border-primary-500/50 hover:-translate-y-1 transition-all duration-300 group">
                         <div
                             class="w-12 h-12 rounded-2xl bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center text-primary-600 dark:text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors duration-300 mb-3">
                             <Home class="w-6 h-6" />
@@ -127,7 +127,7 @@
                     </Link>
 
                     <Link :href="route('penyewa.transactions.index')"
-                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl shadow-sm hover:shadow-lg hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300 group">
+                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:border-blue-500/50 hover:-translate-y-1 transition-all duration-300 group">
                         <div
                             class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 mb-3">
                             <CreditCard class="w-6 h-6" />
@@ -139,7 +139,7 @@
                     </Link>
 
                     <button
-                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl shadow-sm hover:shadow-lg hover:border-green-500/50 hover:-translate-y-1 transition-all duration-300 group">
+                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:border-green-500/50 hover:-translate-y-1 transition-all duration-300 group">
                         <div
                             class="w-12 h-12 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 dark:text-green-400 group-hover:bg-green-600 group-hover:text-white transition-colors duration-300 mb-3">
                             <MessageSquare class="w-6 h-6" />
@@ -151,7 +151,7 @@
                     </button>
 
                     <Link :href="route('profile.show')"
-                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl shadow-sm hover:shadow-lg hover:border-purple-500/50 hover:-translate-y-1 transition-all duration-300 group">
+                        class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl shadow-sm hover:shadow-lg hover:border-purple-500/50 hover:-translate-y-1 transition-all duration-300 group">
                         <div
                             class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300 mb-3">
                             <User class="w-6 h-6" />
@@ -171,7 +171,7 @@
                     Aktivitas Terbaru
                 </h3>
                 <div
-                    class="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+                    class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
                     <div class="space-y-6">
                         <div v-if="!activities || activities.length === 0"
                             class="text-center py-8 text-gray-500 dark:text-gray-400">

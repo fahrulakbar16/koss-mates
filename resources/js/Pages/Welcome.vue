@@ -403,7 +403,7 @@ const organizationStructuredData = computed(() => {
                     <TransitionGroup name="kos-list" tag="div" class="contents">
                         <div v-for="(kos, index) in recommendedBoardingHouses" :key="kos.id"
                             :style="{ '--delay': (index * 0.1) + 's' }"
-                            class="scroll-reveal card-premium group relative bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 ">
+                            class="scroll-reveal card-premium group relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 ">
                             <!-- Image -->
                             <div class="relative h-64 overflow-hidden">
                                 <img :src="getImageUrl(kos)" :alt="kos.name"
@@ -463,7 +463,7 @@ const organizationStructuredData = computed(() => {
 
                 <!-- Empty State -->
                 <div v-else
-                    class="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300 ">
+                    class="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300 ">
                     <div
                         class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

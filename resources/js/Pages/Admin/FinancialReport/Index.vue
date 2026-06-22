@@ -29,21 +29,25 @@
                 </div>
 
                 <!-- Filters -->
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <input v-model="startDateFilter" type="date" class="h-9 rounded-lg border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-36" />
-                        <span class="text-gray-400 text-sm">—</span>
-                        <input v-model="endDateFilter" type="date" class="h-9 rounded-lg border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-36" />
-                        <button v-if="startDateFilter || endDateFilter" @click="startDateFilter = ''; endDateFilter = '';" class="text-xs text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium flex items-center gap-1 transition-colors">
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                            Reset
-                        </button>
+                        <input v-model="startDateFilter" type="date" class="h-9 flex-1 sm:flex-none rounded-lg border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 sm:w-36" />
                     </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <input v-model="endDateFilter" type="date" class="h-9 flex-1 sm:flex-none rounded-lg border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 sm:w-36" />
+                    </div>
+                    <button v-if="startDateFilter || endDateFilter" @click="startDateFilter = ''; endDateFilter = '';" class="text-xs text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium flex items-center gap-1 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        Reset
+                    </button>
                 </div>
             </div>
 

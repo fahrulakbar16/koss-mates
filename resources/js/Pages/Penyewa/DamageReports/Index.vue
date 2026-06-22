@@ -25,7 +25,7 @@
             </div>
 
             <!-- Reports List -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 min-h-[60vh] flex flex-col overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 min-h-[60vh] flex flex-col overflow-hidden">
                 <div v-if="reports.data.length > 0">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">

@@ -21,7 +21,7 @@
             <div class="mb-8">
                 <div
                     class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-2">
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <button @click="activeTab = 'ongoing'" :class="[
                             'px-6 py-4 rounded-xl font-bold text-sm transition-all duration-300',
                             activeTab === 'ongoing'
@@ -29,7 +29,7 @@
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                         ]">
                             <div class="flex flex-col items-center gap-1">
-                                <span>Sedang Berjalan</span>
+                                <span class="leading-tight text-center">Sedang Berjalan</span>
                                 <span :class="[
                                     'text-xs px-2 py-0.5 rounded-full',
                                     activeTab === 'ongoing' ? 'bg-white/20' : 'bg-gray-100 dark:bg-gray-700'
@@ -43,7 +43,7 @@
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                         ]">
                             <div class="flex flex-col items-center gap-1">
-                                <span>Selesai</span>
+                                <span class="leading-tight text-center">Selesai</span>
                                 <span :class="[
                                     'text-xs px-2 py-0.5 rounded-full',
                                     activeTab === 'completed' ? 'bg-white/20' : 'bg-gray-100 dark:bg-gray-700'
@@ -57,7 +57,7 @@
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                         ]">
                             <div class="flex flex-col items-center gap-1">
-                                <span>Gagal</span>
+                                <span class="leading-tight text-center">Gagal</span>
                                 <span :class="[
                                     'text-xs px-2 py-0.5 rounded-full',
                                     activeTab === 'canceled' ? 'bg-white/20' : 'bg-gray-100 dark:bg-gray-700'
@@ -72,9 +72,9 @@
             <div class="space-y-5">
                 <!-- Empty State -->
                 <div v-if="!filteredTransactions.length"
-                    class="text-center py-16 sm:py-20 bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700">
+                    class="text-center px-6 py-16 sm:py-20 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
                     <div
-                        class="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/30 dark:to-primary-800/20 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-500/20">
+                        class="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/30 dark:to-primary-800/20 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-500/20">
                         <Receipt class="w-10 h-10 text-primary-600 dark:text-primary-400" />
                     </div>
                     <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
@@ -97,7 +97,7 @@
 
                 <!-- List Card -->
                 <div v-for="transaction in filteredTransactions" :key="transaction.id"
-                    class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300 group">
+                    class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300 group">
                     <div class="p-6 sm:p-8 flex flex-col sm:flex-row gap-6">
                         <!-- Image -->
                         <div

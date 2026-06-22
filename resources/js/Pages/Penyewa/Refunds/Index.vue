@@ -21,7 +21,7 @@
                             </p>
                         </div>
                     </div>
-                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 min-h-[60vh] flex flex-col overflow-hidden">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 min-h-[60vh] flex flex-col overflow-hidden">
 
                     <div class="overflow-x-auto p-4 sm:p-6 flex-1">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

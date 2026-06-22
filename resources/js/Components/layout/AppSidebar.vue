@@ -2,8 +2,8 @@
     <aside :class="[
         'fixed flex flex-col top-0 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out border-r border-gray-100 dark:border-gray-800',
         {
-            // Mobile: full width when open, hidden when closed, with padding top for header
-            'w-[250px] translate-x-0 pt-[73px] z-[60]': isMobileOpen,
+            // Mobile: full width when open, hidden when closed
+            'w-[250px] translate-x-0 z-[60]': isMobileOpen,
             '-translate-x-full z-50': !isMobileOpen,
             // Desktop: width based on expanded/hovered state, no padding top
             'lg:w-[260px] lg:pt-0': (isExpanded || isHovered) && !isMobileOpen,

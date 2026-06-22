@@ -16,7 +16,7 @@
 
             <!-- Check-in Form Card -->
             <div
-                class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 sm:p-8">
                     <!-- Room Info -->
                     <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">

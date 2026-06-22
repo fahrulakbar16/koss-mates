@@ -43,7 +43,7 @@ const AuraBlue = definePreset(Aura, {
     },
 });
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Koss Mates';
 
 export default function render(page) {
     return createInertiaApp({

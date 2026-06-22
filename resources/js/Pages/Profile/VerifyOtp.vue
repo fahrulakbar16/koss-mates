@@ -30,7 +30,7 @@ const submit = () => {
         <div class="min-h-screen flex flex-col justify-center items-center p-4 bg-gray-50/50 dark:bg-gray-950/50">
             <!-- Main Content Card -->
             <div class="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl shadow-gray-200/50 dark:shadow-black/40 border border-gray-100 dark:border-gray-800 overflow-hidden relative">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-black/40 border border-gray-100 dark:border-gray-800 overflow-hidden relative">
                     <!-- Decorative Background element -->
                     <div class="absolute top-0 right-0 -mt-16 -mr-16 w-32 h-32 bg-primary-500/10 dark:bg-primary-500/5 rounded-full blur-3xl"></div>
                     <div class="absolute bottom-0 left-0 -mb-16 -ml-16 w-32 h-32 bg-green-500/10 dark:bg-green-500/5 rounded-full blur-3xl"></div>

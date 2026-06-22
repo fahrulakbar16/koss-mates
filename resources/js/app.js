@@ -57,7 +57,7 @@ const AuraBlue = definePreset(Aura, {
     },
 });
 
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const appName = import.meta.env.VITE_APP_NAME || "Koss Mates";
 
 NProgress.configure({ showSpinner: true, trickleSpeed: 120 });
 let npStartAt = 0;

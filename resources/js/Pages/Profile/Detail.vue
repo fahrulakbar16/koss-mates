@@ -139,9 +139,9 @@ async function submitAll() {
 </script>
 
 <template>
-    <div class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
         <!-- Header Section -->
-        <div class="px-8 py-5 flex items-center justify-between border-b border-slate-100 bg-slate-50/50">
+        <div class="px-4 sm:px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-100 bg-slate-50/50">
             <div>
                 <h3 class="text-lg font-bold text-slate-900">
                     {{ isEditing ? "Ubah Data Profile" : "Informasi Profil" }}
@@ -149,7 +149,7 @@ async function submitAll() {
                 <p class="text-sm text-slate-500">Kelola informasi dasar akun dan kata sandi Anda.</p>
             </div>
             <button v-if="!isEditing" @click="startEdit"
-                class="inline-flex items-center px-4 py-2 text-sm font-semibold text-white transition rounded-lg shadow-sm bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                class="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-semibold text-white transition rounded-lg shadow-sm bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path
                         d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -182,7 +182,7 @@ async function submitAll() {
             </div>
 
             <!-- Details Section -->
-            <div class="p-10">
+            <div class="px-6 py-10 sm:p-10">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
                     <div class="space-y-1">
                         <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Nama Lengkap</p>
@@ -236,7 +236,7 @@ async function submitAll() {
             </div>
 
             <!-- Form Fields Area -->
-            <div class="p-10 space-y-8">
+            <div class="px-6 py-10 sm:p-10 space-y-8">
                 <!-- Basic Info -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div class="space-y-1">
@@ -260,7 +260,7 @@ async function submitAll() {
                     <h4
                         class="text-sm font-bold text-slate-900 mb-4 uppercase tracking-widest text-center lg:text-left">
                         Ubah Kata Sandi <span
-                            class="text-[10px] font-normal text-slate-400 normal-case tracking-normal">(Kosongkan jika
+                            class="block lg:inline text-[10px] font-normal text-slate-400 normal-case tracking-normal">(Kosongkan jika
                             tidak ingin diubah)</span></h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="space-y-1">

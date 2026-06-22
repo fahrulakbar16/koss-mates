@@ -13,14 +13,14 @@
                     Kelola pemasukan dan pengeluaran operasional
                 </p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <button @click="openIncomeModal"
-                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-lg shadow-emerald-200 dark:shadow-none transition-all duration-300 transform hover:-translate-y-0.5">
+                    class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-lg shadow-emerald-200 dark:shadow-none transition-all duration-300 transform hover:-translate-y-0.5">
                     <PlusIcon class="w-5 h-5 text-white" />
                     Tambah Pemasukan
                 </button>
                 <button @click="openExpenseModal"
-                    class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold shadow-lg shadow-primary-200 dark:shadow-none transition-all duration-300 transform hover:-translate-y-0.5">
+                    class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-bold shadow-lg shadow-primary-200 dark:shadow-none transition-all duration-300 transform hover:-translate-y-0.5">
                     <PlusIcon class="w-5 h-5 text-white" />
                     Tambah Pengeluaran
                 </button>
@@ -29,8 +29,8 @@
 
         <div class="h-full flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700">
             <!-- Filter & Search Bar -->
-            <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                <div class="flex items-center gap-2 w-full lg:w-auto">
+            <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex flex-col items-start lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto">
                     <div class="relative w-full lg:w-64">
                         <div class="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none">
                             <SearchIcon class="w-5 h-5 text-gray-400" />
@@ -39,7 +39,7 @@
                             class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-300 dark:bg-gray-900/50 dark:border-gray-600 dark:text-white dark:focus:border-primary-500" />
                     </div>
                     <select v-model="typeFilter"
-                        class="h-10 rounded-xl border-gray-200 bg-gray-50 text-sm text-gray-900 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-300 dark:bg-gray-900/50 dark:border-gray-600 dark:text-white dark:focus:border-primary-500">
+                        class="h-10 w-full sm:w-auto rounded-xl border-gray-200 bg-gray-50 text-sm text-gray-900 focus:bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all duration-300 dark:bg-gray-900/50 dark:border-gray-600 dark:text-white dark:focus:border-primary-500">
                         <option value="">Semua Tipe</option>
                         <option value="payment">Pembayaran Sewa</option>
                         <option value="income">Pemasukan Manual</option>
@@ -48,16 +48,20 @@
                 </div>
 
                 <!-- Date Filters -->
-                <div class="flex items-center gap-2 w-full lg:w-auto">
-                    <div class="flex items-center gap-2">
-                        <CalendarIcon class="w-4 h-4 text-gray-400" />
-                        <input v-model="startDateFilter" type="date" class="h-10 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-40" />
-                        <span class="text-gray-400 text-sm">—</span>
-                        <input v-model="endDateFilter" type="date" class="h-10 rounded-xl border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 w-40" />
-                        <button v-if="startDateFilter || endDateFilter || search || typeFilter" @click="resetFilters" class="text-xs text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-bold flex items-center gap-1 transition-colors ml-2">
-                            Reset
-                        </button>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full lg:w-auto">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2 w-full sm:w-auto">
+                        <div class="flex items-center gap-2">
+                            <CalendarIcon class="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            <input v-model="startDateFilter" type="date" class="h-10 flex-1 sm:flex-none rounded-xl border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 sm:w-40" />
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <CalendarIcon class="w-4 h-4 text-gray-400 flex-shrink-0" />
+                            <input v-model="endDateFilter" type="date" class="h-10 flex-1 sm:flex-none rounded-xl border-gray-200 dark:border-gray-600 dark:bg-gray-900/50 dark:text-white text-sm focus:border-primary-500 focus:ring-primary-500 sm:w-40" />
+                        </div>
                     </div>
+                    <button v-if="startDateFilter || endDateFilter || search || typeFilter" @click="resetFilters" class="text-xs text-primary-500 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-bold flex items-center gap-1 transition-colors">
+                        Reset
+                    </button>
                 </div>
             </div>
 
@@ -171,7 +175,7 @@
 
             <form id="incomeForm" @submit.prevent="submitIncome" class="space-y-4">
                 <!-- Property & Room Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-3xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-900 shadow-sm hover:shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-900 shadow-sm hover:shadow-md">
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Target Properti</label>
                         <select v-model="incomeForm.boarding_house_id" required
@@ -196,7 +200,7 @@
                 </div>
 
                 <!-- Amount & Date Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pemasukan</label>
                         <div class="relative group">
@@ -292,7 +296,7 @@
 
             <form id="expenseForm" @submit.prevent="submitExpense" class="space-y-4">
                 <!-- Property & Room Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-3xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-900 shadow-sm hover:shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-900 shadow-sm hover:shadow-md">
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Target Properti</label>
                         <select v-model="expenseForm.boarding_house_id" required
@@ -341,7 +345,7 @@
                 </div>
 
                 <!-- Amount & Date Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="space-y-2">
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pengeluaran</label>
                         <div class="relative group">

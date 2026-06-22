@@ -17,7 +17,7 @@
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Boarding House Card -->
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                         <div
                             class="p-6 sm:p-8 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-primary-50 to-transparent dark:from-primary-900/20">
                             <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -93,7 +93,7 @@
 
                     <!-- Payment History (Collapsible) -->
                     <div v-if="transaction.payments && transaction.payments.length > 0"
-                        class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                         <button @click="showHistory = !showHistory"
                             class="w-full p-6 sm:p-8 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                             <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -135,7 +135,7 @@
                     <div class="sticky top-8 space-y-6">
                         <!-- Payment Summary Card -->
                         <div
-                            class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                             <div
                                 class="p-6 sm:p-8 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-primary-50 to-transparent dark:from-primary-900/20">
                                 <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -280,7 +280,7 @@
             <!-- Installment Amount Modal -->
             <div v-if="showInstallmentModal"
                 class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
-                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-md w-full p-8 animate-slideUp">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 animate-slideUp">
                     <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                         <div class="w-1.5 h-8 bg-primary-600 rounded-full"></div>
                         Pilih Jumlah Pembayaran
@@ -329,7 +329,7 @@
             <!-- Cancel Transaction Modal -->
             <div v-if="showCancelModal"
                 class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
-                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-md w-full p-8 animate-slideUp">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 animate-slideUp">
                     <div class="text-center mb-6">
                         <div
                             class="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">

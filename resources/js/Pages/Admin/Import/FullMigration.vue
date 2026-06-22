@@ -164,7 +164,7 @@ const downloadFile = (content, filename) => {
                     <!-- Upload Card -->
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
                         <form @submit.prevent="submit">
-                            <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-3xl p-12 transition-colors hover:border-primary-400 group relative">
+                            <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-12 transition-colors hover:border-primary-400 group relative">
                                 <input
                                     type="file"
                                     @change="handleFileUpload"

@@ -75,7 +75,7 @@
                         <div class="absolute inset-0 bg-cover bg-center"
                             :style="{ backgroundImage: 'url(https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&q=80&w=2000)' }">
                         </div>
-                        <div class="absolute inset-0 bg-white/95 dark:bg-gray-950/90 backdrop-blur-[2px]"></div>
+                        <div class="absolute inset-0 bg-white/95 dark:bg-gray-950/90"></div>
                     </div>
 
                     <div class="w-full max-w-md lg:max-w-[440px] animate-in fade-in zoom-in-95 duration-500 relative">
