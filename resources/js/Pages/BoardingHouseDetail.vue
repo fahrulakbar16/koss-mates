@@ -23,6 +23,14 @@ const isPreviewOpen = ref(false);
 const previewImageIndex = ref(0);
 
 // Booking State
+const getTodayDateString = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
 const isRequirementModalOpen = ref(false);
 const isBookingModalOpen = ref(false);
 const selectedRoom = ref(null);
@@ -32,7 +40,7 @@ const bookingForm = useForm({
     room_price_id: null,
     payment_scheme: 'full',
     total_price: 0,
-    planned_checkin_date: new Date().toISOString().split('T')[0],
+    planned_checkin_date: getTodayDateString(),
 });
 
 const formatPrice = (price) => {
@@ -705,7 +713,7 @@ onUnmounted(() => {
                                 <input
                                     type="date"
                                     v-model="bookingForm.planned_checkin_date"
-                                    :min="new Date().toISOString().split('T')[0]"
+                                    :min="getTodayDateString()"
                                     class="block w-full pl-11 pr-4 py-4 rounded-2xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50 focus:border-primary-600 focus:ring-4 focus:ring-primary-600/10 transition-all duration-200 text-gray-900 dark:text-white font-medium"
                                 />
                                 <div v-if="bookingForm.errors.planned_checkin_date" class="mt-2 text-xs font-bold text-primary-500">
