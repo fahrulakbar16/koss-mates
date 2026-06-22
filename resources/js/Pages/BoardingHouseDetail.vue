@@ -252,7 +252,7 @@ onUnmounted(() => {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <!-- Image Gallery -->
         <div class="mb-12">
-            <div class="group relative w-full h-[400px] md:h-[600px] rounded-3xl overflow-hidden bg-gray-200 dark:bg-gray-800 mb-6 shadow-theme-lg cursor-pointer"
+            <div class="group relative w-full h-[400px] md:h-[600px] rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-800 mb-6 shadow-theme-lg cursor-pointer"
                 @click="openPreview(selectedImage)">
                 <img :src="getImageUrl(images[selectedImage]) || '/images/placeholder.png'" :alt="boardingHouse.name"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -366,7 +366,7 @@ onUnmounted(() => {
             <div class="lg:col-span-2">
                 <!-- Title & Location -->
                 <div
-                    class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700/50 mb-8">
+                    class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700/50 mb-8">
                     <div class="flex flex-col gap-1 mb-6">
                         <span class="text-primary-600 font-semibold tracking-wide uppercase text-sm"
                             v-if="boardingHouse.cluster">
@@ -447,7 +447,7 @@ onUnmounted(() => {
 
                 <!-- Description -->
                 <div v-if="boardingHouse.description"
-                    class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700/50 mb-8">
+                    class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700/50 mb-8">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                         <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -463,7 +463,7 @@ onUnmounted(() => {
 
                 <!-- Rooms -->
                 <div
-                    class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700/50">
+                    class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-700/50">
                     <div class="flex items-center justify-between mb-8">
                         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Kamar Tersedia</h2>
                         <span
@@ -590,7 +590,7 @@ onUnmounted(() => {
                 <div class="sticky top-28 space-y-6">
                     <!-- Price Card -->
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-theme-xl border border-gray-100 dark:border-gray-700/50 relative overflow-hidden">
+                        class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-theme-xl border border-gray-100 dark:border-gray-700/50 relative overflow-hidden">
                         <div
                             class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-primary-50 dark:bg-primary-900/10 rounded-full blur-3xl z-0">
                         </div>
@@ -656,7 +656,7 @@ onUnmounted(() => {
                 <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" @click="closeBookingModal"></div>
 
                 <div
-                    class="relative bg-white dark:bg-gray-900 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+                    class="relative bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
                     <!-- Modal Header -->
                     <div
                         class="px-8 py-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
@@ -834,7 +834,7 @@ onUnmounted(() => {
                 <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm" @click="closeRequirementModal"></div>
 
                 <div
-                    class="relative bg-white dark:bg-gray-900 w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+                    class="relative bg-white dark:bg-gray-900 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
                     <div class="p-8 text-center">
                         <!-- Icon -->
                         <div

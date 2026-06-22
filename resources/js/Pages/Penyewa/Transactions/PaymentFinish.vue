@@ -8,7 +8,7 @@
 
         <div class="max-w-md w-full relative z-10 animate-slideUp">
             <!-- Main Card -->
-            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden relative">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden relative">
 
                 <!-- Success Celebration (Confetti) -->
                 <div v-if="isSuccess" class="absolute inset-0 pointer-events-none overflow-hidden">

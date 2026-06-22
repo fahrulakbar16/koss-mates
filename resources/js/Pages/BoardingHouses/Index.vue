@@ -209,7 +209,7 @@ const getImageUrl = (boardingHouse) => {
 
         <!-- Search and Filters -->
         <div
-            class="bg-white dark:bg-gray-800 rounded-3xl p-6 md:p-8 shadow-theme-sm border border-gray-100 dark:border-gray-700/50 mb-10">
+            class="bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-theme-sm border border-gray-100 dark:border-gray-700/50 mb-10">
             <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-6">
                 <!-- Search Input -->
                 <div class="lg:col-span-2 md:col-span-2">
@@ -276,10 +276,10 @@ const getImageUrl = (boardingHouse) => {
 
             <!-- Filter Pills -->
             <div
-                class="flex flex-wrap gap-2 p-1 bg-gray-50 dark:bg-gray-900/50 rounded-xl md:inline-flex w-full md:w-auto">
+                class="flex flex-wrap gap-2 p-1 bg-gray-50 dark:bg-gray-900/50 rounded-xl w-full">
                 <button v-for="filter in ['semua', 'terdekat', 'termurah', 'terpopuler']" :key="filter"
                     @click="activeFilter = filter"
-                    class="flex-1 md:flex-none px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 capitalize relative"
+                    class="flex-1 px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 capitalize relative"
                     :class="activeFilter === filter
                         ? 'text-primary-600 dark:text-primary-400 bg-white dark:bg-gray-800 shadow-sm ring-1 ring-black/5 dark:ring-white/5'
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-gray-800/50'">
@@ -292,7 +292,7 @@ const getImageUrl = (boardingHouse) => {
         <div v-if="loading && boardingHouses.length === 0"
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <div v-for="i in 8" :key="i"
-                class="bg-white dark:bg-gray-800 rounded-3xl h-[400px] animate-pulse shadow-sm border border-gray-100 dark:border-gray-700">
+                class="bg-white dark:bg-gray-800 rounded-2xl h-[400px] animate-pulse shadow-sm border border-gray-100 dark:border-gray-700">
             </div>
         </div>
 
@@ -300,7 +300,7 @@ const getImageUrl = (boardingHouse) => {
         <div v-else-if="boardingHouses.length > 0"
             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <div v-for="kos in boardingHouses" :key="kos.id"
-                class="group bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-theme-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700/50 flex flex-col h-full">
+                class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-theme-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700/50 flex flex-col h-full">
                 <!-- Image -->
                 <div class="relative h-60 overflow-hidden">
                     <img :src="getImageUrl(kos)" :alt="kos.name"
@@ -425,7 +425,7 @@ const getImageUrl = (boardingHouse) => {
 
         <!-- Empty State -->
         <div v-else
-            class="text-center py-24 bg-white dark:bg-gray-800 rounded-3xl border border-dashed border-gray-300 dark:border-gray-700">
+            class="text-center py-24 bg-white dark:bg-gray-800 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700">
             <div
                 class="inline-flex w-20 h-20 bg-gray-50 dark:bg-gray-700 rounded-full items-center justify-center mb-6">
                 <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

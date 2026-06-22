@@ -163,101 +163,95 @@
                         class="sticky top-0 z-10 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl py-6 -mx-2 px-2 border-b border-gray-200 dark:border-gray-700 mb-8 shadow-sm">
                         <div class="flex flex-col gap-4">
                             <!-- Tab Switcher -->
-                            <div class="flex items-center justify-between gap-4">
-                                <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
-                                    <button @click="activeContentTab = 'gallery'" :class="[
-                                        'flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap',
-                                        activeContentTab === 'gallery'
-                                            ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 shadow-sm'
-                                            : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'
-                                    ]">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                        <span>Galeri Foto</span>
-                                        <span v-if="boardingHouse.images && boardingHouse.images.length > 0"
-                                            class="px-2 py-0.5 rounded-full text-xs font-bold"
-                                            :class="activeContentTab === 'gallery' ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'">
-                                            {{ boardingHouse.images.length }}
-                                        </span>
-                                    </button>
-                                    <button @click="activeContentTab = 'rooms'" :class="[
-                                        'flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap',
-                                        activeContentTab === 'rooms'
-                                            ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 shadow-sm'
-                                            : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'
-                                    ]">
-                                        <BedIcon class="w-5 h-5" />
-                                        <span>Daftar Kamar</span>
-                                        <span v-if="rooms.total" class="px-2 py-0.5 rounded-full text-xs font-bold"
-                                            :class="activeContentTab === 'rooms' ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'">
-                                            {{ rooms.total }}
-                                        </span>
-                                    </button>
-                                    <button @click="activeContentTab = 'expenses'" :class="[
-                                        'flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap',
-                                        activeContentTab === 'expenses'
-                                            ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 shadow-sm'
-                                            : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'
-                                    ]">
-                                        <MoneyIcon class="w-5 h-5" />
-                                        <span>Pengeluaran</span>
-                                    </button>
-                                </div>
+                            <div class="flex flex-col sm:flex-row gap-2 sm:overflow-x-auto sm:pb-2 sm:scrollbar-thin">
+                                <button @click="activeContentTab = 'gallery'" :class="[
+                                    'flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap',
+                                    activeContentTab === 'gallery'
+                                        ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 shadow-sm'
+                                        : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'
+                                ]">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>Galeri Foto</span>
+                                    <span v-if="boardingHouse.images && boardingHouse.images.length > 0"
+                                        class="px-2 py-0.5 rounded-full text-xs font-bold"
+                                        :class="activeContentTab === 'gallery' ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'">
+                                        {{ boardingHouse.images.length }}
+                                    </span>
+                                </button>
+                                <button @click="activeContentTab = 'rooms'" :class="[
+                                    'flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap',
+                                    activeContentTab === 'rooms'
+                                        ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 shadow-sm'
+                                        : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'
+                                ]">
+                                    <BedIcon class="w-5 h-5" />
+                                    <span>Daftar Kamar</span>
+                                    <span v-if="rooms.total" class="px-2 py-0.5 rounded-full text-xs font-bold"
+                                        :class="activeContentTab === 'rooms' ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'">
+                                        {{ rooms.total }}
+                                    </span>
+                                </button>
+                                <button @click="activeContentTab = 'expenses'" :class="[
+                                    'flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap',
+                                    activeContentTab === 'expenses'
+                                        ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 shadow-sm'
+                                        : 'text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'
+                                ]">
+                                    <MoneyIcon class="w-5 h-5" />
+                                    <span>Pengeluaran</span>
+                                </button>
 
-                                <!-- Action Buttons -->
-                                <div v-if="activeContentTab === 'gallery'">
-                                    <button v-if="can('boarding_houses.edit')" @click="openGalleryModal" type="button"
-                                        class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200">
+                                <!-- Action Buttons (dalam baris yang sama, scroll bersama) -->
+                                <div class="sm:ml-auto flex-shrink-0">
+                                    <button v-if="activeContentTab === 'gallery' && can('boarding_houses.edit')" @click="openGalleryModal" type="button"
+                                        class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap">
                                         <PlusSquareIcon class="w-5 h-5" />
-                                        <span class="hidden md:inline">Tambah Foto</span>
-                                        <span class="md:hidden">Tambah</span>
+                                        <span>Tambah Foto</span>
                                     </button>
-                                </div>
-                                <div v-if="activeContentTab === 'expenses'">
-                                    <button v-if="is('Superadmin') || is('Pengelola')" @click="openExpenseModal" type="button"
-                                        class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200">
+                                    <button v-if="activeContentTab === 'expenses' && (is('Superadmin') || is('Pengelola'))" @click="openExpenseModal" type="button"
+                                        class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap">
                                         <PlusSquareIcon class="w-5 h-5" />
-                                        <span class="hidden md:inline">Tambah Pengeluaran</span>
-                                        <span class="md:hidden">Tambah</span>
+                                        <span>Tambah Pengeluaran</span>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Room Filters (only show when rooms tab is active) -->
-                            <div v-if="activeContentTab === 'rooms'" class="flex flex-col sm:flex-row gap-3">
-                                <div class="relative group flex-1">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <SearchIcon
-                                            class="h-4 w-4 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+                            <div v-if="activeContentTab === 'rooms'" class="flex flex-col gap-3">
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <div class="relative group flex-1">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <SearchIcon
+                                                class="h-4 w-4 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
+                                        </div>
+                                        <input v-model="search" type="text" placeholder="Cari nomor/nama kamar..."
+                                            class="pl-10 pr-4 py-2.5 w-full bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all shadow-sm" />
                                     </div>
-                                    <input v-model="search" type="text" placeholder="Cari nomor/nama kamar..."
-                                        class="pl-10 pr-4 py-2.5 w-full bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all shadow-sm" />
-                                </div>
 
-                                <select v-model="statusFilter"
-                                    class="py-2.5 pl-4 pr-10 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all shadow-sm cursor-pointer">
-                                    <option value="">Semua Status</option>
-                                    <option value="available">Tersedia</option>
-                                    <option value="occupied">Terisi</option>
-                                    <option value="maintenance">Maintenance</option>
-                                </select>
+                                    <select v-model="statusFilter"
+                                        class="w-full sm:w-auto py-2.5 pl-4 pr-10 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all shadow-sm cursor-pointer">
+                                        <option value="">Semua Status</option>
+                                        <option value="available">Tersedia</option>
+                                        <option value="occupied">Terisi</option>
+                                        <option value="maintenance">Maintenance</option>
+                                    </select>
+                                </div>
 
                                 <div class="flex gap-2">
                                     <button v-if="can('rooms.create')" @click="openAddModal" type="button"
-                                        class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200">
+                                        class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transform hover:-translate-y-0.5 transition-all duration-200">
                                         <PlusSquareIcon class="w-5 h-5" />
-                                        <span class="hidden md:inline">Tambah Kamar</span>
-                                        <span class="md:hidden">Tambah</span>
+                                        <span>Tambah Kamar</span>
                                     </button>
                                     <button v-if="can('rooms.create')" @click="openBatchModal" type="button"
-                                        class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-primary-600 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-xl shadow-sm transform hover:-translate-y-0.5 transition-all duration-200">
+                                        class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-primary-600 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-xl shadow-sm transform hover:-translate-y-0.5 transition-all duration-200">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                                         </svg>
-                                        <span class="hidden md:inline">Tambah Batch</span>
-                                        <span class="md:hidden">Batch</span>
+                                        <span>Tambah Batch</span>
                                     </button>
                                 </div>
                             </div>

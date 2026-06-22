@@ -3,8 +3,7 @@
         <img
             :src="logoUrl"
             alt="Logo"
-            width="45"
-            height="45"
+            class="h-9 w-auto object-contain"
         />
         <div class="flex flex-col leading-tight">
             <div class="text-primary-600 font-bold tracking-wider">
@@ -22,7 +21,7 @@ import { computed } from "vue";
 const page = usePage();
 
 // Website settings
-const logoUrl = computed(() => page.props.settings?.logo_main_url || '/images/logo/logo.png');
+const logoUrl = computed(() => page.props.settings?.logo_main_url || '/KosMates/logosaja.png');
 const siteName = computed(() => page.props.settings?.site_name || 'Starter Project');
 const siteDescription = computed(() => page.props.settings?.site_description || 'Laravel Inertia Vue');
 </script>

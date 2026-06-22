@@ -26,7 +26,7 @@
         </div>
 
         <div
-            class="flex-1 overflow-hidden rounded-3xl bg-white dark:bg-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 flex flex-col">
+            class="flex-1 overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700 flex flex-col">
             <!-- Decorative gradient line -->
             <div class="h-1 bg-gradient-to-r from-primary-500 via-blue-500 to-purple-500 w-full"></div>
 

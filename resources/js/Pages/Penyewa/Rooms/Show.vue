@@ -23,7 +23,7 @@
                     <!-- Main Room Card -->
                     <!-- Single Combined Card -->
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 relative overflow-hidden">
+                        class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 relative overflow-hidden">
                         <!-- Active Status Badge (Top Right) -->
                         <div
                             class="absolute top-6 right-6 z-10 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
@@ -88,7 +88,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Lapor Kerusakan -->
                         <Link :href="route('penyewa.damage-reports.create')"
-                            class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 flex items-center gap-4 hover:shadow-2xl transition-all text-left group">
+                            class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 flex items-center gap-4 hover:shadow-2xl transition-all text-left group">
                             <div
                                 class="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,7 +108,7 @@
                         <!-- Pindah Kamar -->
                         <Link v-if="$page.props.auth.user.tenant?.is_moved"
                             :href="activeRoom?.pending_transfer ? route('penyewa.transfers.index') : route('penyewa.transfers.create')"
-                            class="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 flex items-center gap-4 hover:shadow-2xl transition-all text-left group">
+                            class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 flex items-center gap-4 hover:shadow-2xl transition-all text-left group">
                             <div
                                 class="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 rounded-2xl flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@
                 <!-- Right Column (History) -->
                 <div class="space-y-6">
                     <div
-                        class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                        class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-6">
                             <h3 class="font-bold text-gray-900 dark:text-white">Riwayat Terbaru</h3>
                             <Link :href="route('penyewa.transactions.index')"
@@ -167,7 +167,7 @@
             </div>
             <!-- Empty State -->
             <div v-else
-                class="bg-white dark:bg-gray-800 rounded-3xl p-12 text-center shadow-xl border border-gray-200 dark:border-gray-700 min-h-[60vh] flex flex-col items-center justify-center">
+                class="bg-white dark:bg-gray-800 rounded-2xl p-12 text-center shadow-xl border border-gray-200 dark:border-gray-700 min-h-[60vh] flex flex-col items-center justify-center">
                 <div
                     class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

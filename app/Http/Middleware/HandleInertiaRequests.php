@@ -76,7 +76,7 @@ class HandleInertiaRequests extends Middleware
                 ? $logoMain
                 : asset('storage/' . $logoMain);
         } else {
-            $settings['logo_main_url'] = '/images/logo/KosMates.png';
+            $settings['logo_main_url'] = '/KosMates/logosaja.png';
         }
 
         if ($logoFavicon && is_string($logoFavicon)) {
@@ -84,7 +84,7 @@ class HandleInertiaRequests extends Middleware
                 ? $logoFavicon
                 : asset('storage/' . $logoFavicon);
         } else {
-            $settings['logo_favicon_url'] = '/images/logo/KosMates.png';
+            $settings['logo_favicon_url'] = '/KosMates/logosaja.png';
         }
 
         return array_merge(parent::share($request), [
