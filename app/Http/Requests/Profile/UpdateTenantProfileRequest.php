@@ -22,12 +22,12 @@ class UpdateTenantProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|string|max:20',
+            'phone' => 'nullable|string|max:20',
             'address' => 'required|string|max:500',
             'id_card_number' => 'required|string|max:30',
             'birth_date' => 'required|date',
             'gender' => 'required|in:male,female',
-            'emergency_contact' => 'required|string|max:255',
+            'emergency_contact' => 'nullable|string|max:255',
         ];
     }
 }

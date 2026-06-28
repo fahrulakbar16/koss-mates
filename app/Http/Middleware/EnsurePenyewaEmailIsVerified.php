@@ -24,13 +24,13 @@ class EnsurePenyewaEmailIsVerified
             $tenant = $user->tenant;
             $phoneVerified = $tenant && !is_null($tenant->phone_verified_at);
 
-            if (!$emailVerified || !$phoneVerified) {
+            if (!$emailVerified) {
                 if ($request->expectsJson() || $request->is('api/*')) {
                     return response()->json([
                         'message' => 'Detail kontak Anda belum terverifikasi seluruhnya.',
                         'data' => [
                             'email_verified' => $emailVerified,
-                            'phone_verified' => $phoneVerified
+                            'phone_verified' => 1
                         ]
                     ], 403);
                 }
@@ -39,7 +39,7 @@ class EnsurePenyewaEmailIsVerified
                 // We'll pass the verification statuses as query parameters to the notice page
                 return redirect()->route('penyewa.verification.notice', [
                     'email_verified' => $emailVerified ? 1 : 0,
-                    'phone_verified' => $phoneVerified ? 1 : 0
+                    'phone_verified' => 1
                 ]);
             }
         }
