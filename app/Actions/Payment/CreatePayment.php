@@ -71,7 +71,7 @@ class CreatePayment
     private function generateSnapToken(payment $payment): array
     {
         \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
-        \Midtrans\Config::$isProduction = config('services.midtrans.is_production', false);
+        \Midtrans\Config::$isProduction = true;
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
         \Midtrans\Config::$overrideNotifUrl = route('midtrans.callback');
