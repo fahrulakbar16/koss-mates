@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Transaksi;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class BookingRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ class BookingRequest extends FormRequest
      */
     public function rules(): array
     {
+        Log::info("booking request data", $this->all());
         return [
             'boarding_house_id' => 'nullable|exists:boarding_houses,id',
             'room_id' => 'required|exists:rooms,id',
