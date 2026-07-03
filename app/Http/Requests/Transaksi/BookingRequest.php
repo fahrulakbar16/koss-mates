@@ -29,7 +29,7 @@ class BookingRequest extends FormRequest
             'room_price_id' => 'required|exists:rooms_price,id',
             'payment_scheme' => 'required|in:full,installment',
             'total_price' => 'required|numeric',
-            'planned_checkin_date' => 'required|date|after_or_equal:today',
+            'planned_checkin_date' => 'required|date',
         ];
     }
 }
