@@ -176,8 +176,7 @@
                 <div
                     class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p class="text-sm text-gray-500 text-center md:text-left">
-                        &copy; {{ new Date().getFullYear() }} Kostmates. All rights reserved. Made with ❤️ in
-                        Indonesia.
+                        &copy; {{ new Date().getFullYear() }} Digi Jaya Global. All rights reserved. Develop by ARRW.
                     </p>
                     <div v-if="laravelVersion || phpVersion" class="flex gap-6 text-sm text-gray-500">
                         <span v-if="laravelVersion">Laravel v{{ laravelVersion }}</span>
