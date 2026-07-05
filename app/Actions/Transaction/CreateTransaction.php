@@ -8,11 +8,13 @@ use App\Models\Transaction;
 use App\Models\UserRooms;
 use App\Helpers\LogActivityHelper;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CreateTransaction
 {
     public function execute($user, $data, $type = Transaction::TYPE_EXTENDED)
     {
+        Log::info("Booking Request Data: " . json_encode($data));
         try {
             DB::beginTransaction();
 

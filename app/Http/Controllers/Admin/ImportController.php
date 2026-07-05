@@ -98,6 +98,7 @@ class ImportController extends Controller
                         ['name' => $kosName, 'cluster_id' => $cluster->id],
                         [
                             'owner_id' => $owner->id,
+                            'pengelola_id' => 4,
                             'address' => 'Imported Address',
                             'gender' => 'C', // Default to Campur
                         ]

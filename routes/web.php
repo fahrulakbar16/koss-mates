@@ -53,7 +53,13 @@ Route::prefix('penyewa')->middleware(['auth'])->group(function () {
 });
 
 
-Route::prefix('penyewa')->middleware(['auth', 'penyewa.verified'])->group(function () {
+Route::prefix('aktivasi-akun')->middleware(['auth', 'role:Penyewa'])->group(function () {
+    Route::get('/form', [\App\Http\Controllers\Penyewa\AktivasiAkunController::class, 'create'])->name('aktivasi-akun.form');
+    Route::post('/store', [\App\Http\Controllers\Penyewa\AktivasiAkunController::class, 'store'])->name('aktivasi-akun.store');
+    Route::get('/review', [\App\Http\Controllers\Penyewa\AktivasiAkunController::class, 'review'])->name('aktivasi-akun.review');
+});
+
+Route::prefix('penyewa')->middleware(['auth', 'penyewa.verified', 'check_activation'])->group(function () {
     Route::resource('transactions', TransactionController::class)->only(['index', 'show'])->names('penyewa.transactions');
     Route::post('transactions/{transaction}/payment', [TransactionController::class, 'createPayment'])->name('penyewa.transactions.payment.create');
     Route::delete('transactions/{transaction}/cancel', [TransactionController::class, 'cancel'])->name('penyewa.transactions.cancel');
@@ -141,6 +147,16 @@ Route::prefix('admin/room-transfers')->middleware(['auth'])->group(function () {
     Route::get('/{transfer}', [\App\Http\Controllers\Admin\RoomTransferController::class, 'show'])->name('admin.room-transfers.show');
     Route::post('/{transfer}/action', [\App\Http\Controllers\Admin\RoomTransferController::class, 'action'])->name('admin.room-transfers.action');
 });
+
+// Aktivasi Akun Management
+Route::prefix('admin/aktivasi-akun')->middleware(['auth', 'role:Superadmin|Pengelola'])->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\AktivasiAkunController::class, 'index'])->name('admin.aktivasi-akun.index');
+    Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AktivasiAkunController::class, 'edit'])->name('admin.aktivasi-akun.edit');
+    Route::put('/{id}', [\App\Http\Controllers\Admin\AktivasiAkunController::class, 'update'])->name('admin.aktivasi-akun.update');
+    Route::post('/{id}/approve', [\App\Http\Controllers\Admin\AktivasiAkunController::class, 'approve'])->name('admin.aktivasi-akun.approve');
+    Route::post('/{id}/reject', [\App\Http\Controllers\Admin\AktivasiAkunController::class, 'reject'])->name('admin.aktivasi-akun.reject');
+});
+
 
 // Damage Reports Management
 Route::prefix('admin/damage-reports')->middleware(['auth'])->group(function () {

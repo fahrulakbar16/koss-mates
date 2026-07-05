@@ -684,6 +684,11 @@ const sharedAdminItems = [
         path: "/admin/damage-reports",
     },
     {
+        icon: UserCard,
+        name: "Aktivasi Akun",
+        path: "/admin/aktivasi-akun",
+    },
+    {
         icon: UserGroupIcon,
         name: "Akun Penyewa",
         path: "/admin/tenants",

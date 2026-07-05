@@ -46,6 +46,7 @@ class User extends Authenticatable
         'external_id',
         'password',
         'email_verified_at',
+        'active_at',
         'last_seen',
     ];
 
@@ -81,6 +82,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'active_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -151,5 +153,10 @@ class User extends Authenticatable
     public function owner(): HasOne
     {
         return $this->hasOne(Owner::class);
+    }
+
+    public function aktivasiAkun(): HasOne
+    {
+        return $this->hasOne(AktivasiAkun::class, 'user_id');
     }
 }
