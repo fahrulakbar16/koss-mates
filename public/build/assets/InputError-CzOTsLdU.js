@@ -1,0 +1,1 @@
+import{d as t,f as a,o as s,a as r,t as m}from"./app-DoLMCUls.js";const o={key:0},c={class:"text-sm text-primary-600 dark:text-primary-400"},g={__name:"InputError",props:{message:[String,Array]},setup(e){return(n,i)=>e.message?(s(),t("div",o,[r("p",c,m(Array.isArray(e.message)?e.message[0]:e.message),1)])):a("",!0)}};export{g as _};
