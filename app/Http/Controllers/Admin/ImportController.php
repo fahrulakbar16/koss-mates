@@ -137,7 +137,7 @@ class ImportController extends Controller
                         ['email' => $email],
                         [
                             'name' => $tenantName,
-                            'username' => Str::slug($tenantName, '_') . rand(10, 99),
+                            'username' => Str::slug($tenantName, '_'),
                             'password' => Hash::make('password'),
                             'email_verified_at' => now(),
                         ]
