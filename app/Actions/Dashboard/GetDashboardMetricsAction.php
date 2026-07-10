@@ -190,7 +190,12 @@ class GetDashboardMetricsAction
                 }
             }])
             ->when($isPengelola, function ($query) use ($user) {
-                $query->where('pengelola_id', $user->id);
+                $query->where(function ($q) use ($user) {
+                    $q->where('pengelola_id', $user->id)
+                      ->orWhereHas('boardingHouses', function ($q) use ($user) {
+                          $q->where('pengelola_id', $user->id);
+                      });
+                });
             })
                 ->having('boarding_houses_count', '>', 0)
                 ->get()

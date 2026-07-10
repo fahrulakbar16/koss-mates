@@ -114,7 +114,12 @@ class HandleInertiaRequests extends Middleware
                     });
                 })
                 ->when(Auth::user()->hasRole('Pengelola'), function ($query) {
-                    return $query->where('pengelola_id', Auth::id());
+                    return $query->where(function ($q) {
+                        $q->where('pengelola_id', Auth::id())
+                          ->orWhereHas('boardingHouses', function ($q) {
+                              $q->where('pengelola_id', Auth::id());
+                          });
+                    });
                 })
                 ->get()
                 : [],
