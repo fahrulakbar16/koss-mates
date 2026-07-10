@@ -41,6 +41,7 @@ class LoginGoogle
                 'photo_url' => $photoUrl,
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
+                'active_at' => now()
             ]);
 
             $user->assignRole('Penyewa');

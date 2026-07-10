@@ -23,6 +23,7 @@ class RegisterAction
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
             'status' => 'active',
+            'active_at' => now()
         ]);
 
         $user->tenant()->create([
