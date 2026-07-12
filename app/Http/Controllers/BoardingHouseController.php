@@ -155,7 +155,6 @@ class BoardingHouseController extends Controller
 
         $boardingHouse->load('cluster', 'owner', 'images', 'penyewa');
 
-        // dd($boardingHouse->toArray());
         // Get expenses for this boarding house with room name
         $expenses = $boardingHouse->expenses()
             ->with('room:id,name')
@@ -173,12 +172,16 @@ class BoardingHouseController extends Controller
                 ];
             });
 
-        // dd($rooms->toArray());
+        $tenants = \App\Models\User::role('Penyewa')
+            ->select('id', 'name', 'username', 'email')
+            ->orderBy('name')
+            ->get();
 
         return Inertia::render('Admin/BoardingHouses/Show', [
             'boardingHouse' => $boardingHouse,
             'rooms' => $rooms,
             'expenses' => $expenses,
+            'tenants' => $tenants,
             'search' => $request->input('search'),
             'gender' => $request->input('gender'),
         ]);

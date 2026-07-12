@@ -23,6 +23,7 @@ class Tenant extends Model
         'emergency_contact',
         'is_moved',
         'phone_verified_at',
+        'tempat_kuliah_kerja',
     ];
 
     protected $casts = [

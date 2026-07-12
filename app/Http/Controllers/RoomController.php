@@ -199,4 +199,94 @@ class RoomController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan saat check-out: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Assign a tenant manually from admin dashboard.
+     */
+    public function assignTenant(Request $request, BoardingHouse $boardingHouse, Room $room)
+    {
+        abort_unless(Gate::allows('rooms.edit'), 403, 'Anda tidak memiliki akses untuk menambah penyewa');
+
+        $request->validate([
+            'is_new_tenant' => 'required|boolean',
+            'room_price_id' => 'required|exists:rooms_price,id',
+            'planned_checkin_date' => 'required|date',
+            'has_payment' => 'required|boolean',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            if ($request->is_new_tenant) {
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                    'username' => 'required|string|max:255|unique:users',
+                    'email' => 'required|string|email|max:255|unique:users',
+                    'password' => 'required|string|min:8',
+                    'phone' => 'required|string|max:20',
+                    'gender' => 'required|in:L,P,Male,Female',
+                    'address' => 'nullable|string',
+                    'id_card_number' => 'nullable|string|max:50',
+                    'birth_date' => 'nullable|date',
+                    'emergency_contact' => 'nullable|string|max:50',
+                    'tempat_kuliah_kerja' => 'nullable|string|max:255',
+                ]);
+                $user = app(\App\Actions\Tenant\CreateTenantAccount::class)->execute($request->all());
+            } else {
+                $request->validate([
+                    'tenant_id' => 'required|exists:users,id',
+                ]);
+                $user = \App\Models\User::findOrFail($request->tenant_id);
+            }
+
+            // Create Transaction
+            $data = [
+                'boarding_house_id' => $boardingHouse->id,
+                'room_id' => $room->id,
+                'room_price_id' => $request->room_price_id,
+                'planned_checkin_date' => $request->planned_checkin_date,
+                'payment_scheme' => 'full',
+            ];
+
+            $transaction = app(\App\Actions\Transaction\CreateTransaction::class)->execute($user, $data, Transaction::TYPE_BOOKED);
+
+            if ($request->has_payment) {
+                $request->validate([
+                    'payment_amount' => 'required|numeric|min:1',
+                ]);
+
+                $paymentAmount = $request->payment_amount;
+
+                \App\Models\payment::create([
+                    'transaction_id' => $transaction->id,
+                    'payment_sequence' => 1,
+                    'amount' => $paymentAmount,
+                    'payment_method' => 'cash',
+                    'payment_status' => 'success',
+                    'payment_date' => now(),
+                ]);
+
+                if ($paymentAmount >= $transaction->total_price) {
+                    $transaction->update(['status' => Transaction::STATUS_COMPLETED]);
+
+                    $transaction->userRoom->update([
+                        'status' => 'checked_in'
+                    ]);
+                } else {
+
+                    $transaction->userRoom->update([
+                        'status' => 'checked_in'
+                    ]);
+                    $transaction->update(['status' => Transaction::STATUS_INCOMPLETE]);
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Penyewa berhasil ditambahkan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan penyewa: ' . $e->getMessage());
+        }
+    }
 }

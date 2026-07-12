@@ -372,6 +372,12 @@
                                             </svg>
                                             Detail
                                         </Link>
+                                        <button v-if="room.status === 'available' && can('rooms.edit')" @click="openAssignTenantModal(room)"
+                                            class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-emerald-600 dark:bg-emerald-500 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg"
+                                            title="Tambah Penyewa">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+                                            Tambah
+                                        </button>
                                         <button v-if="room.status === 'booked' && can('rooms.edit')" @click="openCancelBookingModal(room)"
                                             class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-primary-600 dark:bg-primary-500 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg"
                                             title="Batalkan Booking">
@@ -884,6 +890,142 @@
                     </div>
                 </div>
             </Modal>
+            <!-- Assign Tenant Modal -->
+            <Modal :show="isAssignTenantModalOpen" title="Tambah Penyewa ke Kamar" confirmText="Tambahkan" maxWidth="2xl"
+                @close="closeAssignTenantModal" @confirm="saveAssignTenant">
+                <div class="space-y-5">
+                    <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                        <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            Kamar Terpilih: <span class="font-bold text-primary-600 dark:text-primary-400">{{ selectedRoomForTenant?.name }} (No. {{ selectedRoomForTenant?.number }})</span>
+                        </p>
+                    </div>
+
+                    <!-- Toggle Penyewa Lama/Baru -->
+                    <div class="flex items-center gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" v-model="assignTenantForm.is_new_tenant" :value="false" class="text-primary-600 focus:ring-primary-500">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Pilih Penyewa Terdaftar</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" v-model="assignTenantForm.is_new_tenant" :value="true" class="text-primary-600 focus:ring-primary-500">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Buat Akun Baru</span>
+                        </label>
+                    </div>
+
+                    <!-- Penyewa Lama -->
+                    <div v-if="!assignTenantForm.is_new_tenant" class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Pilih Penyewa <span class="text-primary-500">*</span></label>
+                        <select v-model="assignTenantForm.tenant_id" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
+                            <option value="">-- Pilih Penyewa --</option>
+                            <option v-for="tenant in tenants" :key="tenant.id" :value="tenant.id">{{ tenant.name }} ({{ tenant.email }})</option>
+                        </select>
+                        <div v-if="assignTenantForm.errors.tenant_id" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.tenant_id }}</div>
+                    </div>
+
+                    <!-- Penyewa Baru -->
+                    <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Nama Lengkap <span class="text-primary-500">*</span></label>
+                            <input type="text" v-model="assignTenantForm.name" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                            <div v-if="assignTenantForm.errors.name" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.name }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Username <span class="text-primary-500">*</span></label>
+                            <input type="text" v-model="assignTenantForm.username" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                            <div v-if="assignTenantForm.errors.username" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.username }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Email <span class="text-primary-500">*</span></label>
+                            <input type="email" v-model="assignTenantForm.email" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                            <div v-if="assignTenantForm.errors.email" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.email }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Password <span class="text-primary-500">*</span></label>
+                            <input type="text" v-model="assignTenantForm.password" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required placeholder="Minimal 8 karakter">
+                            <div v-if="assignTenantForm.errors.password" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.password }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">No. HP <span class="text-primary-500">*</span></label>
+                            <input type="text" v-model="assignTenantForm.phone" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                            <div v-if="assignTenantForm.errors.phone" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.phone }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Jenis Kelamin <span class="text-primary-500">*</span></label>
+                            <select v-model="assignTenantForm.gender" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                                <option value="">-- Pilih --</option>
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                            <div v-if="assignTenantForm.errors.gender" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.gender }}</div>
+                        </div>
+                        
+                        <!-- Detail Tenant Tambahan -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">No. KTP (NIK)</label>
+                            <input type="text" v-model="assignTenantForm.id_card_number" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
+                            <div v-if="assignTenantForm.errors.id_card_number" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.id_card_number }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Tanggal Lahir</label>
+                            <input type="date" v-model="assignTenantForm.birth_date" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
+                            <div v-if="assignTenantForm.errors.birth_date" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.birth_date }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Kontak Darurat</label>
+                            <input type="text" v-model="assignTenantForm.emergency_contact" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
+                            <div v-if="assignTenantForm.errors.emergency_contact" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.emergency_contact }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Tempat Kuliah/Kerja</label>
+                            <input type="text" v-model="assignTenantForm.tempat_kuliah_kerja" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl">
+                            <div v-if="assignTenantForm.errors.tempat_kuliah_kerja" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.tempat_kuliah_kerja }}</div>
+                        </div>
+                        <div class="space-y-2 sm:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Alamat</label>
+                            <textarea v-model="assignTenantForm.address" rows="2" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl"></textarea>
+                            <div v-if="assignTenantForm.errors.address" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.address }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Room Booking Details -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Paket Harga <span class="text-primary-500">*</span></label>
+                            <select v-model="assignTenantForm.room_price_id" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                                <option value="">-- Pilih Paket Harga --</option>
+                                <option v-for="price in selectedRoomForTenant?.prices" :key="price.id" :value="price.id">
+                                    {{ price.duration }} Bulan - Rp {{ formatCurrency(price.price) }}
+                                </option>
+                            </select>
+                            <div v-if="assignTenantForm.errors.room_price_id" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.room_price_id }}</div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Tanggal Check-in <span class="text-primary-500">*</span></label>
+                            <input type="date" v-model="assignTenantForm.planned_checkin_date" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                            <div v-if="assignTenantForm.errors.planned_checkin_date" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.planned_checkin_date }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <div class="space-y-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" v-model="assignTenantForm.has_payment" class="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500">
+                                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Penyewa sudah melakukan pembayaran awal?</span>
+                            </label>
+
+                            <div v-if="assignTenantForm.has_payment" class="space-y-2 pl-6">
+                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Jumlah yang Dibayarkan (Rp) <span class="text-primary-500">*</span></label>
+                                <input type="number" v-model.number="assignTenantForm.payment_amount" class="w-full px-4 py-2.5 text-sm bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl" required>
+                                <div v-if="assignTenantForm.errors.payment_amount" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.payment_amount }}</div>
+                                <p class="text-xs text-gray-500 mt-1" v-if="assignTenantForm.room_price_id">
+                                    Total Harga: Rp {{ formatCurrency(selectedRoomForTenant?.prices?.find(p => p.id === assignTenantForm.room_price_id)?.price || 0) }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     </div>
 </template>
@@ -915,6 +1057,7 @@ const props = defineProps({
     boardingHouse: Object,
     rooms: Object,
     expenses: Array,
+    tenants: Array,
     search: String,
     status: String,
 });
@@ -931,6 +1074,48 @@ const search = ref(props.search || "");
 const statusFilter = ref(props.status || "");
 const activeContentTab = ref('rooms'); // Default to rooms tab
 
+const isAssignTenantModalOpen = ref(false);
+const selectedRoomForTenant = ref(null);
+const assignTenantForm = useForm({
+    is_new_tenant: true,
+    tenant_id: "",
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+    phone: "",
+    gender: "",
+    address: "",
+    id_card_number: "",
+    birth_date: "",
+    emergency_contact: "",
+    tempat_kuliah_kerja: "",
+    room_price_id: "",
+    planned_checkin_date: "",
+    has_payment: false,
+    payment_amount: "",
+});
+
+function openAssignTenantModal(room) {
+    selectedRoomForTenant.value = room;
+    assignTenantForm.reset();
+    isAssignTenantModalOpen.value = true;
+}
+
+function closeAssignTenantModal() {
+    isAssignTenantModalOpen.value = false;
+    selectedRoomForTenant.value = null;
+    assignTenantForm.reset();
+}
+
+function saveAssignTenant() {
+    assignTenantForm.post(route("boarding-houses.rooms.assign-tenant", [props.boardingHouse.id, selectedRoomForTenant.value.id]), {
+        preserveScroll: true,
+        onSuccess: () => {
+            closeAssignTenantModal();
+        },
+    });
+}
 
 
 let timeout = null;

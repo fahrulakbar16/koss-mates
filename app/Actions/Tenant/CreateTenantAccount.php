@@ -38,6 +38,7 @@ class CreateTenantAccount
                 'birth_date' => $data['birth_date'] ?? null,
                 'gender' => $data['gender'] ?? null,
                 'emergency_contact' => $data['emergency_contact'] ?? null,
+                'tempat_kuliah_kerja' => $data['tempat_kuliah_kerja'] ?? null,
             ]);
 
             LogActivityHelper::addToLog('Membuat akun penyewa: ' . $user->name, [

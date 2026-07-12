@@ -59,6 +59,10 @@ class AuthController extends Controller
     {
         $user = app(RegisterAction::class)->execute($request);
 
+        $user->update([
+            'active_at' => now(),
+        ]);
+
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([

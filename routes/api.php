@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --- Verify Email Resend ---
     Route::post('/email/resend', [\App\Http\Controllers\Api\v1\Penyewa\VerificationController::class, 'resend'])
-       ->name('api.verification.send');
+        ->name('api.verification.send');
 
     // --- Profile ---
     Route::prefix('/profile')->group(function () {
