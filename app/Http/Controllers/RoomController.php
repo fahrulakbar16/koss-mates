@@ -232,6 +232,9 @@ class RoomController extends Controller
                     'tempat_kuliah_kerja' => 'nullable|string|max:255',
                 ]);
                 $user = app(\App\Actions\Tenant\CreateTenantAccount::class)->execute($request->all());
+                $user->update([
+                    'email_verified_at' => now(),
+                ]);
             } else {
                 $request->validate([
                     'tenant_id' => 'required|exists:users,id',

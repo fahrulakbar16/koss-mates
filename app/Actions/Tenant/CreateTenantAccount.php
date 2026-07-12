@@ -19,6 +19,7 @@ class CreateTenantAccount
                 'username' => $data['username'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
+                'active_at' => now(),
             ]);
 
             // Assign "Penyewa" role
