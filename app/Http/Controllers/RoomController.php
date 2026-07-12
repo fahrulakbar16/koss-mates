@@ -273,12 +273,12 @@ class RoomController extends Controller
                     $transaction->update(['status' => Transaction::STATUS_COMPLETED]);
 
                     $transaction->userRoom->update([
-                        'status' => 'checked_in'
+                        'status' => 'checkin_open'
                     ]);
                 } else {
 
                     $transaction->userRoom->update([
-                        'status' => 'checked_in'
+                        'status' => 'checkin_open'
                     ]);
                     $transaction->update(['status' => Transaction::STATUS_INCOMPLETE]);
                 }
