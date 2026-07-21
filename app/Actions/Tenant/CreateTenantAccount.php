@@ -40,6 +40,7 @@ class CreateTenantAccount
                 'gender' => $data['gender'] ?? null,
                 'emergency_contact' => $data['emergency_contact'] ?? null,
                 'tempat_kuliah_kerja' => $data['tempat_kuliah_kerja'] ?? null,
+                'file_ktp' => isset($data['file_ktp']) ? $data['file_ktp']->store('ktp', 'public') : null,
             ]);
 
             LogActivityHelper::addToLog('Membuat akun penyewa: ' . $user->name, [

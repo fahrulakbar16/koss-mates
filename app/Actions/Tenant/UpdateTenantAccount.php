@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Helpers\LogActivityHelper;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UpdateTenantAccount
 {
@@ -45,6 +46,15 @@ class UpdateTenantAccount
                     'is_moved' => $data['is_moved'] ?? false,
                 ]
             );
+
+            if (isset($data['file_ktp'])) {
+                if ($user->tenant->file_ktp) {
+                    Storage::disk('public')->delete($user->tenant->file_ktp);
+                }
+                $user->tenant->update([
+                    'file_ktp' => $data['file_ktp']->store('ktp', 'public')
+                ]);
+            }
 
             LogActivityHelper::addToLog('Memperbarui akun penyewa: ' . $user->name, [
                 'id' => $user->id,

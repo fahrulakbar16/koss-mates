@@ -104,6 +104,8 @@
                                     </div>
                                 </div>
 
+
+
                                 <div v-if="tenant.birth_date" class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0 border border-gray-100 dark:border-gray-700">
                                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,6 +160,20 @@
                                         ]">
                                             {{ tenant.rooms[0].status === 'checked_in' ? 'Ditempati' : tenant.rooms[0].status === 'booked' ? 'Dipesan' : tenant.rooms[0].status === 'checked_out' ? 'Sudah Keluar' : 'Dibatalkan' }}
                                         </span>
+                                    </div>
+                                </div>
+
+                                <div v-if="tenant.file_ktp" class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-gray-800 flex items-center justify-center shrink-0 border border-gray-100 dark:border-gray-700">
+                                        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0 pt-0.5">
+                                        <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Foto KTP</p>
+                                        <a :href="tenant.file_ktp" target="_blank" class="mt-1 block w-full rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:opacity-90 transition-opacity">
+                                            <img :src="tenant.file_ktp" alt="Foto KTP" class="w-full aspect-[16/10] object-cover" />
+                                        </a>
                                     </div>
                                 </div>
 

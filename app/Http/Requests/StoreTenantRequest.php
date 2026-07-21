@@ -29,6 +29,7 @@ class StoreTenantRequest extends FormRequest
             'phone' => 'required|string|max:20',
             'address' => 'nullable|string|max:500',
             'id_card_number' => 'nullable|string|max:20',
+            'file_ktp' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'birth_date' => 'nullable|date',
             'gender' => 'nullable|in:L,P',
             'emergency_contact' => 'nullable|string|max:20',

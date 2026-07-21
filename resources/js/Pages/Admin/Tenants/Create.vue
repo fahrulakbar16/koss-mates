@@ -132,6 +132,40 @@
                             </div>
 
                             <div class="space-y-2">
+                                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300 block">
+                                    Foto KTP
+                                </label>
+                                <div class="relative w-full sm:max-w-sm">
+                                    <input type="file" id="file_ktp" @change="handleFileChange" accept="image/*" class="sr-only" />
+                                    <label for="file_ktp"
+                                           class="flex flex-col items-center justify-center w-full aspect-[16/10] border-2 border-dashed rounded-xl cursor-pointer transition-all duration-200 overflow-hidden group"
+                                           :class="ktpPreview ? 'border-primary-500 bg-primary-500/5 dark:border-primary-400 dark:bg-primary-400/5' : 'border-gray-300 bg-gray-50 hover:bg-gray-100 hover:border-gray-400 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700'">
+
+                                        <img v-if="ktpPreview" :src="ktpPreview" alt="Preview KTP" class="w-full h-full object-cover" />
+
+                                        <div v-else class="flex flex-col items-center justify-center p-4 text-center">
+                                            <div class="p-3 bg-white dark:bg-gray-700 rounded-full shadow-sm mb-3 text-gray-400 dark:text-gray-300 group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                            </div>
+                                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Klik untuk upload KTP</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">PNG, JPG, JPEG (Maks. 2MB)</p>
+                                        </div>
+
+                                        <div v-if="ktpPreview" class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                            <span class="text-white text-sm font-medium">Ubah Foto</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div v-if="errors.file_ktp" class="text-xs text-primary-500 mt-1 font-medium">{{ errors.file_ktp }}</div>
+                            </div>
+
+                            <div class="space-y-2">
                                 <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                     Tanggal Lahir
                                 </label>
@@ -182,13 +216,15 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import { useForm, Head, Link } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { computed, ref } from 'vue';
 
 defineOptions({
     layout: AppLayout,
 });
+
+const ktpPreview = ref(null);
 
 const form = useForm({
     name: '',
@@ -199,10 +235,22 @@ const form = useForm({
     phone: '',
     gender: '',
     id_card_number: '',
+    file_ktp: null,
     birth_date: '',
     address: '',
     emergency_contact: '',
 });
+
+const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        form.file_ktp = file;
+        ktpPreview.value = URL.createObjectURL(file);
+    } else {
+        form.file_ktp = null;
+        ktpPreview.value = null;
+    }
+};
 
 const props = defineProps({
     errors: {
