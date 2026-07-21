@@ -18,6 +18,7 @@ class Tenant extends Model
         'phone',
         'address',
         'id_card_number',
+        'file_ktp',
         'birth_date',
         'gender',
         'emergency_contact',

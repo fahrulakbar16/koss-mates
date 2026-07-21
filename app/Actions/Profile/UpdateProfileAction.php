@@ -37,6 +37,24 @@ class UpdateProfileAction
 
         $user->save();
 
+        if ($user->hasRole('Penyewa') || $user->tenant) {
+            $tenantData = $request->only([
+                'phone', 'address', 'id_card_number', 'birth_date', 'gender', 'emergency_contact', 'is_moved'
+            ]);
+
+            if ($request->hasFile('file_ktp')) {
+                if ($user->tenant?->file_ktp) {
+                    Storage::disk('public')->delete($user->tenant->file_ktp);
+                }
+                $tenantData['file_ktp'] = $request->file('file_ktp')->store('ktp', 'public');
+            }
+
+            if (!empty($tenantData)) {
+                $user->tenant()->updateOrCreate(['user_id' => $user->id], $tenantData);
+                $user->load('tenant'); // Refresh the relationship
+            }
+        }
+
         LogActivityHelper::addToLog('Memperbarui profil: ' . $user->name, [
             'id' => $user->id,
             'name' => $user->name,

@@ -37,7 +37,8 @@ class UpdateProfileRequest extends FormRequest
             'birth_date' => ['required', 'date'],
             'gender' => ['required', 'string', 'in:male,female'],
             'emergency_contact' => ['required', 'string', 'max:20'],
-            'is_moved' => ['sometimes','required', 'boolean'],
+            'is_moved' => ['sometimes', 'required', 'boolean'],
+            'file_ktp' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ];
     }
 
@@ -65,4 +66,3 @@ class UpdateProfileRequest extends FormRequest
         ];
     }
 }
-

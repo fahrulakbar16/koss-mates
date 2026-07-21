@@ -47,6 +47,9 @@ class UserResource extends JsonResource
             'id_card_number'        => $this->whenLoaded('tenant', function () {
                 return $this->tenant->id_card_number;
             }),
+            'file_ktp'              => $this->whenLoaded('tenant', function () {
+                return $this->tenant->file_ktp;
+            }),
             'birth_date'            => $this->whenLoaded('tenant', function () {
                 return $this->tenant->birth_date;
             }),

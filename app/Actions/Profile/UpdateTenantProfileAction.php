@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Services\FonnteApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class UpdateTenantProfileAction
 {
@@ -27,6 +29,13 @@ class UpdateTenantProfileAction
     {
         $currentPhone = $user->tenant?->phone;
         $newPhone = $data['phone'] ?? null;
+
+        if (isset($data['file_ktp']) && $data['file_ktp'] instanceof UploadedFile) {
+            if ($user->tenant?->file_ktp) {
+                Storage::disk('public')->delete($user->tenant->file_ktp);
+            }
+            $data['file_ktp'] = $data['file_ktp']->store('ktp', 'public');
+        }
 
         // If phone number is changing, require OTP
         if ($newPhone && $newPhone !== $currentPhone) {
