@@ -149,7 +149,7 @@ async function submitAll() {
                 <p class="text-sm text-slate-500">Kelola informasi dasar akun dan kata sandi Anda.</p>
             </div>
             <button v-if="!isEditing" @click="startEdit"
-                class="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-semibold text-white transition rounded-lg shadow-sm bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                class="inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-semibold text-white transition rounded-lg shadow-sm bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path
                         d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />

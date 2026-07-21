@@ -61,13 +61,6 @@ const submit = () => {
                 <h3 class="text-lg font-bold text-slate-900">Biodata Penyewa</h3>
                 <p class="text-sm text-slate-500">Lengkapi informasi identitas dan kontak darurat Anda.</p>
             </div>
-            <div class="p-2 bg-primary-50 rounded-lg flex-shrink-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-            </div>
         </div>
 
         <form @submit.prevent="submit" class="px-6 py-10 sm:p-10 space-y-8">
@@ -113,14 +106,14 @@ const submit = () => {
                         <input type="file" id="file_ktp" @change="handleFileChange" accept="image/*" class="sr-only" />
                         <label for="file_ktp"
                                class="flex flex-col items-center justify-center w-full aspect-[16/10] border-2 border-dashed rounded-xl cursor-pointer transition-all duration-200 overflow-hidden group"
-                               :class="ktpPreview ? 'border-primary bg-primary/5' : 'border-slate-300 bg-slate-50 hover:bg-slate-100 hover:border-slate-400'">
+                               :class="ktpPreview ? 'border-primary-500 bg-primary-500/5' : 'border-slate-300 bg-slate-50 hover:bg-slate-100 hover:border-slate-400'">
 
                             <!-- If there is preview -->
                             <img v-if="ktpPreview" :src="ktpPreview" alt="Preview KTP" class="w-full h-full object-cover" />
 
                             <!-- If no preview -->
                             <div v-else class="flex flex-col items-center justify-center p-4 text-center">
-                                <div class="p-3 bg-white rounded-full shadow-sm mb-3 text-slate-400 group-hover:text-primary transition-colors">
+                                <div class="p-3 bg-white rounded-full shadow-sm mb-3 text-slate-400 group-hover:text-primary-500 transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -190,7 +183,7 @@ const submit = () => {
             <!-- Form Actions -->
             <div class="pt-6 border-t border-slate-100 flex justify-end">
                 <button type="submit" :disabled="form.processing"
-                    class="inline-flex items-center px-8 py-3 text-sm font-bold text-white transition rounded-lg shadow-md bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50">
+                    class="inline-flex items-center px-8 py-3 text-sm font-bold text-white transition rounded-lg shadow-md bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50">
                     <svg v-if="!form.processing" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2"
                         viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
