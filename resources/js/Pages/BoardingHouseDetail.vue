@@ -236,9 +236,7 @@ onMounted(() => {
     window.addEventListener('keydown', handleKeydown);
 
     // Load Midtrans Snap Script
-    const midtransScriptUrl = page.props.midtrans_is_production
-        ? 'https://app.midtrans.com/snap/snap.js'
-        : 'https://app.sandbox.midtrans.com/snap/snap.js';
+    const midtransScriptUrl = 'https://app.midtrans.com/snap/snap.js'
     const clientKey = page.props.midtrans_client_key;
 
     const script = document.createElement('script');
