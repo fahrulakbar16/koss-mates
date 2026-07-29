@@ -224,6 +224,12 @@ Route::middleware(['auth', 'role:Pengelola|Superadmin'])->group(function () {
         ->name('admin.video-demo.stream');
 });
 
+// Calendar (check-in/check-out per cluster)
+Route::prefix('admin/calendar')->middleware(['auth', 'role:Superadmin|Pengelola|Pemilik'])->group(function () {
+    Route::get('/', [\App\Http\Controllers\Admin\CalendarController::class, 'index'])->name('admin.calendar.index');
+    Route::get('/events', [\App\Http\Controllers\Admin\CalendarController::class, 'events'])->name('admin.calendar.events');
+});
+
 // Import Management
 Route::prefix('admin/import')->middleware(['auth'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\ImportController::class, 'index'])->name('admin.import.index');
