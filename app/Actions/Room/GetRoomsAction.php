@@ -14,7 +14,7 @@ class GetRoomsAction
     {
         $search = $request->input('search');
         $status = $request->input('status');
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 12);
 
         $query = $boardingHouse->rooms()
             ->when($search, function ($query, $search) {
