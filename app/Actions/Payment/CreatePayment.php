@@ -23,6 +23,7 @@ class CreatePayment
                 ->sum('amount');
 
             $remainingAmount = $transaction->total_price - $paidAmount;
+            Log::info('Remaining amount: ' . $remainingAmount);
 
             // Validate amount - reject if exceeds remaining balance
             if ($amount > $remainingAmount) {
