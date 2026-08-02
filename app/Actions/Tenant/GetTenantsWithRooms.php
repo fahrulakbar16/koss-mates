@@ -17,7 +17,7 @@ class GetTenantsWithRooms
 
         $query = User::role('Penyewa')
             ->whereHas('rooms', function ($q) use ($boardingHouseIds) {
-                $q->whereIn('status', ['booked', 'checked_in']);
+                $q->whereIn('status', ['booked', 'checked_in', 'checkin_open']);
                 if ($boardingHouseIds !== null) {
                     $q->whereIn('boarding_house_id', $boardingHouseIds);
                 }
@@ -26,7 +26,7 @@ class GetTenantsWithRooms
                 'tenant',
                 'rooms' => function ($q) use ($boardingHouseIds) {
                     $q->with(['room.boardingHouse', 'plan'])
-                        ->whereIn('status', ['booked', 'checked_in'])
+                        ->whereIn('status', ['booked', 'checked_in', 'checkin_open'])
                         ->when($boardingHouseIds !== null, fn($q2) => $q2->whereIn('boarding_house_id', $boardingHouseIds))
                         ->latest();
                 },
@@ -36,10 +36,10 @@ class GetTenantsWithRooms
             }]);
 
         if (!empty($data['search'])) {
-            $query->where(function($q) use ($data) {
+            $query->where(function ($q) use ($data) {
                 $q->where('name', 'like', "%{$data['search']}%")
-                  ->orWhere('email', 'like', "%{$data['search']}%")
-                  ->orWhere('username', 'like', "%{$data['search']}%");
+                    ->orWhere('email', 'like', "%{$data['search']}%")
+                    ->orWhere('username', 'like', "%{$data['search']}%");
             });
         }
 

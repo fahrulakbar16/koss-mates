@@ -110,13 +110,13 @@
                                 <td class="px-6 py-5 whitespace-nowrap">
                                     <span :class="[
                                         'inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold border capitalize',
-                                        tenant.room_status === 'checked_in'
+                                        tenant.room_status === 'checkin_open' || tenant.room_status === 'checked_in'
                                             ? 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800'
                                             : tenant.room_status === 'booked'
                                             ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800'
                                             : 'bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-900/30 dark:text-gray-400 dark:border-gray-800'
                                     ]">
-                                        {{ tenant.room_status === 'checked_in' ? 'Ditempati' : tenant.room_status === 'booked' ? 'Dipesan' : (tenant.room_status || '-') }}
+                                        {{ tenant.room_status === 'checkin_open' || tenant.room_status === 'checked_in' ? 'Ditempati' : tenant.room_status === 'booked' ? 'Dipesan' : (tenant.room_status || '-') }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-5 whitespace-nowrap">
