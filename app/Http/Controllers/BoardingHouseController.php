@@ -177,9 +177,6 @@ class BoardingHouseController extends Controller
             ->orderBy('name')
             ->get();
 
-        Log::info("Boarding House", [
-            "boardingHouse" => $boardingHouse,
-        ]);
         return Inertia::render('Admin/BoardingHouses/Show', [
             'boardingHouse' => $boardingHouse,
             'rooms' => $rooms,
