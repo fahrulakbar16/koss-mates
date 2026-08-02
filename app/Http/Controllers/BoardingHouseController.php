@@ -154,7 +154,6 @@ class BoardingHouseController extends Controller
         $rooms = $result['rooms'];
 
         $boardingHouse->load('cluster', 'owner', 'images', 'penyewa', 'rooms');
-        // dd($boardingHouse->toArray());
 
         // Get expenses for this boarding house with room name
         $expenses = $boardingHouse->expenses()
