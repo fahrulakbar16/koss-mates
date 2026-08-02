@@ -958,7 +958,7 @@
                             </select>
                             <div v-if="assignTenantForm.errors.gender" class="text-xs text-primary-500 font-medium">{{ assignTenantForm.errors.gender }}</div>
                         </div>
-                        
+
                         <!-- Detail Tenant Tambahan -->
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">No. KTP (NIK)</label>

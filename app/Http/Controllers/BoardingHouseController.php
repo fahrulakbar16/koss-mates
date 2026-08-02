@@ -153,7 +153,8 @@ class BoardingHouseController extends Controller
         $result = app(\App\Actions\Room\GetRoomsAction::class)->execute($request, $boardingHouse);
         $rooms = $result['rooms'];
 
-        $boardingHouse->load('cluster', 'owner', 'images', 'penyewa');
+        $boardingHouse->load('cluster', 'owner', 'images', 'penyewa', 'rooms');
+        // dd($boardingHouse->toArray());
 
         // Get expenses for this boarding house with room name
         $expenses = $boardingHouse->expenses()
