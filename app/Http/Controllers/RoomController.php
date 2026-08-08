@@ -166,9 +166,25 @@ class RoomController extends Controller
             'boardingHouse'
         ])->findOrFail($room->id);
 
+        $activeUserRoom = \App\Models\UserRooms::with(['user.tenant', 'plan'])
+            ->where('room_id', $room->id)
+            ->whereIn('status', ['checked_in', 'checkin_open', 'booked'])
+            ->first();
+
+        // Override status to 'occupied' or 'booked' if there is an active tenant, 
+        // to keep it consistent with GetRoomsAction logic and DB discrepancies.
+        if ($activeUserRoom) {
+            if (in_array($activeUserRoom->status, ['checked_in', 'checkin_open'])) {
+                $room->status = 'occupied';
+            } elseif ($activeUserRoom->status === 'booked') {
+                $room->status = 'booked';
+            }
+        }
+
         return Inertia::render('Admin/Rooms/Show', [
             'boardingHouse' => $boardingHouse,
             'room' => $room,
+            'activeUserRoom' => $activeUserRoom,
         ]);
     }
 
@@ -198,6 +214,27 @@ class RoomController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat check-out: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Update check-in date of active tenant.
+     */
+    public function updateCheckin(Request $request, BoardingHouse $boardingHouse, Room $room)
+    {
+        $request->validate([
+            'start_date' => 'required|date',
+            'user_room_id' => 'required|exists:user_rooms,id'
+        ]);
+
+        $userRoom = \App\Models\UserRooms::where('room_id', $room->id)
+            ->where('id', $request->user_room_id)
+            ->firstOrFail();
+
+        $userRoom->update([
+            'start_date' => $request->start_date
+        ]);
+
+        return redirect()->back()->with('success', 'Tanggal check-in berhasil diperbarui');
     }
 
     /**

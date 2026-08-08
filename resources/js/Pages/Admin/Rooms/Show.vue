@@ -37,15 +37,18 @@
                                         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
                                             {{ room.name }}
                                         </h1>
-                                        <span :class="[
-                                            'px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-lg border',
-                                            room.status === 'available' ? 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800' :
-                                                room.status === 'occupied' ? 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800' :
-                                                    room.status === 'booked' ? 'bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800' :
-                                                        'bg-primary-100 text-primary-700 border-primary-200 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800'
-                                        ]">
-                                            {{ room.status === 'available' ? 'Tersedia' : room.status === 'occupied' ? 'Terisi' : room.status === 'booked' ? 'Booked' : 'Maintenance' }}
-                                        </span>
+                                        <div class="flex items-center gap-2">
+                                            <span :class="[
+                                                'w-2 h-2 rounded-full animate-pulse',
+                                                room.status === 'occupied' ? 'bg-blue-500' : (room.status === 'maintenance' ? 'bg-primary-500' : (room.status === 'booked' ? 'bg-amber-500' : 'bg-emerald-500'))
+                                            ]"></span>
+                                            <span :class="[
+                                                'text-xs font-bold uppercase tracking-wider',
+                                                room.status === 'occupied' ? 'text-blue-600 dark:text-blue-400' : (room.status === 'maintenance' ? 'text-primary-600 dark:text-primary-400' : (room.status === 'booked' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'))
+                                            ]">
+                                                {{ room.status === 'occupied' ? 'Terisi' : (room.status === 'maintenance' ? 'Maintenance' : (room.status === 'booked' ? 'Booked' : 'Tersedia')) }}
+                                            </span>
+                                        </div>
                                     </div>
                                     <p v-if="room.number" class="text-sm text-gray-500 dark:text-gray-400 font-mono">
                                         No. {{ room.number }}
@@ -104,7 +107,7 @@
                 </div>
 
                 <!-- Active Tenant Section -->
-                <div v-if="room.status === 'occupied' && room.penyewa_aktif && room.penyewa_aktif.length > 0"
+                <div v-if="activeUserRoom"
                     class="p-8 border-b border-gray-100 dark:border-gray-700 bg-blue-50/20 dark:bg-blue-900/10">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                         <div>
@@ -122,33 +125,44 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div
                             class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                             <p class="text-xs font-semibold text-gray-400 lg:text-gray-500 uppercase tracking-wider mb-2">Nama
                                 Penyewa</p>
-                            <p class="text-base font-bold text-gray-900 dark:text-white">{{ room.penyewa_aktif[0].name }}
+                            <p class="text-base font-bold text-gray-900 dark:text-white">{{ activeUserRoom.user?.name }}
                             </p>
                         </div>
                         <div
                             class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                             <p class="text-xs font-semibold text-gray-400 lg:text-gray-500 uppercase tracking-wider mb-2">
                                 WhatsApp</p>
-                            <a :href="`https://wa.me/${room.penyewa_aktif[0].tenant?.phone}`" target="_blank"
+                            <a :href="`https://wa.me/${activeUserRoom.user?.tenant?.phone}`" target="_blank"
                                 class="text-base font-bold text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                                     <path
                                         d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                                 </svg>
-                                {{ room.penyewa_aktif[0].tenant?.phone || '-' }}
+                                {{ activeUserRoom.user?.tenant?.phone || '-' }}
                             </a>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                            <p class="text-xs font-semibold text-gray-400 lg:text-gray-500 uppercase tracking-wider mb-2">Paket</p>
+                            <p class="text-base font-bold text-gray-900 dark:text-white">{{ activeUserRoom.plan?.duration }} Bulan ({{ formatCurrency(activeUserRoom.plan?.price) }})</p>
                         </div>
                         <div
                             class="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
                             <p class="text-xs font-semibold text-gray-400 lg:text-gray-500 uppercase tracking-wider mb-2">
                                 Tanggal Mulai</p>
-                            <p class="text-base font-bold text-gray-900 dark:text-white">{{
-                                formatDate(room.penyewa_aktif[0].pivot.start_date) }}</p>
+                            <div class="flex items-center justify-between">
+                                <p class="text-base font-bold text-gray-900 dark:text-white">{{
+                                    formatDate(activeUserRoom.start_date) }}</p>
+                                <button v-if="can('rooms.edit')" @click="openCheckinModal" 
+                                    class="p-1.5 text-gray-400 hover:text-primary-600 bg-gray-50 hover:bg-primary-50 dark:bg-gray-700/50 dark:hover:bg-primary-900/30 rounded-lg transition-colors" title="Edit Tanggal Check-in">
+                                    <EditIcon class="w-4 h-4" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -329,6 +343,24 @@
         <ConfirmModal :show="isConfirmExpenseModalOpen" :question="`Yakin ingin menghapus`"
             :selected="`pengeluaran ${selectedExpense?.category || ''}`" title="Hapus Pengeluaran" confirmText="Ya, Hapus!" maxWidth="md"
             @close="closeConfirmExpenseModal" @confirm="confirmDeleteExpense" />
+
+        <!-- Checkin Date Modal -->
+        <Modal :show="isCheckinModalOpen" title="Edit Tanggal Check-in" maxWidth="sm"
+            @close="closeCheckinModal" @confirm="saveCheckinDate" confirmText="Simpan">
+            <div class="space-y-4">
+                <div class="space-y-2">
+                    <label for="start_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        Tanggal Mulai / Check-in <span class="text-primary-500">*</span>
+                    </label>
+                    <input id="start_date"
+                        class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
+                        type="date" v-model="checkinForm.start_date" required />
+                    <div v-if="checkinForm.errors.start_date" class="text-xs text-primary-500 font-medium mt-1">
+                        {{ checkinForm.errors.start_date }}
+                    </div>
+                </div>
+            </div>
+        </Modal>
     </div>
 </template>
 
@@ -352,6 +384,7 @@ defineOptions({
 const props = defineProps({
     boardingHouse: Object,
     room: Object,
+    activeUserRoom: Object,
 });
 
 const { can } = useAuth();
@@ -544,6 +577,43 @@ function confirmDeleteExpense() {
             onSuccess: () => {
                 closeConfirmExpenseModal();
                 router.reload({ only: ['room'] });
+            },
+        }
+    );
+}
+
+// Checkin Date Modal
+const isCheckinModalOpen = ref(false);
+const checkinForm = useForm({
+    user_room_id: null,
+    start_date: '',
+});
+
+function openCheckinModal() {
+    if (!can("rooms.edit") || !props.activeUserRoom) return;
+    checkinForm.user_room_id = props.activeUserRoom.id;
+    // Format to YYYY-MM-DD for date input
+    const date = new Date(props.activeUserRoom.start_date);
+    checkinForm.start_date = date.toISOString().split('T')[0];
+    checkinForm.clearErrors();
+    isCheckinModalOpen.value = true;
+}
+
+function closeCheckinModal() {
+    isCheckinModalOpen.value = false;
+    checkinForm.reset();
+    checkinForm.clearErrors();
+}
+
+function saveCheckinDate() {
+    if (!can("rooms.edit")) return;
+    
+    checkinForm.put(
+        route("boarding-houses.rooms.update-checkin", [props.boardingHouse.id, props.room.id]),
+        {
+            onSuccess: () => {
+                closeCheckinModal();
+                router.reload({ only: ['room', 'activeUserRoom'] });
             },
         }
     );

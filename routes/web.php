@@ -267,6 +267,7 @@ Route::prefix('boarding-houses')->group(function () {
     Route::post('/{boardingHouse}/rooms/{room}/assign-tenant', [RoomController::class, 'assignTenant'])->name('boarding-houses.rooms.assign-tenant');
     Route::post('/{boardingHouse}/rooms/{room}/cancel-booking', [RoomController::class, 'cancelBooking'])->name('boarding-houses.rooms.cancel-booking');
     Route::post('/{boardingHouse}/rooms/{room}/checkout', [RoomController::class, 'checkout'])->name('boarding-houses.rooms.checkout');
+    Route::put('/{boardingHouse}/rooms/{room}/update-checkin', [RoomController::class, 'updateCheckin'])->name('boarding-houses.rooms.update-checkin');
 
     // Boarding House Expenses
     Route::post('/{boardingHouse}/expenses', [\App\Http\Controllers\Admin\ExpenseController::class, 'store'])->name('boarding-houses.expenses.store');
