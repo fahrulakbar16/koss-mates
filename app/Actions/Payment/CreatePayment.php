@@ -29,10 +29,7 @@ class CreatePayment
 
             // Validate amount - reject if exceeds remaining balance
             if ($amount > $remainingAmount) {
-                throw new CustomException(
-                    'Jumlah pembayaran melebihi sisa tagihan. Sisa tagihan: Rp ' . number_format($remainingAmount, 0, ',', '.'),
-                    400
-                );
+                $amount = $remainingAmount;
             }
 
             if ($remainingAmount == 0) {
