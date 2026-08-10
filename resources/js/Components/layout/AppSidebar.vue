@@ -669,6 +669,11 @@ const sharedAdminItems = [
         path: "/boarding-houses",
     },
     {
+        icon: CalendarIcon,
+        name: "Kalender",
+        path: "/admin/calendar",
+    },
+    {
         icon: ChecklistIcon,
         name: "Permintaan Check-in",
         path: "/admin/checkin-requests",
@@ -790,6 +795,11 @@ const pemilikMenuGroups = [
                 icon: HomeIcon,
                 name: "Properti",
                 path: "/boarding-houses",
+            },
+            {
+                icon: CalendarIcon,
+                name: "Kalender",
+                path: "/admin/calendar",
             },
             {
                 icon: UserGroupIcon,

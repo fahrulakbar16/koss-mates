@@ -342,7 +342,7 @@
                                                         {{ room.active_tenant.charAt(0).toUpperCase() }}
                                                     </span>
                                                 </div>
-                                                <div class="flex-1">
+                                                <div class="flex-1 min-w-0">
                                                     <p
                                                         class="text-sm font-semibold text-gray-900 dark:text-white truncate">
                                                         {{ room.active_tenant }}
@@ -360,9 +360,9 @@
 
                                     <!-- Actions -->
                                     <div
-                                        class="pt-4 border-t border-gray-100 dark:border-gray-600/50 flex items-center justify-between gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        class="pt-4 border-t border-gray-100 dark:border-gray-600/50 flex flex-wrap items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                         <Link :href="route('boarding-houses.rooms.show', [boardingHouse.id, room.id])"
-                                            class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-primary-600 dark:bg-primary-500 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg">
+                                            class="flex-1 min-w-[90px] flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-primary-600 dark:bg-primary-500 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
                                                 viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -373,25 +373,25 @@
                                             Detail
                                         </Link>
                                         <button v-if="room.status === 'available' && can('rooms.edit')" @click="openAssignTenantModal(room)"
-                                            class="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-emerald-600 dark:bg-emerald-500 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg"
+                                            class="flex-1 min-w-[90px] flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-emerald-600 dark:bg-emerald-500 rounded-lg hover:bg-emerald-700 dark:hover:bg-emerald-600 transition-colors shadow-lg"
                                             title="Tambah Penyewa">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
                                             Tambah
                                         </button>
                                         <button v-if="room.status === 'booked' && can('rooms.edit')" @click="openCancelBookingModal(room)"
-                                            class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-primary-600 dark:bg-primary-500 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg"
+                                            class="flex-1 min-w-[90px] flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-primary-600 dark:bg-primary-500 rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors shadow-lg"
                                             title="Batalkan Booking">
                                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                             Batal
                                         </button>
-                                        <Link v-if="can('rooms.edit')" :href="route('boarding-houses.rooms.prices.edit', [boardingHouse.id, room.id])"
-                                            class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-gray-900 dark:bg-gray-600 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-500 transition-colors shadow-lg"
-                                            title="Atur Harga">
-                                            <MoneyIcon class="w-3.5 h-3.5" />
-                                        </Link>
-                                        <div class="flex gap-1">
+                                        <div class="flex items-center gap-1 flex-shrink-0 ml-auto">
+                                            <Link v-if="can('rooms.edit')" :href="route('boarding-houses.rooms.prices.edit', [boardingHouse.id, room.id])"
+                                                class="flex items-center justify-center p-2 text-white bg-gray-900 dark:bg-gray-600 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-500 transition-colors shadow-lg"
+                                                title="Atur Harga">
+                                                <MoneyIcon class="w-4 h-4" />
+                                            </Link>
                                             <button v-if="can('rooms.edit')" @click="openEditModal(room)"
                                                 class="p-2 text-gray-600 bg-gray-100 dark:bg-gray-700/50 dark:text-gray-300 rounded-lg hover:bg-primary-50 hover:text-primary-600 dark:hover:bg-primary-900/30 dark:hover:text-primary-400 transition-colors"
                                                 title="Edit Kamar">
