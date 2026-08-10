@@ -569,7 +569,7 @@ const processPayment = async () => {
     try {
         const amount = props.transaction.payment_scheme === 'installment'
             ? paymentAmount.value
-            : props.transaction.total_price;
+            : remainingAmount.value;
 
         const response = await axios.post(
             route('penyewa.transactions.payment.create', props.transaction.id),
