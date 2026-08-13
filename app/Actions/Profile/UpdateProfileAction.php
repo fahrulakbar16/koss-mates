@@ -19,7 +19,7 @@ class UpdateProfileAction
     public function execute(User $user, Request $request): User
     {
         // Update user fields (only fillable ones)
-        $fields = ['email', 'name', 'status'];
+        $fields = ['email', 'name'];
         foreach ($fields as $field) {
             if ($request->filled($field)) {
                 $user->{$field} = $request->input($field);
@@ -39,7 +39,13 @@ class UpdateProfileAction
 
         if ($user->hasRole('Penyewa') || $user->tenant) {
             $tenantData = $request->only([
-                'phone', 'address', 'id_card_number', 'birth_date', 'gender', 'emergency_contact', 'is_moved'
+                'phone',
+                'address',
+                'id_card_number',
+                'birth_date',
+                'gender',
+                'emergency_contact',
+                'is_moved'
             ]);
 
             if ($request->hasFile('file_ktp')) {
