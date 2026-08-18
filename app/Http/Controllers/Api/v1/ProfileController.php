@@ -20,7 +20,6 @@ class ProfileController extends Controller
 {
     use \App\Traits\ApiResponse;
 
-
     /**
      * Mengambil data profil user yang sedang login.
      */

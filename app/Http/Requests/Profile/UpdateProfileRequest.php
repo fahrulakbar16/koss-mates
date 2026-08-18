@@ -25,20 +25,20 @@ class UpdateProfileRequest extends FormRequest
         $user = $this->user();
 
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user?->id)],
-            'profile_photo_url' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
-            'delete_photo' => ['required', 'in:true,false,1,0'],
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'status' => ['sometimes', 'required', 'string', 'max:100'],
+            'email' => ['sometimes', 'required', 'email', Rule::unique('users', 'email')->ignore($user?->id)],
+            'profile_photo_url' => ['sometimes', 'required', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
+            'delete_photo' => ['sometimes', 'required', 'in:true,false,1,0'],
             // Tenant fields
-            'phone' => ['required', 'string', 'max:20'],
-            'address' => ['required', 'string', 'max:255'],
-            'id_card_number' => ['required', 'string', 'max:50'],
-            'birth_date' => ['required', 'date'],
-            'gender' => ['required', 'string', 'in:male,female'],
-            'emergency_contact' => ['required', 'string', 'max:20'],
+            'phone' => ['sometimes', 'required', 'string', 'max:20'],
+            'address' => ['sometimes', 'required', 'string', 'max:255'],
+            'id_card_number' => ['sometimes', 'required', 'string', 'max:50'],
+            'birth_date' => ['sometimes', 'required', 'date'],
+            'gender' => ['sometimes', 'required', 'string', 'in:male,female'],
+            'emergency_contact' => ['sometimes', 'required', 'string', 'max:20'],
             'is_moved' => ['sometimes', 'required', 'boolean'],
-            'file_ktp' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'file_ktp' => ['sometimes', 'nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ];
     }
 
