@@ -50,7 +50,9 @@ class Room extends Model
 
     public function penyewaAktif(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, UserRooms::class, 'room_id', 'user_id')->wherePivotIn('status', ['checked_in', 'checkin_open']);
+        return $this->belongsToMany(User::class, UserRooms::class, 'room_id', 'user_id')
+            ->wherePivotIn('status', ['checked_in', 'checkin_open'])
+            ->withPivot('status', 'start_date', 'end_date', 'room_price_id');
     }
 
     public function tenant(): BelongsTo

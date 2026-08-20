@@ -24,6 +24,17 @@ class RoomResource extends JsonResource
             'capacity' => $this->capacity,
             'status' => $this->status,
             'min_price' => $this->min_price ?? $this->min_price, // Added by GetRoomsAction or relation
+            'penyewa_aktif' => $this->whenLoaded('penyewaAktif', function () {
+                $tenant = $this->penyewaAktif->first();
+                if (!$tenant) return null;
+                return [
+                    'id' => $tenant->id,
+                    'name' => $tenant->name,
+                    'status' => $tenant->pivot->status,
+                    'start_date' => $tenant->pivot->start_date,
+                    'end_date' => $tenant->pivot->end_date,
+                ];
+            }),
             // Add relations if loaded
             'prices' => $this->whenLoaded('prices'),
             'transactions_count' => $this->whenCounted('transactions'),
