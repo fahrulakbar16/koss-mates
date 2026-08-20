@@ -6,6 +6,7 @@ use App\Exceptions\CustomException;
 use Illuminate\Support\Facades\Http;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class LoginGoogle
 {
@@ -34,8 +35,23 @@ class LoginGoogle
             ->first();
 
         if (!$user) {
+            $baseUsername = Str::slug($name);
+            if (empty($baseUsername)) {
+                $baseUsername = $email ? explode('@', $email)[0] : 'user';
+                $baseUsername = Str::slug($baseUsername) ?: 'user';
+            }
+
+            $username = $baseUsername;
+            $counter = 1;
+            
+            while (User::where('username', $username)->exists()) {
+                $username = $baseUsername . $counter;
+                $counter++;
+            }
+
             $user = User::create([
                 'name' => $name,
+                'username' => $username,
                 'email' => $email,
                 'google_id' => $uid,
                 'photo_url' => $photoUrl,
