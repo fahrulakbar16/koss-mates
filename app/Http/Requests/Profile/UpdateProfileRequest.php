@@ -26,7 +26,6 @@ class UpdateProfileRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:100'],
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user?->id)],
             'profile_photo_url' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
             'delete_photo' => ['required', 'in:true,false,1,0'],
