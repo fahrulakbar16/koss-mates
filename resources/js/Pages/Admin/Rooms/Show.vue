@@ -74,11 +74,6 @@
                                         </svg>
                                         Check Out
                                     </button>
-                                    <button v-if="can('rooms.edit')" @click="openEditModal"
-                                        class="p-2.5 text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 hover:text-primary-600 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-primary-400 dark:hover:bg-gray-700 rounded-xl transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5"
-                                        title="Edit Kamar">
-                                        <EditIcon class="w-5 h-5" />
-                                    </button>
                                 </div>
                             </div>
 
@@ -335,6 +330,12 @@
                                                 {{ formatCurrency(transaction.total_price) }}
                                             </p>
                                         </div>
+                                        <!-- Edit Transaction Button -->
+                                        <button @click.stop="openEditTransactionModal(transaction)"
+                                            class="p-2 text-primary-600 bg-primary-50 dark:bg-primary-950/30 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors"
+                                            title="Edit Tagihan">
+                                            <EditIcon class="w-4 h-4" />
+                                        </button>
                                         <!-- Delete Transaction Button -->
                                         <button @click.stop="deleteTransaction(transaction)"
                                             class="p-2 text-rose-600 bg-rose-50 dark:bg-rose-950/30 rounded-lg hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors"
@@ -649,8 +650,8 @@
             </div>
         </Modal>
 
-        <!-- Add Transaction Modal -->
-        <Modal :show="isTransactionModalOpen" title="Tambah Tagihan Sewa" maxWidth="lg"
+        <!-- Add/Edit Transaction Modal -->
+        <Modal :show="isTransactionModalOpen" :title="isTransactionEditMode ? 'Edit Tagihan Sewa' : 'Tambah Tagihan Sewa'" maxWidth="lg"
             @close="closeTransactionModal" @confirm="saveTransaction" confirmText="Simpan">
             <div class="space-y-5">
                 <div class="space-y-2">
@@ -730,6 +731,23 @@
                         </div>
                     </div>
                 </div>
+
+                <div v-if="isTransactionEditMode" class="space-y-2">
+                    <label for="tx_status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        Status Transaksi <span class="text-primary-500">*</span>
+                    </label>
+                    <select id="tx_status"
+                        class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
+                        v-model="transactionForm.status" required>
+                        <option value="pending">Menunggu (Pending)</option>
+                        <option value="incomplete">Belum Lunas (Incomplete)</option>
+                        <option value="completed">Lunas (Completed)</option>
+                        <option value="cancelled">Batal (Cancelled)</option>
+                    </select>
+                    <div v-if="transactionForm.errors.status" class="text-xs text-primary-500 font-medium mt-1">
+                        {{ transactionForm.errors.status }}
+                    </div>
+                </div>
             </div>
         </Modal>
     </div>
@@ -798,6 +816,8 @@ const targetTransactionId = ref(null);
 const isPaymentEditMode = ref(false);
 
 const isTransactionModalOpen = ref(false);
+const isTransactionEditMode = ref(false);
+const editingTransactionId = ref(null);
 const formattedTxAmount = ref("");
 const transactionForm = useForm({
     room_price_id: "",
@@ -805,6 +825,7 @@ const transactionForm = useForm({
     payment_scheme: "full",
     type: "extended",
     jatuh_tempo: new Date().toISOString().split('T')[0],
+    status: "pending",
 });
 
 function onPricePlanChange() {
@@ -819,14 +840,39 @@ function handleTxAmountInput(event) {
     let rawValue = event.target.value;
     const cleanValue = rawValue.replace(/[^0-9]/g, "");
     const intValue = cleanValue ? parseInt(cleanValue, 10) : 0;
-    
+
     transactionForm.total_price = intValue;
     formattedTxAmount.value = formatRupiahString(cleanValue);
 }
 
 function openTransactionModal() {
+    isTransactionEditMode.value = false;
+    editingTransactionId.value = null;
     transactionForm.reset();
     formattedTxAmount.value = "";
+    transactionForm.clearErrors();
+    isTransactionModalOpen.value = true;
+}
+
+function openEditTransactionModal(transaction) {
+    isTransactionEditMode.value = true;
+    editingTransactionId.value = transaction.id;
+    
+    transactionForm.room_price_id = transaction.room_price_id;
+    transactionForm.total_price = transaction.total_price;
+    transactionForm.payment_scheme = transaction.payment_scheme;
+    transactionForm.type = transaction.type;
+    
+    if (transaction.jatuh_tempo) {
+        const date = new Date(transaction.jatuh_tempo);
+        transactionForm.jatuh_tempo = date.toISOString().split('T')[0];
+    } else {
+        transactionForm.jatuh_tempo = new Date().toISOString().split('T')[0];
+    }
+    
+    transactionForm.status = transaction.status;
+    formattedTxAmount.value = formatRupiahString(transaction.total_price);
+    
     transactionForm.clearErrors();
     isTransactionModalOpen.value = true;
 }
@@ -838,18 +884,34 @@ function closeTransactionModal() {
 }
 
 function saveTransaction() {
-    transactionForm.post(
-        route("boarding-houses.rooms.transactions.store", [
-            props.boardingHouse.id,
-            props.room.id,
-        ]),
-        {
-            onSuccess: () => {
-                closeTransactionModal();
-                router.reload({ only: ['transactions', 'room', 'activeUserRoom'] });
-            },
-        }
-    );
+    if (isTransactionEditMode.value) {
+        transactionForm.put(
+            route("boarding-houses.rooms.transactions.update", [
+                props.boardingHouse.id,
+                props.room.id,
+                editingTransactionId.value,
+            ]),
+            {
+                onSuccess: () => {
+                    closeTransactionModal();
+                    router.reload({ only: ['transactions', 'room', 'activeUserRoom'] });
+                },
+            }
+        );
+    } else {
+        transactionForm.post(
+            route("boarding-houses.rooms.transactions.store", [
+                props.boardingHouse.id,
+                props.room.id,
+            ]),
+            {
+                onSuccess: () => {
+                    closeTransactionModal();
+                    router.reload({ only: ['transactions', 'room', 'activeUserRoom'] });
+                },
+            }
+        );
+    }
 }
 
 function formatRupiahString(value) {
@@ -863,10 +925,10 @@ function handleAmountInput(event) {
     let rawValue = event.target.value;
     const cleanValue = rawValue.replace(/[^0-9]/g, "");
     const intValue = cleanValue ? parseInt(cleanValue, 10) : 0;
-    
+
     paymentForm.amount = intValue;
     formattedAmount.value = formatRupiahString(cleanValue);
-    
+
     if (maxAllowedAmount.value > 0 && intValue > maxAllowedAmount.value) {
         paymentForm.setError('amount', `Jumlah pembayaran tidak boleh melebihi jumlah tagihan (Rp ${formatRupiahString(maxAllowedAmount.value)}).`);
     } else {
@@ -878,7 +940,7 @@ function openAddPaymentModal(transaction) {
     isPaymentEditMode.value = false;
     targetTransactionId.value = transaction.id;
     maxAllowedAmount.value = transaction.total_price;
-    
+
     paymentForm.id = null;
     paymentForm.amount = 0;
     formattedAmount.value = "";
@@ -889,7 +951,7 @@ function openAddPaymentModal(transaction) {
     paymentForm.proof_preview = null;
     paymentForm.remove_proof = false;
     currentPaymentProof.value = null;
-    
+
     paymentForm.clearErrors();
     isPaymentModalOpen.value = true;
 }
@@ -932,25 +994,25 @@ function openPaymentModal(paymentRecord, transactionTotal) {
     isPaymentEditMode.value = true;
     targetTransactionId.value = paymentRecord.transaction_id;
     maxAllowedAmount.value = transactionTotal || 0;
-    
+
     paymentForm.id = paymentRecord.id;
     paymentForm.amount = paymentRecord.amount || 0;
     formattedAmount.value = formatRupiahString(paymentForm.amount);
     paymentForm.payment_status = paymentRecord.payment_status || "pending";
     paymentForm.payment_method = paymentRecord.payment_method || "cash";
-    
+
     if (paymentRecord.payment_date) {
         const date = new Date(paymentRecord.payment_date);
         paymentForm.payment_date = date.toISOString().split('T')[0];
     } else {
         paymentForm.payment_date = new Date().toISOString().split('T')[0];
     }
-    
+
     paymentForm.proof = null;
     paymentForm.proof_preview = null;
     paymentForm.remove_proof = false;
     currentPaymentProof.value = paymentRecord.proof;
-    
+
     paymentForm.clearErrors();
     isPaymentModalOpen.value = true;
 }

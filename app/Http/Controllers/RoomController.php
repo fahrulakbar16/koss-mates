@@ -490,6 +490,67 @@ class RoomController extends Controller
     }
 
     /**
+     * Update an existing transaction/bill.
+     */
+    public function updateTransaction(Request $request, BoardingHouse $boardingHouse, Room $room, Transaction $transaction)
+    {
+        if ($transaction->room_id !== $room->id) {
+            abort(400, 'Transaksi tidak terkait dengan kamar ini.');
+        }
+
+        $request->validate([
+            'room_price_id' => 'required|exists:rooms_price,id',
+            'total_price' => 'required|numeric|min:0',
+            'payment_scheme' => 'required|in:full,installment',
+            'type' => 'required|in:booked,extended',
+            'jatuh_tempo' => 'required|date',
+            'status' => 'required|in:pending,completed,incomplete,cancelled',
+        ], [
+            'room_price_id.required' => 'Paket harga kamar wajib dipilih.',
+            'room_price_id.exists' => 'Paket harga kamar tidak valid.',
+            'total_price.required' => 'Total tagihan wajib diisi.',
+            'total_price.numeric' => 'Total tagihan harus berupa angka.',
+            'total_price.min' => 'Total tagihan minimal 0.',
+            'payment_scheme.required' => 'Skema pembayaran wajib dipilih.',
+            'payment_scheme.in' => 'Skema pembayaran tidak valid.',
+            'type.required' => 'Tipe tagihan wajib dipilih.',
+            'type.in' => 'Tipe tagihan tidak valid.',
+            'jatuh_tempo.required' => 'Tanggal jatuh tempo wajib diisi.',
+            'jatuh_tempo.date' => 'Tanggal jatuh tempo harus berupa tanggal yang valid.',
+            'status.required' => 'Status transaksi wajib diisi.',
+            'status.in' => 'Status transaksi tidak valid.',
+        ]);
+
+        $status = $request->status;
+
+        // If not manually cancelled, automatically calculate status based on payments
+        if ($status !== 'cancelled') {
+            $totalPaid = $transaction->payments()
+                ->where('payment_status', 'success')
+                ->sum('amount');
+
+            if ($totalPaid >= $request->total_price) {
+                $status = 'completed';
+            } elseif ($totalPaid > 0) {
+                $status = 'incomplete';
+            } else {
+                $status = 'pending';
+            }
+        }
+
+        $transaction->update([
+            'room_price_id' => $request->room_price_id,
+            'total_price' => $request->total_price,
+            'payment_scheme' => $request->payment_scheme,
+            'type' => $request->type,
+            'jatuh_tempo' => Carbon::parse($request->jatuh_tempo),
+            'status' => $status,
+        ]);
+
+        return redirect()->back()->with('success', 'Tagihan transaksi berhasil diperbarui.');
+    }
+
+    /**
      * Delete a transaction/bill.
      */
     public function destroyTransaction(BoardingHouse $boardingHouse, Room $room, Transaction $transaction)

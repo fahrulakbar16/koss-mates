@@ -290,8 +290,8 @@ Route::prefix('boarding-houses')->group(function () {
     Route::post('/{boardingHouse}/rooms/{room}/transactions/{transaction}/payments', [RoomController::class, 'storePayment'])->name('boarding-houses.rooms.payments.store');
     Route::delete('/{boardingHouse}/rooms/{room}/payments/{payment}', [RoomController::class, 'destroyPayment'])->name('boarding-houses.rooms.payments.destroy');
 
-    // Room Transactions
     Route::post('/{boardingHouse}/rooms/{room}/transactions', [RoomController::class, 'storeTransaction'])->name('boarding-houses.rooms.transactions.store');
+    Route::put('/{boardingHouse}/rooms/{room}/transactions/{transaction}', [RoomController::class, 'updateTransaction'])->name('boarding-houses.rooms.transactions.update');
     Route::delete('/{boardingHouse}/rooms/{room}/transactions/{transaction}', [RoomController::class, 'destroyTransaction'])->name('boarding-houses.rooms.transactions.destroy');
 
 
