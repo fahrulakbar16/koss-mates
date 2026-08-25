@@ -285,6 +285,17 @@ Route::prefix('boarding-houses')->group(function () {
     Route::put('/{boardingHouse}/rooms/{room}/expenses/{expense}', [ExpenseController::class, 'update'])->name('boarding-houses.rooms.expenses.update');
     Route::delete('/{boardingHouse}/rooms/{room}/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('boarding-houses.rooms.expenses.destroy');
 
+    // Room Payments
+    Route::put('/{boardingHouse}/rooms/{room}/payments/{payment}', [RoomController::class, 'updatePayment'])->name('boarding-houses.rooms.payments.update');
+    Route::post('/{boardingHouse}/rooms/{room}/transactions/{transaction}/payments', [RoomController::class, 'storePayment'])->name('boarding-houses.rooms.payments.store');
+    Route::delete('/{boardingHouse}/rooms/{room}/payments/{payment}', [RoomController::class, 'destroyPayment'])->name('boarding-houses.rooms.payments.destroy');
+
+    // Room Transactions
+    Route::post('/{boardingHouse}/rooms/{room}/transactions', [RoomController::class, 'storeTransaction'])->name('boarding-houses.rooms.transactions.store');
+    Route::delete('/{boardingHouse}/rooms/{room}/transactions/{transaction}', [RoomController::class, 'destroyTransaction'])->name('boarding-houses.rooms.transactions.destroy');
+
+
+
     // Boarding House Images
     Route::post('/{boardingHouse}/images', [BoardingHouseController::class, 'storeImages'])->name('boarding-houses.images.store');
     Route::delete('/{boardingHouse}/images/{boardingHouseImage}', [BoardingHouseController::class, 'destroyImage'])->name('boarding-houses.images.destroy');
