@@ -37,7 +37,7 @@ class TransactionController extends Controller
         if ($request->search) {
             $query->where(function ($q) use ($request) {
                 $q->where('description', 'like', '%' . $request->search . '%')
-                  ->orWhere('reference_number', 'like', '%' . $request->search . '%');
+                    ->orWhere('reference_number', 'like', '%' . $request->search . '%');
             });
         }
 
@@ -77,5 +77,69 @@ class TransactionController extends Controller
         app(StoreExpense::class)->execute($request->validated());
 
         return Redirect::back()->with('success', 'Pengeluaran berhasil ditambahkan');
+    }
+
+    public function updateIncome(Request $request, TransactionLog $transaction)
+    {
+        abort_unless($transaction->type === 'income', 403, 'Transaksi ini bukan pemasukan manual.');
+
+        $validated = $request->validate([
+            'boarding_house_id' => 'required|exists:boarding_houses,id',
+            'room_id'           => 'nullable|exists:rooms,id',
+            'amount'            => 'required|numeric|min:0',
+            'transaction_date'  => 'required|date',
+            'description'       => 'required|string',
+            'payment_method'    => 'required|string',
+        ]);
+
+        $transaction->update([
+            'boarding_house_id' => $validated['boarding_house_id'],
+            'room_id'           => $validated['room_id'] ?? null,
+            'amount'            => $validated['amount'],
+            'transaction_date'  => $validated['transaction_date'],
+            'description'       => $validated['description'],
+            'payment_method'    => $validated['payment_method'],
+        ]);
+
+        return Redirect::back()->with('success', 'Pemasukan berhasil diperbarui');
+    }
+
+    public function updateExpense(Request $request, Expense $expense)
+    {
+        $validated = $request->validate([
+            'boarding_house_id' => 'required|exists:boarding_houses,id',
+            'room_id'           => 'nullable|exists:rooms,id',
+            'amount'            => 'required|numeric|min:0',
+            'expense_date'      => 'required|date',
+            'description'       => 'required|string',
+            'category'          => 'required|string',
+        ]);
+
+        $expense->update([
+            'boarding_house_id' => $validated['boarding_house_id'],
+            'room_id'           => $validated['room_id'] ?? null,
+            'amount'            => $validated['amount'],
+            'expense_date'      => $validated['expense_date'],
+            'description'       => $validated['description'],
+            'category'          => $validated['category'],
+        ]);
+
+        return Redirect::back()->with('success', 'Pengeluaran berhasil diperbarui');
+    }
+
+    public function destroyIncome(TransactionLog $transaction)
+    {
+        abort_unless($transaction->type === 'income', 403, 'Hanya pemasukan manual yang bisa dihapus.');
+
+        $transaction->delete();
+
+        return Redirect::back()->with('success', 'Pemasukan berhasil dihapus');
+    }
+
+    public function destroyExpense(Expense $expense)
+    {
+        $expense->delete();
+
+        return Redirect::back()->with('success', 'Pengeluaran berhasil dihapus');
     }
 }

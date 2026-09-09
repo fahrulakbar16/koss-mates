@@ -34,8 +34,8 @@ Route::prefix('profile')->group(function () {
 });
 
 Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Penyewa\VerificationController::class, 'verify'])
-        ->middleware('signed')
-        ->name('penyewa.verification.verify');
+    ->middleware('signed')
+    ->name('penyewa.verification.verify');
 
 // Penyewa Routes
 Route::prefix('penyewa')->middleware(['auth'])->group(function () {
@@ -213,7 +213,12 @@ Route::prefix('admin/transactions')->middleware(['auth'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('admin.transactions.index');
     Route::post('/income', [\App\Http\Controllers\Admin\TransactionController::class, 'storeIncome'])->name('admin.transactions.store-income');
     Route::post('/expense', [\App\Http\Controllers\Admin\TransactionController::class, 'storeExpense'])->name('admin.transactions.store-expense');
+    Route::put('/income/{transaction}', [\App\Http\Controllers\Admin\TransactionController::class, 'updateIncome'])->name('admin.transactions.update-income');
+    Route::put('/expense/{expense}', [\App\Http\Controllers\Admin\TransactionController::class, 'updateExpense'])->name('admin.transactions.update-expense');
+    Route::delete('/income/{transaction}', [\App\Http\Controllers\Admin\TransactionController::class, 'destroyIncome'])->name('admin.transactions.destroy-income');
+    Route::delete('/expense/{expense}', [\App\Http\Controllers\Admin\TransactionController::class, 'destroyExpense'])->name('admin.transactions.destroy-expense');
 });
+
 
 // Video Demo
 Route::middleware(['auth', 'role:Pengelola|Superadmin'])->group(function () {
