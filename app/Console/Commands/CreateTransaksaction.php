@@ -2,199 +2,118 @@
 
 namespace App\Console\Commands;
 
-use App\Models\UserRooms;
-use App\Models\Transaction;
 use App\Models\payment;
-use Carbon\Carbon;
+use App\Models\Transaction;
+use App\Models\UserRooms;
+use Carbon\CarbonImmutable;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class CreateTransaksaction extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'billing:create-monthly
                             {--payment-scheme=full : Payment scheme (full or installment)}
                             {--dry-run : Display what would be created without actually creating}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create monthly billing transactions for active tenants based on their room price';
+    protected $description = 'Create renewal bills from the actual start date and room plan duration, starting one calendar month before due';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): int
     {
-        $this->info('Starting monthly billing generation...');
-        $this->newLine();
-
-        $paymentScheme = $this->option('payment-scheme');
-        $dryRun = $this->option('dry-run');
-
-        // Validate payment scheme
-        if (!in_array($paymentScheme, ['full', 'installment'])) {
+        $scheme = $this->option('payment-scheme');
+        if (! in_array($scheme, ['full', 'installment'], true)) {
             $this->error('Invalid payment scheme. Must be "full" or "installment"');
-            return 1;
+
+            return self::FAILURE;
         }
 
-        // Get current month and year
-        $currentMonth = Carbon::now()->format('Y-m');
+        $today = CarbonImmutable::today();
+        $created = $skipped = $errors = 0;
+        $tenants = UserRooms::query()->where('status', 'checked_in')
+            ->where('verifikasi_admin', true)->select('id')->lazyById(100);
 
-        // Get all active tenants (checked_in)
-        $activeTenants = UserRooms::with(['user', 'room', 'plan', 'boardingHouse', 'rekapHistories' => function ($query) {
-            $query->orderBy('year', 'desc')->orderBy('month', 'desc');
-        }])
-            ->where('status', 'checked_in')
-            ->where('verifikasi_admin', true)
-            ->get();
-
-        if ($activeTenants->isEmpty()) {
-            $this->warn('No active tenants found.');
-            return 0;
-        }
-
-        $this->info("Found {$activeTenants->count()} active tenant(s)");
-        $this->newLine();
-
-        $created = 0;
-        $skipped = 0;
-        $errors = 0;
-
-        foreach ($activeTenants as $userRoom) {
+        foreach ($tenants as $candidate) {
             try {
-                // Check if tenant has valid data
-                if (!$userRoom->plan) {
-                    $this->warn("Skipping tenant {$userRoom->user->name}: No room price plan found");
-                    $errors++;
-                    continue;
-                }
-
-
-                // Cek rekap histori: jika history month terakhir sama dengan bulan sekarang
-                $latestHistory = $userRoom->rekapHistories->first();
-                $currentDate = Carbon::now();
-
-                if (!$latestHistory || $latestHistory->month != $currentDate->month || $latestHistory->year != $currentDate->year) {
-                    $this->warn("Skipping {$userRoom->user->name}: Rekap history bulan ini belum ada atau bukan bulan sekarang");
-                    $skipped++;
-                    continue;
-                }
-
-                // Target transaksi: bulan depan
-                $targetDate = $currentDate->copy()->addMonthNoOverflow();
-                $billingMonth = $targetDate->month;
-                $billingYear = $targetDate->year;
-
-                // Jatuh tempo: bulan depan di tanggal yang sama saat dia masuk (start_date)
-                $startDay = Carbon::parse($userRoom->start_date)->day;
-                // Cegah overflow tanggal (misal masuk tgl 31, bulan depan cuma ada 30 hari)
-                $daysInTargetMonth = $targetDate->daysInMonth;
-                $safeStartDay = min($startDay, $daysInTargetMonth);
-
-                $dueDate = Carbon::create($billingYear, $billingMonth, $safeStartDay);
-
-                // Check if billing already exists for the target billing month
-                $existingTransaction = Transaction::where('user_id', $userRoom->user_id)
-                    ->where('room_id', $userRoom->room_id)
-                    ->where('user_room_id', $userRoom->id)
-                    ->whereMonth('created_at', $billingMonth)
-                    ->whereYear('created_at', $billingYear)
-                    ->where('type', Transaction::TYPE_EXTENDED)
-                    ->first();
-
-
-                if ($existingTransaction) {
-                    $this->warn("Skipping {$userRoom->user->name}: Billing already exists for target month {$billingYear}-{$billingMonth}");
-                    $skipped++;
-                    continue;
-                }
-
-                $roomPrice = $userRoom->plan->price;
-                $duration = $userRoom->plan->duration;
-
-                if ($dryRun) {
-                    $this->line("Would create billing for:");
-                    $this->line("  - Tenant: {$userRoom->user->name}");
-                    $this->line("  - Boarding House: {$userRoom->boardingHouse->name}");
-                    $this->line("  - Room: {$userRoom->room->name}");
-                    $this->line("  - Duration: {$duration} month(s)");
-                    $this->line("  - Amount: Rp " . number_format($roomPrice, 0, ',', '.'));
-                    $this->line("  - Payment Scheme: {$paymentScheme}");
-                    $this->line("  - Target Month: {$billingYear}-{$billingMonth}");
-                    $this->line("  - Jatuh Tempo: {$dueDate->format('Y-m-d')}");
-                    $this->newLine();
-                    $created++;
-                    continue;
-                }
-
-                // Create transaction
-                $transaction = Transaction::create([
-                    'user_id' => $userRoom->user_id,
-                    'room_id' => $userRoom->room_id,
-                    'user_room_id' => $userRoom->id,
-                    'room_price_id' => $userRoom->room_price_id,
-                    'total_price' => $roomPrice,
-                    'payment_scheme' => $paymentScheme,
-                    'type' => Transaction::TYPE_EXTENDED,
-                    'status' => Transaction::STATUS_PENDING,
-                    'jatuh_tempo' => $dueDate->format('Y-m-d'),
-                    'created_at' => Carbon::createFromDate($billingYear, $billingMonth, 1), // Override created_at to mark for that month
-                ]);
-
-                // Create payment record(s)
-                if ($paymentScheme === 'full') {
-                    // Single full payment
-                    payment::create([
-                        'transaction_id' => $transaction->id,
-                        'payment_sequence' => 'full',
-                        'amount' => $roomPrice,
-                        'payment_method' => 'cash',
-                        'payment_status' => 'pending',
-                    ]);
-                } else {
-                    // Installment payments (split into multiple payments based on duration)
-                    $installmentAmount = ceil($roomPrice / $duration);
-
-                    for ($i = 1; $i <= $duration; $i++) {
-                        payment::create([
-                            'transaction_id' => $transaction->id,
-                            'payment_sequence' => 'installment',
-                            'amount' => $installmentAmount,
-                            'payment_method' => 'cash',
-                            'payment_status' => 'pending',
-                        ]);
+                $count = DB::transaction(function () use ($candidate, $today, $scheme) {
+                    // Serialize billing generation for this tenancy, including the duplicate check.
+                    $tenancy = UserRooms::query()->lockForUpdate()->find($candidate->id);
+                    if (! $tenancy || $tenancy->status !== 'checked_in' || ! $tenancy->verifikasi_admin) {
+                        return 0;
                     }
-                }
+                    $tenancy->load(['plan', 'user', 'room']);
+                    if (! $tenancy->start_date || ! $tenancy->plan || ! $tenancy->user || ! $tenancy->room) {
+                        throw new \RuntimeException('Missing start date, plan, user, or room.');
+                    }
+                    $duration = (int) $tenancy->plan->duration;
+                    $price = (int) $tenancy->plan->price;
+                    if ($duration < 1 || $price < 1 || $tenancy->plan->room_id != $tenancy->room_id) {
+                        throw new \RuntimeException('Invalid room plan duration, price, or room.');
+                    }
 
-                $this->info("✓ Created billing for {$userRoom->user->name} - Rp " . number_format($roomPrice, 0, ',', '.'));
-                $created++;
-            } catch (\Exception $e) {
-                $this->error("✗ Error creating billing for {$userRoom->user->name}: {$e->getMessage()}");
+                    $start = CarbonImmutable::parse($tenancy->start_date)->startOfDay();
+                    // The initial period is covered by the booking transaction. Generate only
+                    // the current renewal cycle and the upcoming cycle within the one-month advance billing window;
+                    // do not backfill all historical periods for an existing tenancy.
+                    $months = max(0, ($today->year - $start->year) * 12 + $today->month - $start->month);
+                    $cycle = max(1, intdiv($months, $duration));
+                    $count = 0;
+                    for ($index = $cycle; ; $index++) {
+                        // Always calculate from the original date so Jan 31 -> Feb 28 -> Mar 31.
+                        $due = $start->addMonthsNoOverflow($index * $duration);
+                        if ($due->subMonthNoOverflow()->gt($today)) {
+                            break;
+                        }
+                        $nextDue = $start->addMonthsNoOverflow(($index + 1) * $duration);
+                        if ($nextDue->lte($today)) {
+                            continue;
+                        }
+                        $exists = $tenancy->transactions()
+                            ->where('type', Transaction::TYPE_EXTENDED)
+                            ->whereDate('jatuh_tempo', $due->toDateString())->exists();
+                        if ($exists) {
+                            continue;
+                        }
+
+                        if (! $this->option('dry-run')) {
+                            $transaction = $tenancy->transactions()->create([
+                                'user_id' => $tenancy->user_id,
+                                'room_id' => $tenancy->room_id,
+                                'room_price_id' => $tenancy->room_price_id,
+                                'total_price' => $price,
+                                'payment_scheme' => $scheme,
+                                'type' => Transaction::TYPE_EXTENDED,
+                                'status' => Transaction::STATUS_PENDING,
+                                'jatuh_tempo' => $due->toDateString(),
+                            ]);
+                            $parts = $scheme === 'full' ? 1 : $duration;
+                            $base = intdiv($price, $parts);
+                            $remainder = $price % $parts;
+                            for ($part = 0; $part < $parts; $part++) {
+                                payment::create([
+                                    'transaction_id' => $transaction->id,
+                                    'payment_sequence' => $scheme === 'full' ? 'full' : 'installment',
+                                    'amount' => $base + ($part < $remainder ? 1 : 0),
+                                    'payment_method' => 'cash',
+                                    'payment_status' => 'pending',
+                                ]);
+                            }
+                        }
+                        $prefix = $this->option('dry-run') ? 'Would create' : 'Prepared';
+                        $this->line("{$prefix}: {$tenancy->user->name}, {$tenancy->room->name}, {$duration} month(s), Rp {$price}, due {$due->toDateString()}");
+                        $count++;
+                    }
+
+                    return $count;
+                });
+                $created += $count;
+                $skipped += $count === 0 ? 1 : 0;
+            } catch (\Throwable $e) {
+                $this->error("Tenancy #{$candidate->id}: {$e->getMessage()}");
                 $errors++;
             }
         }
 
-        // Summary
-        $this->newLine();
-        $this->info('=== Summary ===');
-        $this->info("Total active tenants: {$activeTenants->count()}");
-        $this->info("Billing created: {$created}");
-        $this->warn("Skipped (already exists): {$skipped}");
-        if ($errors > 0) {
-            $this->error("Errors: {$errors}");
-        }
+        $this->info('Billing '.($this->option('dry-run') ? 'planned' : 'created').": {$created}; tenants skipped: {$skipped}; errors: {$errors}");
 
-        if ($dryRun) {
-            $this->newLine();
-            $this->comment('Dry run mode - No changes were made to the database');
-        }
-
-        return 0;
+        return $errors > 0 ? self::FAILURE : self::SUCCESS;
     }
 }

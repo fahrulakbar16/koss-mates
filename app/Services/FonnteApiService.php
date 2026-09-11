@@ -255,9 +255,9 @@ class FonnteApiService
 
             $response = Http::withHeaders([
                 'Authorization' => $this->deviceToken,
-            ])->post("{$this->baseUrl}/send", $data);
+            ])->connectTimeout(10)->timeout(30)->post("{$this->baseUrl}/send", $data);
 
-            if ($response->successful()) {
+            if ($response->successful() && $response->json('status') === true) {
                 return [
                     'success' => true,
                     'data' => $response->json(),
@@ -266,7 +266,7 @@ class FonnteApiService
 
             return [
                 'success' => false,
-                'message' => 'Gagal mengirim pesan',
+                'message' => $response->json('reason') ?? 'Gagal mengirim pesan',
                 'error' => $response->json(),
             ];
         } catch (\Exception $e) {

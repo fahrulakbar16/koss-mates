@@ -35,6 +35,7 @@ class Transaction extends Model
         'type' => 'string',
         'jatuh_tempo' => 'date',
         'planned_checkin_date' => 'date',
+        'last_reminder_sent_at' => 'datetime',
     ];
 
     /**
