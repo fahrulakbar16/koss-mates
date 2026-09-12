@@ -65,7 +65,9 @@ class ProcessPaymentSuccess
 
             DB::commit();
 
-            $this->sendCheckinReminder($transaction);
+            if ($transaction->type === 'booked') {
+                $this->sendCheckinReminder($transaction);
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('ProcessPaymentSuccess error: ' . $e->getMessage(), ['payment_id' => $payment->id]);

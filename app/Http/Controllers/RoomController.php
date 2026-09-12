@@ -377,6 +377,16 @@ class RoomController extends Controller
 
         DB::beginTransaction();
         try {
+            $transaction = Transaction::whereKey($transaction->id)->lockForUpdate()->firstOrFail();
+            $paidAmount = $transaction->payments()->where('payment_status', 'success')
+                ->where('id', '!=', $payment->id)
+                ->sum('amount');
+            $remaining = max(0, $transaction->total_price - $paidAmount);
+            if ($request->amount > $remaining) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'amount' => 'Jumlah pembayaran tidak boleh melebihi sisa tagihan (Rp ' . number_format($remaining, 0, ',', '.') . ').',
+                ]);
+            }
             $payment->amount = $request->amount;
             $payment->payment_method = $request->payment_method;
             $payment->payment_date = Carbon::parse($request->payment_date);
@@ -435,6 +445,9 @@ class RoomController extends Controller
 
             DB::commit();
             return redirect()->back()->with('success', 'Pembayaran berhasil diperbarui');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            throw $e;
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
@@ -597,6 +610,15 @@ class RoomController extends Controller
 
         DB::beginTransaction();
         try {
+            $transaction = Transaction::whereKey($transaction->id)->lockForUpdate()->firstOrFail();
+            $paidAmount = $transaction->payments()->where('payment_status', 'success')
+                ->sum('amount');
+            $remaining = max(0, $transaction->total_price - $paidAmount);
+            if ($request->amount > $remaining) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'amount' => 'Jumlah pembayaran tidak boleh melebihi sisa tagihan (Rp ' . number_format($remaining, 0, ',', '.') . ').',
+                ]);
+            }
             $proofPath = null;
             if ($request->hasFile('proof')) {
                 $proofPath = $request->file('proof')->store('payment-proofs', 'public');
@@ -631,6 +653,9 @@ class RoomController extends Controller
 
             DB::commit();
             return redirect()->back()->with('success', 'Pembayaran berhasil ditambahkan.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            throw $e;
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());

@@ -9,7 +9,7 @@ Artisan::command('inspire', function () {
 
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('app:handle-tranfer-request')->dailyAt('02:10');
+Schedule::command('app:handle-tranfer-request')->dailyAt('02:10')->withoutOverlapping();
 
 Schedule::command('billing:create-monthly')
     ->dailyAt('07:00')

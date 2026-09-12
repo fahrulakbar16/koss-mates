@@ -358,7 +358,7 @@
                                             </svg>
                                             Rincian Pembayaran
                                         </h4>
-                                        <button @click="openAddPaymentModal(transaction)"
+                                        <button v-if="transaction.status !== 'completed' && remainingPaymentAmount(transaction) > 0" @click="openAddPaymentModal(transaction)"
                                             class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-primary-700 bg-primary-50 dark:bg-primary-950/30 dark:text-primary-400 border border-primary-200 dark:border-primary-900 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
                                             <PlusIcon class="w-3.5 h-3.5" />
                                             Catat Pembayaran
@@ -416,7 +416,7 @@
                                                     </td>
                                                     <td class="py-3 text-right">
                                                         <div class="flex items-center justify-end gap-2">
-                                                            <button @click="openPaymentModal(payment, transaction.total_price)"
+                                                            <button @click="openPaymentModal(payment, transaction)"
                                                                 class="px-2.5 py-1 text-xs font-semibold text-primary-700 bg-primary-50 dark:bg-primary-950/30 dark:text-primary-400 border border-primary-200 dark:border-primary-900 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
                                                                 Update
                                                              </button>
@@ -594,20 +594,7 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label for="payment_method" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Metode Pembayaran <span class="text-primary-500">*</span>
-                        </label>
-                        <select id="payment_method"
-                            class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
-                            v-model="paymentForm.payment_method" required>
-                            <option value="cash">Tunai (Cash)</option>
-                            <option value="gateway">Online Gateway</option>
-                        </select>
-                        <div v-if="paymentForm.errors.payment_method" class="text-xs text-primary-500 font-medium mt-1">
-                            {{ paymentForm.errors.payment_method }}
-                        </div>
-                    </div>
+                    <input type="hidden" name="payment_method" value="cash" />
 
                     <div class="space-y-2">
                         <label for="payment_status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -700,37 +687,8 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="space-y-2">
-                        <label for="payment_scheme" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Skema Pembayaran <span class="text-primary-500">*</span>
-                        </label>
-                        <select id="payment_scheme"
-                            class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
-                            v-model="transactionForm.payment_scheme" required>
-                            <option value="full">Bayar Lunas (Full)</option>
-                            <option value="installment">Cicilan (Installment)</option>
-                        </select>
-                        <div v-if="transactionForm.errors.payment_scheme" class="text-xs text-primary-500 font-medium mt-1">
-                            {{ transactionForm.errors.payment_scheme }}
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label for="tx_type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            Tipe Transaksi <span class="text-primary-500">*</span>
-                        </label>
-                        <select id="tx_type"
-                            class="w-full px-4 py-2.5 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-700 transition-all"
-                            v-model="transactionForm.type" required>
-                            <option value="extended">Perpanjangan (Extended)</option>
-                            <option value="booked">Booking Baru (Booked)</option>
-                        </select>
-                        <div v-if="transactionForm.errors.type" class="text-xs text-primary-500 font-medium mt-1">
-                            {{ transactionForm.errors.type }}
-                        </div>
-                    </div>
-                </div>
+                <input type="hidden" name="payment_scheme" value="installment" />
+                <input type="hidden" name="type" value="extended" />
 
                 <div v-if="isTransactionEditMode" class="space-y-2">
                     <label for="tx_status" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -802,7 +760,7 @@ const currentPaymentProof = ref(null);
 const paymentForm = useForm({
     id: null,
     amount: 0,
-    payment_status: "pending",
+    payment_status: "success",
     payment_method: "cash",
     payment_date: new Date().toISOString().split('T')[0],
     proof: null,
@@ -822,7 +780,7 @@ const formattedTxAmount = ref("");
 const transactionForm = useForm({
     room_price_id: "",
     total_price: 0,
-    payment_scheme: "full",
+    payment_scheme: "installment",
     type: "extended",
     jatuh_tempo: new Date().toISOString().split('T')[0],
     status: "pending",
@@ -831,7 +789,7 @@ const transactionForm = useForm({
 function onPricePlanChange() {
     const selectedPrice = props.room.prices.find(p => p.id === transactionForm.room_price_id);
     if (selectedPrice) {
-        transactionForm.total_price = selectedPrice.price;
+        transactionForm.total_price = Number(selectedPrice.price);
         formattedTxAmount.value = formatRupiahString(selectedPrice.price);
     }
 }
@@ -859,9 +817,9 @@ function openEditTransactionModal(transaction) {
     editingTransactionId.value = transaction.id;
     
     transactionForm.room_price_id = transaction.room_price_id;
-    transactionForm.total_price = transaction.total_price;
-    transactionForm.payment_scheme = transaction.payment_scheme;
-    transactionForm.type = transaction.type;
+    transactionForm.total_price = Number(transaction.total_price);
+    transactionForm.payment_scheme = "installment";
+    transactionForm.type = "extended";
     
     if (transaction.jatuh_tempo) {
         const date = new Date(transaction.jatuh_tempo);
@@ -916,8 +874,10 @@ function saveTransaction() {
 
 function formatRupiahString(value) {
     if (value === null || value === undefined) return "";
-    const numberString = value.toString().replace(/[^0-9]/g, "");
-    if (!numberString) return "";
+    if (value === "") return "";
+    const amount = Number(value);
+    if (!Number.isFinite(amount)) return "";
+    const numberString = Math.trunc(amount).toString();
     return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
@@ -929,22 +889,31 @@ function handleAmountInput(event) {
     paymentForm.amount = intValue;
     formattedAmount.value = formatRupiahString(cleanValue);
 
-    if (maxAllowedAmount.value > 0 && intValue > maxAllowedAmount.value) {
-        paymentForm.setError('amount', `Jumlah pembayaran tidak boleh melebihi jumlah tagihan (Rp ${formatRupiahString(maxAllowedAmount.value)}).`);
+    if (intValue > maxAllowedAmount.value) {
+        paymentForm.setError('amount', `Jumlah pembayaran tidak boleh melebihi sisa tagihan (Rp ${formatRupiahString(maxAllowedAmount.value)}).`);
     } else {
         paymentForm.clearErrors('amount');
     }
 }
 
+function remainingPaymentAmount(transaction, excludedPaymentId = null) {
+    const paid = (transaction.payments || [])
+        .filter(payment => payment.payment_status === 'success' && payment.id !== excludedPaymentId)
+        .reduce((total, payment) => total + Number(payment.amount), 0);
+    return Math.max(0, Number(transaction.total_price) - paid);
+}
+
 function openAddPaymentModal(transaction) {
+    if (transaction.status === 'completed' || remainingPaymentAmount(transaction) <= 0) return;
     isPaymentEditMode.value = false;
     targetTransactionId.value = transaction.id;
-    maxAllowedAmount.value = transaction.total_price;
+    maxAllowedAmount.value = remainingPaymentAmount(transaction);
 
+    paymentForm.transform(data => data);
     paymentForm.id = null;
     paymentForm.amount = 0;
     formattedAmount.value = "";
-    paymentForm.payment_status = "pending";
+    paymentForm.payment_status = "success";
     paymentForm.payment_method = "cash";
     paymentForm.payment_date = new Date().toISOString().split('T')[0];
     paymentForm.proof = null;
@@ -990,16 +959,16 @@ function deleteTransaction(transactionRecord) {
     }
 }
 
-function openPaymentModal(paymentRecord, transactionTotal) {
+function openPaymentModal(paymentRecord, transaction) {
     isPaymentEditMode.value = true;
     targetTransactionId.value = paymentRecord.transaction_id;
-    maxAllowedAmount.value = transactionTotal || 0;
+    maxAllowedAmount.value = remainingPaymentAmount(transaction, paymentRecord.id);
 
     paymentForm.id = paymentRecord.id;
     paymentForm.amount = paymentRecord.amount || 0;
     formattedAmount.value = formatRupiahString(paymentForm.amount);
-    paymentForm.payment_status = paymentRecord.payment_status || "pending";
-    paymentForm.payment_method = paymentRecord.payment_method || "cash";
+    paymentForm.payment_status = paymentRecord.payment_status || "success";
+    paymentForm.payment_method = "cash";
 
     if (paymentRecord.payment_date) {
         const date = new Date(paymentRecord.payment_date);
@@ -1049,8 +1018,8 @@ function removePaymentProof() {
 }
 
 function savePayment() {
-    if (maxAllowedAmount.value > 0 && paymentForm.amount > maxAllowedAmount.value) {
-        paymentForm.setError('amount', `Jumlah pembayaran tidak boleh melebihi jumlah tagihan (Rp ${formatRupiahString(maxAllowedAmount.value)}).`);
+    if (paymentForm.amount > maxAllowedAmount.value) {
+        paymentForm.setError('amount', `Jumlah pembayaran tidak boleh melebihi sisa tagihan (Rp ${formatRupiahString(maxAllowedAmount.value)}).`);
         return;
     }
 

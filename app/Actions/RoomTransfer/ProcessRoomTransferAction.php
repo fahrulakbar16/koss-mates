@@ -2,21 +2,19 @@
 
 namespace App\Actions\RoomTransfer;
 
+use App\Models\RekapHistory;
 use App\Models\Room;
 use App\Models\RoomTransfer;
 use App\Models\UserRooms;
-use App\Models\RekapHistory;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProcessRoomTransferAction
 {
     /**
      * Process a room transfer request (approve or reject).
      *
-     * @param RoomTransfer $transfer
-     * @param string $actionType Action type: 'approve' or 'reject'
-     * @return void
+     * @param  string  $actionType  Action type: 'approve' or 'reject'
      */
     public function execute(RoomTransfer $transfer, string $actionType): void
     {
@@ -31,7 +29,7 @@ class ProcessRoomTransferAction
                     'user_id' => $oldUserRoom->user_id,
                     'boarding_house_id' => $newRoom->boarding_house_id,
                     'room_id' => $newRoom->id,
-                    'room_price_id' => $oldUserRoom->room_price_id,
+                    'room_price_id' => $transfer->room_price_id,
                     'status' => 'booked',
                     'start_date' => $transferDate,
                 ]);

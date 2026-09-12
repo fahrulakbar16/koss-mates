@@ -3,210 +3,145 @@
 namespace App\Console\Commands;
 
 use App\Models\Expense;
+use App\Models\Refund;
 use App\Models\Room;
 use App\Models\RoomTransfer;
+use App\Models\Transaction;
 use App\Models\UserRooms;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use App\Models\Transaction;
-use App\Models\payment;
-use App\Models\Refund;
-use App\Models\TransactionLog;
-use App\Models\RekapHistory;
+use Illuminate\Support\Facades\Log;
 
 class HandleTranferRequest extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:handle-tranfer-request';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Handle room transfer requests scheduled for today';
+    protected $description = 'Process approved room transfers due today or overdue';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): int
     {
         $today = Carbon::today();
+        $errors = 0;
+        $transfers = RoomTransfer::whereDate('plan_date', '<=', $today)
+            ->where('status', 'approved')->where('is_process', 0)
+            ->select('id')->lazyById(100);
 
-        $transfers = RoomTransfer::whereDate('plan_date', $today)
-            ->where('status', 'approved')
-            ->where('is_process', 0)
-            ->get();
-
-        $this->info("Found " . $transfers->count() . " transfers scheduled for today.");
-
-        foreach ($transfers as $transfer) {
-            DB::beginTransaction();
+        foreach ($transfers as $candidate) {
             try {
-                // 1. Find New UserRoom (status 'booked') and update to 'checkin_open'
-                $newUserRoom = UserRooms::where('user_id', $transfer->user_id) // Or from old userRoom->user_id
-                    ->where('room_id', $transfer->room_id)
-                    ->where('status', 'booked')
-                    ->first();
-
-                if ($newUserRoom) {
-                    $newUserRoom->update(['status' => 'checkin_open']);
-                    $this->info("Updated New UserRoom ID {$newUserRoom->id} to 'checkin_open'.");
-                }
-
-                // 2. Find Old UserRoom and update to 'checked_out'
-                // The transfer record has 'user_room_id' which is the old/source user_room
-                $oldUserRoom = $transfer->userRoom;
-
-                if ($oldUserRoom) {
-                    $oldUserRoom->update(['status' => 'checked_out']);
-                    $this->info("Updated Old UserRoom ID {$oldUserRoom->id} to 'checked_out'.");
-
-                    // 3. Update Old Room status to 'available'
-                    $oldRoom = $oldUserRoom->room;
-                    if ($oldRoom) {
-                        $oldRoom->update(['status' => 'available']); // Assuming 'available' is the string value or use Room::STATUS_AVAILABLE constant if imported
-                        $this->info("Updated Old Room ID {$oldRoom->id} to 'available'.");
+                $processed = DB::transaction(function () use ($candidate, $today) {
+                    $transfer = RoomTransfer::lockForUpdate()->find($candidate->id);
+                    if (! $transfer || $transfer->status !== 'approved' || $transfer->is_process
+                        || ! $transfer->plan_date || Carbon::parse($transfer->plan_date)->gt($today->copy()->endOfDay())) {
+                        return false;
                     }
-                }
+                    $old = UserRooms::lockForUpdate()->find($transfer->user_room_id);
+                    $targets = UserRooms::where('user_id', $transfer->user_id)
+                        ->where('room_id', $transfer->room_id)->where('status', 'booked')
+                        ->lockForUpdate()->get();
+                    if (! $old || $old->user_id != $transfer->user_id || $old->status === 'checked_out'
+                        || $targets->count() !== 1 || $old->room_id == $transfer->room_id) {
+                        throw new \RuntimeException('Invalid source tenancy or missing/ambiguous booked destination tenancy.');
+                    }
+                    $new = $targets->first();
+                    $rooms = Room::whereIn('id', [$old->room_id, $new->room_id])->orderBy('id')->lockForUpdate()->get()->keyBy('id');
+                    $oldRoom = $rooms->get($old->room_id);
+                    $newRoom = $rooms->get($new->room_id);
+                    $plan = $transfer->price;
+                    if (! $oldRoom || ! $newRoom || ! $plan || $plan->room_id != $newRoom->id
+                        || $plan->duration < 1 || $plan->price <= 0
+                        || ! in_array($newRoom->status, [Room::STATUS_AVAILABLE, Room::STATUS_BOOKED], true)) {
+                        throw new \RuntimeException('Invalid destination room or selected price plan.');
+                    }
+                    if (UserRooms::where('room_id', $new->room_id)->where('id', '!=', $new->id)
+                        ->whereIn('status', ['booked', 'checkin_open', 'checked_in'])->exists()) {
+                        throw new \RuntimeException('Destination room has another active reservation or occupant.');
+                    }
 
-                // 4. Handle Kekurangan Pembayaran (Shortage)
-                if ($transfer->kekurangan_pembayaran > 0) {
-                    $transaction = Transaction::create([
-                        'user_id' => $transfer->user_id,
-                        'user_room_id' => $newUserRoom->id ?? null, // Link to new user room
-                        'room_id' => $transfer->room_id,
-                        'room_price_id' => $transfer->room_price_id,
-                        'total_price' => $transfer->kekurangan_pembayaran,
-                        'payment_scheme' => 'installment',
-                        'type' => 'booked',
-                        'status' => Transaction::STATUS_PENDING, // Or 'incomplete' based on business logic, using pending for now
+                    $price = (int) $plan->price;
+                    $credit = (int) $transfer->sisa_pembayaran;
+                    $shortage = (int) $transfer->kekurangan_pembayaran;
+                    $refund = (int) $transfer->pengembalian_dana;
+                    if (min($credit, $shortage, $refund) < 0
+                        || $shortage !== max(0, $price - $credit)
+                        || $refund !== max(0, $credit - $price)) {
+                        throw new \RuntimeException('Transfer amounts do not match the selected price and carried balance; review the approved calculation.');
+                    }
+                    $paid = min($credit, $price);
+                    $date = Carbon::parse($transfer->plan_date)->startOfDay();
+                    $status = $paid >= $price ? Transaction::STATUS_COMPLETED
+                        : ($paid > 0 ? Transaction::STATUS_INCOMPLETE : Transaction::STATUS_PENDING);
+                    $new->update([
+                        'room_price_id' => $plan->id,
+                        'status' => 'checkin_open',
+                        'planned_checkin_date' => $date,
                     ]);
+                    $old->update(['status' => 'checked_out', 'end_date' => $date]);
+                    $oldRoom->update(['status' => Room::STATUS_AVAILABLE]);
+                    $newRoom->update(['status' => Room::STATUS_BOOKED]);
 
-                    $this->info("Created Transaction ID {$transaction->id} for shortage: {$transfer->kekurangan_pembayaran}");
-
-                    if ($transfer->sisa_pembayaran > 0) {
-                        $payment = payment::create([
-                            'transaction_id' => $transaction->id,
-                            'amount' => $transfer->sisa_pembayaran,
+                    $transaction = $new->transactions()->create([
+                        'user_id' => $transfer->user_id,
+                        'room_id' => $new->room_id,
+                        'room_price_id' => $plan->id,
+                        'total_price' => $price,
+                        'payment_scheme' => $shortage > 0 ? 'installment' : 'full',
+                        'type' => Transaction::TYPE_BOOKED,
+                        'status' => $status,
+                        'jatuh_tempo' => $date,
+                        'planned_checkin_date' => $date,
+                    ]);
+                    if ($paid > 0) {
+                        $transaction->payments()->create([
+                            'amount' => $paid,
                             'payment_method' => 'cash',
                             'payment_status' => 'success',
-                            'payment_date' => Carbon::now(),
-                            'payment_sequence' => 'installment', // First payment
+                            'payment_date' => $date,
+                            'payment_sequence' => $shortage > 0 ? 'installment' : 'full',
                         ]);
-
-                        $this->info("Created Payment ID {$payment->id} for amount: {$transfer->sisa_pembayaran}");
-
-                        // Create rekap history
-                        $roomPrice = $transaction->roomPrice;
-                        $duration = $roomPrice->duration;
-                        $paymentDate = $payment->payment_date;
-                        $totalPaid = $transaction->payments()->where('payment_status', 'success')->sum('amount');
-
-                        for ($i = 0; $i < $duration; $i++) {
-                            $currentDate = Carbon::parse($paymentDate)->addMonthsNoOverflow($i);
-                            $transaction->userRoom->rekapHistories()->updateOrCreate(
-                                [
-                                    'user_room_id' => $transaction->userRoom->id,
-                                    'month' => $currentDate->month,
-                                    'year' => $currentDate->year,
-                                ],
-                                [
-                                    'total_price' => $transaction->total_price,
-                                    'total_payment' => $totalPaid,
-                                    'payment_date' => $paymentDate,
-                                    'status' => $totalPaid >= $transaction->total_price ? 'completed' : 'incomplete',
-                                ]
-                            );
-                        }
                     }
-                }
-
-                // 5. Handle Pengembalian Dana (Refund)
-                if ($transfer->pengembalian_dana > 0) {
-                    $transaction = Transaction::create([
-                        'user_id' => $transfer->user_id,
-                        'user_room_id' => $newUserRoom->id ?? null, // Link to new user room
-                        'room_id' => $transfer->room_id,
-                        'room_price_id' => $transfer->room_price_id,
-                        'total_price' => $transfer->price->price,
-                        'payment_scheme' => 'full',
-                        'type' => 'booked',
-                        'status' => Transaction::STATUS_COMPLETED, // Or 'incomplete' based on business logic, using pending for now
-                    ]);
-
-                    $payment = $transaction->payments()->create([
-                        'amount' => $transfer->price->price,
-                        'payment_method' => 'cash',
-                        'payment_status' => 'success',
-                        'payment_date' => now(),
-                        'payment_sequence' => 'full',
-                    ]);
-
-                    // Create rekap history
-                    $roomPrice = $transaction->roomPrice;
-                    $duration = $roomPrice->duration;
-                    $paymentDate = $payment->payment_date;
-                    $totalPaid = $transaction->payments()->where('payment_status', 'success')->sum('amount');
-
-                    for ($i = 0; $i < $duration; $i++) {
-                        $currentDate = Carbon::parse($paymentDate)->addMonthsNoOverflow($i);
-                        $transaction->userRoom->rekapHistories()->updateOrCreate(
-                            [
-                                'user_room_id' => $transaction->userRoom->id,
-                                'month' => $currentDate->month,
-                                'year' => $currentDate->year,
-                            ],
-                            [
-                                'total_price' => $transaction->total_price,
-                                'total_payment' => $totalPaid,
-                                'payment_date' => $paymentDate,
-                                'status' => $totalPaid >= $transaction->total_price ? 'completed' : 'incomplete',
-                            ]
-                        );
+                    for ($i = 0; $i < $plan->duration; $i++) {
+                        $month = $date->copy()->addMonthsNoOverflow($i);
+                        $new->rekapHistories()->updateOrCreate([
+                            'month' => $month->month, 'year' => $month->year,
+                        ], [
+                            'total_price' => $price,
+                            'total_payment' => $paid,
+                            'payment_date' => $paid > 0 ? $date : null,
+                            'status' => $paid >= $price ? 'completed' : 'incomplete',
+                        ]);
                     }
+                    if ($refund > 0) {
+                        Refund::create([
+                            'user_id' => $transfer->user_id,
+                            'boarding_house_id' => $old->boarding_house_id,
+                            'amount' => $refund, 'status' => 'pending', 'is_verified' => false,
+                        ]);
+                    }
+                    if ($paid > 0) {
+                        Expense::create([
+                            'user_id' => $transfer->user_id,
+                            'boarding_house_id' => $old->boarding_house_id,
+                            'room_id' => $old->room_id,
+                            'expense_date' => $date, 'amount' => $paid,
+                            'description' => 'Oper dana - pindah kamar',
+                            'category' => 'pengeluaran', 'status' => 'selesai',
+                        ]);
+                    }
+                    $transfer->update(['is_process' => 1]);
 
-                    $refund = Refund::create([
-                        'user_id' => $transfer->user_id,
-                        'boarding_house_id' => $oldUserRoom->boarding_house_id,
-                        'amount' => $transfer->pengembalian_dana,
-                        'status' => 'pending',
-                        'is_verified' => false,
-                    ]);
-
-                    //buat pengeluaran di kos yang lama dengan status oper dana
-                    Expense::create([
-                        'user_id' => $transfer->user_id,
-                        'boarding_house_id' => $oldUserRoom->boarding_house_id,
-                        'room_id' => $oldUserRoom->room_id,
-                        'expense_date' => now(),
-                        'amount' => $transfer->price->price,
-                        'description' => "Oper dana - pindah kamar",
-                        'category' => 'pengeluaran',
-                        'status' => 'selesai',
-                    ]);
-
-                    $this->info("Created Refund ID {$refund->id} for amount: {$transfer->pengembalian_dana}");
+                    return true;
+                });
+                if ($processed) {
+                    $this->info("Processed transfer #{$candidate->id}.");
                 }
-
-                $transfer->update([
-                    'is_process' => 1,
-                ]);
-                $this->info("Updated Transfer ID {$transfer->id} to 'is_process' = true");
-
-                DB::commit();
-            } catch (\Exception $e) {
-                DB::rollBack();
-                $this->error("Failed to process Transfer ID {$transfer->id}: " . $e->getMessage());
-                \Illuminate\Support\Facades\Log::error("Failed to process Transfer ID {$transfer->id}: " . $e->getMessage());
+            } catch (\Throwable $e) {
+                $errors++;
+                $this->error("Failed transfer #{$candidate->id}: {$e->getMessage()}");
+                Log::error('Room transfer failed', ['transfer_id' => $candidate->id, 'error' => $e->getMessage()]);
             }
         }
 
-        $this->info("Transfer processing completed.");
+        return $errors > 0 ? self::FAILURE : self::SUCCESS;
     }
 }
