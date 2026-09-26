@@ -116,7 +116,7 @@
                                         {{ item.boarding_house?.name || '-' }}
                                     </div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400">
-                                        {{ item.room?.room_number ? 'Kamar ' + item.room.room_number : '-' }}
+                                        {{ item.room?.name || (item.room?.number != null ? 'Kamar ' + item.room.number : '-') }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-5 whitespace-nowrap">
@@ -182,23 +182,23 @@
         <Modal :show="showIncomeModal" @close="closeIncomeModal" max-width="2xl">
             <template #header>
                 <div class="flex items-center gap-4">
-                    <div class="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-2xl">
+                    <div class="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-xl">
                         <PlusIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-tight">Tambah Pemasukan Manual</h3>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-0.5">Catat pemasukan tambahan di luar biaya sewa</p>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-tight">Tambah Pemasukan</h3>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Catat pemasukan tambahan di luar biaya sewa</p>
                     </div>
                 </div>
             </template>
 
-            <form id="incomeForm" @submit.prevent="submitIncome" class="space-y-4">
+            <form id="incomeForm" @submit.prevent="submitIncome" class="transaction-entry-form space-y-6">
                 <!-- Property & Room Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-900 shadow-sm hover:shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-xl border border-gray-100 dark:border-gray-800 ">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Target Properti</label>
-                        <select v-model="incomeForm.boarding_house_id" required
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none">
+                        <label for="incomeForm-boarding_house_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Properti</label>
+                        <select id="incomeForm-boarding_house_id" v-model="incomeForm.boarding_house_id" required
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none ">
                             <option value="" disabled>Pilih Properti</option>
                             <option v-for="bh in boardingHouses" :key="bh.id" :value="bh.id">{{ bh.name }}</option>
                         </select>
@@ -206,9 +206,9 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
-                        <select v-model="incomeForm.room_id"
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none"
+                        <label for="incomeForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
+                        <select id="incomeForm-room_id" v-model="incomeForm.room_id"
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none "
                             :disabled="!incomeForm.boarding_house_id">
                             <option value="">Semua Kamar</option>
                             <option v-for="room in availableIncomeRooms" :key="room.id" :value="room.id">{{ room.name }}</option>
@@ -219,27 +219,27 @@
                 </div>
 
                 <!-- Amount & Date Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pemasukan</label>
+                        <label for="formattedIncomeAmount" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pemasukan</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                                <span class="text-lg font-bold text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="text-sm font-medium text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
                             </div>
-                            <input v-model="formattedIncomeAmount" type="text"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="formattedIncomeAmount" v-model="formattedIncomeAmount" type="text" inputmode="numeric"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 placeholder="0" required />
                         </div>
                         <div v-if="incomeForm.errors.amount" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ incomeForm.errors.amount }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Tanggal Transaksi</label>
+                        <label for="incomeForm-transaction_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Tanggal Transaksi</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <CalendarIcon class="w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
                             </div>
-                            <input v-model="incomeForm.transaction_date" type="date"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="incomeForm-transaction_date" v-model="incomeForm.transaction_date" type="date"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 required />
                         </div>
                         <div v-if="incomeForm.errors.transaction_date" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ incomeForm.errors.transaction_date }}</div>
@@ -247,29 +247,29 @@
                 </div>
 
                 <div class="space-y-3">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Metode Pembayaran</label>
-                    <div class="grid grid-cols-3 gap-4">
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Metode Pembayaran</label>
+                    <div class="grid grid-cols-3 gap-2">
                         <button v-for="method in [
                             { id: 'cash', name: 'Tunai', icon: MoneyIcon },
                             { id: 'transfer', name: 'Transfer', icon: HomeIcon },
                             { id: 'other', name: 'Lainnya', icon: GridIcon }
-                        ]" :key="method.id" type="button" @click="incomeForm.payment_method = method.id"
+                        ]" :key="method.id" type="button" @click="incomeForm.payment_method = method.id" :aria-pressed="incomeForm.payment_method === method.id"
                             :class="[
-                                'px-4 py-4 rounded-2xl border-2 font-black transition-all flex flex-col items-center justify-center gap-2 transform active:scale-95',
+                                'px-3 py-3 rounded-xl border font-semibold transition-all flex items-center justify-center gap-2',
                                 incomeForm.payment_method === method.id
-                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 shadow-xl shadow-primary-500/10'
+                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 '
                                     : 'bg-white border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400'
                             ]">
-                            <component :is="method.icon" class="w-7 h-7" />
-                            <span class="text-[10px] uppercase tracking-[0.15em] font-black">{{ method.name }}</span>
+                            <component :is="method.icon" class="w-5 h-5" />
+                            <span class="text-xs sm:text-sm font-semibold">{{ method.name }}</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
-                    <textarea v-model="incomeForm.description"
-                        class="w-full px-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none resize-none"
+                    <label for="incomeForm-description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
+                    <textarea id="incomeForm-description" v-model="incomeForm.description"
+                        class="w-full px-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none resize-none"
                         rows="3" placeholder="Contoh: Denda keterlambatan sewa, penjualan sampah, dll." required></textarea>
                     <div v-if="incomeForm.errors.description" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ incomeForm.errors.description }}</div>
                 </div>
@@ -278,11 +278,11 @@
             <template #footer>
                 <div class="flex items-center justify-end gap-3 w-full">
                     <button type="button" @click="closeIncomeModal"
-                        class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                        class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
                         Batal
                     </button>
                     <button type="submit" form="incomeForm"
-                        class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-bold shadow-lg shadow-primary-500/30 dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
+                        class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-semibold shadow-sm dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
                         :disabled="incomeForm.processing">
                         <template v-if="incomeForm.processing">
                             <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -303,23 +303,23 @@
         <Modal :show="showExpenseModal" @close="closeExpenseModal" max-width="2xl">
             <template #header>
                 <div class="flex items-center gap-4">
-                    <div class="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-2xl">
+                    <div class="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-xl">
                         <PlusIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-tight">Tambah Pengeluaran</h3>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-0.5">Catat pengeluaran operasional properti</p>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-tight">Tambah Pengeluaran</h3>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Catat pengeluaran operasional properti</p>
                     </div>
                 </div>
             </template>
 
-            <form id="expenseForm" @submit.prevent="submitExpense" class="space-y-4">
+            <form id="expenseForm" @submit.prevent="submitExpense" class="transaction-entry-form space-y-6">
                 <!-- Property & Room Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 transition-all hover:bg-white dark:hover:bg-gray-900 shadow-sm hover:shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-xl border border-gray-100 dark:border-gray-800 ">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Target Properti</label>
-                        <select v-model="expenseForm.boarding_house_id" required
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none">
+                        <label for="expenseForm-boarding_house_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Properti</label>
+                        <select id="expenseForm-boarding_house_id" v-model="expenseForm.boarding_house_id" required
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none ">
                             <option value="" disabled>Pilih Properti</option>
                             <option v-for="bh in boardingHouses" :key="bh.id" :value="bh.id">{{ bh.name }}</option>
                         </select>
@@ -327,9 +327,9 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
-                        <select v-model="expenseForm.room_id"
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none"
+                        <label for="expenseForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
+                        <select id="expenseForm-room_id" v-model="expenseForm.room_id"
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none "
                             :disabled="!expenseForm.boarding_house_id">
                             <option value="">Semua Kamar</option>
                             <option v-for="room in availableExpenseRooms" :key="room.id" :value="room.id">Kamar {{ room.name }}</option>
@@ -340,7 +340,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Kategori Pengeluaran</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kategori Pengeluaran</label>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         <button v-for="cat in [
                             { id: 'utility', name: 'Listrik/Air', icon: GridIcon },
@@ -351,9 +351,9 @@
                             { id: 'other', name: 'Lainnya', icon: GridIcon }
                         ]" :key="cat.id" type="button" @click="expenseForm.category = cat.id"
                             :class="[
-                                'px-4 py-4 rounded-2xl border-2 font-black transition-all flex items-center gap-3 transform active:scale-95',
+                                'px-3 py-3 rounded-xl border font-semibold transition-all flex items-center gap-3 transform active:scale-95',
                                 expenseForm.category === cat.id
-                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 shadow-xl shadow-primary-500/10'
+                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 '
                                     : 'bg-white border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400'
                             ]">
                             <component :is="cat.icon" class="w-5 h-5 transition-transform group-hover:scale-110" />
@@ -364,27 +364,27 @@
                 </div>
 
                 <!-- Amount & Date Section -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pengeluaran</label>
+                        <label for="formattedExpenseAmount" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pengeluaran</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                                <span class="text-lg font-bold text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="text-sm font-medium text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
                             </div>
-                            <input v-model="formattedExpenseAmount" type="text"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="formattedExpenseAmount" v-model="formattedExpenseAmount" type="text" inputmode="numeric"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 placeholder="0" required />
                         </div>
                         <div v-if="expenseForm.errors.amount" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ expenseForm.errors.amount }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Tanggal Pengeluaran</label>
+                        <label for="expenseForm-expense_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Tanggal Pengeluaran</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <CalendarIcon class="w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
                             </div>
-                            <input v-model="expenseForm.expense_date" type="date"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="expenseForm-expense_date" v-model="expenseForm.expense_date" type="date"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 required />
                         </div>
                         <div v-if="expenseForm.errors.expense_date" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ expenseForm.errors.expense_date }}</div>
@@ -392,9 +392,9 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
-                    <textarea v-model="expenseForm.description"
-                        class="w-full px-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none resize-none"
+                    <label for="expenseForm-description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
+                    <textarea id="expenseForm-description" v-model="expenseForm.description"
+                        class="w-full px-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none resize-none"
                         rows="3" placeholder="Contoh: Perbaikan keran bocor, bayar internet, dll." required></textarea>
                     <div v-if="expenseForm.errors.description" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ expenseForm.errors.description }}</div>
                 </div>
@@ -403,11 +403,11 @@
             <template #footer>
                 <div class="flex items-center justify-end gap-3 w-full">
                     <button type="button" @click="closeExpenseModal"
-                        class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                        class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
                         Batal
                     </button>
                     <button type="submit" form="expenseForm"
-                        class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-bold shadow-lg shadow-primary-500/30 dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
+                        class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-semibold shadow-sm dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
                         :disabled="expenseForm.processing">
                         <template v-if="expenseForm.processing">
                             <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -428,31 +428,31 @@
         <Modal :show="showEditIncomeModal" @close="closeEditIncomeModal" max-width="2xl">
             <template #header>
                 <div class="flex items-center gap-4">
-                    <div class="p-3 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl">
+                    <div class="p-3 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl">
                         <EditIcon class="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-tight">Edit Pemasukan</h3>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-0.5">Perbarui data pemasukan manual</p>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-tight">Edit Pemasukan</h3>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Perbarui data pemasukan manual</p>
                     </div>
                 </div>
             </template>
 
-            <form id="editIncomeForm" @submit.prevent="submitEditIncome" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <form id="editIncomeForm" @submit.prevent="submitEditIncome" class="transaction-entry-form space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Target Properti</label>
-                        <select v-model="editIncomeForm.boarding_house_id" required
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none">
+                        <label for="editIncomeForm-boarding_house_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Properti</label>
+                        <select id="editIncomeForm-boarding_house_id" v-model="editIncomeForm.boarding_house_id" required
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none ">
                             <option value="" disabled>Pilih Properti</option>
                             <option v-for="bh in boardingHouses" :key="bh.id" :value="bh.id">{{ bh.name }}</option>
                         </select>
                         <div v-if="editIncomeForm.errors.boarding_house_id" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editIncomeForm.errors.boarding_house_id }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
-                        <select v-model="editIncomeForm.room_id"
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none"
+                        <label for="editIncomeForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
+                        <select id="editIncomeForm-room_id" v-model="editIncomeForm.room_id"
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none "
                             :disabled="!editIncomeForm.boarding_house_id">
                             <option value="">Semua Kamar</option>
                             <option v-for="room in availableEditIncomeRooms" :key="room.id" :value="room.id">{{ room.name }}</option>
@@ -461,27 +461,27 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pemasukan</label>
+                        <label for="formattedEditIncomeAmount" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pemasukan</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                                <span class="text-lg font-bold text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="text-sm font-medium text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
                             </div>
-                            <input v-model="formattedEditIncomeAmount" type="text"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="formattedEditIncomeAmount" v-model="formattedEditIncomeAmount" type="text" inputmode="numeric"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 placeholder="0" required />
                         </div>
                         <div v-if="editIncomeForm.errors.amount" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editIncomeForm.errors.amount }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Tanggal Transaksi</label>
+                        <label for="editIncomeForm-transaction_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Tanggal Transaksi</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <CalendarIcon class="w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
                             </div>
-                            <input v-model="editIncomeForm.transaction_date" type="date"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="editIncomeForm-transaction_date" v-model="editIncomeForm.transaction_date" type="date"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 required />
                         </div>
                         <div v-if="editIncomeForm.errors.transaction_date" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editIncomeForm.errors.transaction_date }}</div>
@@ -489,29 +489,29 @@
                 </div>
 
                 <div class="space-y-3">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Metode Pembayaran</label>
-                    <div class="grid grid-cols-3 gap-4">
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Metode Pembayaran</label>
+                    <div class="grid grid-cols-3 gap-2">
                         <button v-for="method in [
                             { id: 'cash', name: 'Tunai', icon: MoneyIcon },
                             { id: 'transfer', name: 'Transfer', icon: HomeIcon },
                             { id: 'other', name: 'Lainnya', icon: GridIcon }
-                        ]" :key="method.id" type="button" @click="editIncomeForm.payment_method = method.id"
+                        ]" :key="method.id" type="button" @click="editIncomeForm.payment_method = method.id" :aria-pressed="editIncomeForm.payment_method === method.id"
                             :class="[
-                                'px-4 py-4 rounded-2xl border-2 font-black transition-all flex flex-col items-center justify-center gap-2 transform active:scale-95',
+                                'px-3 py-3 rounded-xl border font-semibold transition-all flex items-center justify-center gap-2',
                                 editIncomeForm.payment_method === method.id
-                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 shadow-xl shadow-primary-500/10'
+                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 '
                                     : 'bg-white border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400'
                             ]">
-                            <component :is="method.icon" class="w-7 h-7" />
-                            <span class="text-[10px] uppercase tracking-[0.15em] font-black">{{ method.name }}</span>
+                            <component :is="method.icon" class="w-5 h-5" />
+                            <span class="text-xs sm:text-sm font-semibold">{{ method.name }}</span>
                         </button>
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
-                    <textarea v-model="editIncomeForm.description"
-                        class="w-full px-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none resize-none"
+                    <label for="editIncomeForm-description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
+                    <textarea id="editIncomeForm-description" v-model="editIncomeForm.description"
+                        class="w-full px-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none resize-none"
                         rows="3" required></textarea>
                     <div v-if="editIncomeForm.errors.description" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editIncomeForm.errors.description }}</div>
                 </div>
@@ -520,11 +520,11 @@
             <template #footer>
                 <div class="flex items-center justify-end gap-3 w-full">
                     <button type="button" @click="closeEditIncomeModal"
-                        class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                        class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
                         Batal
                     </button>
                     <button type="submit" form="editIncomeForm"
-                        class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
+                        class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-semibold shadow-sm dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
                         :disabled="editIncomeForm.processing">
                         <template v-if="editIncomeForm.processing">
                             <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -545,31 +545,31 @@
         <Modal :show="showEditExpenseModal" @close="closeEditExpenseModal" max-width="2xl">
             <template #header>
                 <div class="flex items-center gap-4">
-                    <div class="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-2xl">
+                    <div class="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-xl">
                         <EditIcon class="w-6 h-6 text-primary-600 dark:text-primary-400" />
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white leading-tight">Edit Pengeluaran</h3>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 mt-0.5">Perbarui data pengeluaran</p>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white leading-tight">Edit Pengeluaran</h3>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400 mt-1">Perbarui data pengeluaran</p>
                     </div>
                 </div>
             </template>
 
-            <form id="editExpenseForm" @submit.prevent="submitEditExpense" class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+            <form id="editExpenseForm" @submit.prevent="submitEditExpense" class="transaction-entry-form space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-gray-900/40 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Target Properti</label>
-                        <select v-model="editExpenseForm.boarding_house_id" required
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none">
+                        <label for="editExpenseForm-boarding_house_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Properti</label>
+                        <select id="editExpenseForm-boarding_house_id" v-model="editExpenseForm.boarding_house_id" required
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none ">
                             <option value="" disabled>Pilih Properti</option>
                             <option v-for="bh in boardingHouses" :key="bh.id" :value="bh.id">{{ bh.name }}</option>
                         </select>
                         <div v-if="editExpenseForm.errors.boarding_house_id" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editExpenseForm.errors.boarding_house_id }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
-                        <select v-model="editExpenseForm.room_id"
-                            class="w-full h-[58px] px-5 py-4 bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 focus:border-primary-500 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none appearance-none"
+                        <label for="editExpenseForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
+                        <select id="editExpenseForm-room_id" v-model="editExpenseForm.room_id"
+                            class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none "
                             :disabled="!editExpenseForm.boarding_house_id">
                             <option value="">Semua Kamar</option>
                             <option v-for="room in availableEditExpenseRooms" :key="room.id" :value="room.id">Kamar {{ room.name }}</option>
@@ -579,7 +579,7 @@
                 </div>
 
                 <div class="space-y-3">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Kategori Pengeluaran</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kategori Pengeluaran</label>
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         <button v-for="cat in [
                             { id: 'utility', name: 'Listrik/Air', icon: GridIcon },
@@ -590,9 +590,9 @@
                             { id: 'other', name: 'Lainnya', icon: GridIcon }
                         ]" :key="cat.id" type="button" @click="editExpenseForm.category = cat.id"
                             :class="[
-                                'px-4 py-4 rounded-2xl border-2 font-black transition-all flex items-center gap-3 transform active:scale-95',
+                                'px-3 py-3 rounded-xl border font-semibold transition-all flex items-center gap-3 transform active:scale-95',
                                 editExpenseForm.category === cat.id
-                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 shadow-xl shadow-primary-500/10'
+                                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:bg-primary-900/30 dark:border-primary-500 dark:text-primary-400 '
                                     : 'bg-white border-gray-100 text-gray-500 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400'
                             ]">
                             <component :is="cat.icon" class="w-5 h-5" />
@@ -602,27 +602,27 @@
                     <div v-if="editExpenseForm.errors.category" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editExpenseForm.errors.category }}</div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pengeluaran</label>
+                        <label for="formattedEditExpenseAmount" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Jumlah Pengeluaran</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                                <span class="text-lg font-bold text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="text-sm font-medium text-gray-400 group-focus-within:text-primary-500 transition-colors">Rp</span>
                             </div>
-                            <input v-model="formattedEditExpenseAmount" type="text"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="formattedEditExpenseAmount" v-model="formattedEditExpenseAmount" type="text" inputmode="numeric"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 placeholder="0" required />
                         </div>
                         <div v-if="editExpenseForm.errors.amount" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editExpenseForm.errors.amount }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Tanggal Pengeluaran</label>
+                        <label for="editExpenseForm-expense_date" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Tanggal Pengeluaran</label>
                         <div class="relative group">
-                            <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <CalendarIcon class="w-5 h-5 text-gray-400 group-focus-within:text-primary-500 transition-colors" />
                             </div>
-                            <input v-model="editExpenseForm.expense_date" type="date"
-                                class="w-full h-[58px] pl-14 pr-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none"
+                            <input id="editExpenseForm-expense_date" v-model="editExpenseForm.expense_date" type="date"
+                                class="w-full h-12 pl-12 pr-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none"
                                 required />
                         </div>
                         <div v-if="editExpenseForm.errors.expense_date" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editExpenseForm.errors.expense_date }}</div>
@@ -630,9 +630,9 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
-                    <textarea v-model="editExpenseForm.description"
-                        class="w-full px-6 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-2 border-transparent focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-2xl text-lg font-bold text-gray-700 dark:text-white transition-all outline-none resize-none"
+                    <label for="editExpenseForm-description" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Deskripsi / Catatan</label>
+                    <textarea id="editExpenseForm-description" v-model="editExpenseForm.description"
+                        class="w-full px-4 py-3 bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-600 focus:border-primary-500 focus:bg-white dark:focus:bg-gray-900 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none resize-none"
                         rows="3" required></textarea>
                     <div v-if="editExpenseForm.errors.description" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editExpenseForm.errors.description }}</div>
                 </div>
@@ -641,11 +641,11 @@
             <template #footer>
                 <div class="flex items-center justify-end gap-3 w-full">
                     <button type="button" @click="closeEditExpenseModal"
-                        class="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+                        class="px-5 py-2.5 rounded-xl text-sm font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
                         Batal
                     </button>
                     <button type="submit" form="editExpenseForm"
-                        class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-bold shadow-lg shadow-primary-500/30 dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
+                        class="px-6 py-2.5 bg-primary-500 hover:bg-primary-600 text-white rounded-xl font-semibold shadow-sm dark:shadow-none transition-all flex items-center gap-2 transform active:scale-95 disabled:grayscale disabled:scale-100"
                         :disabled="editExpenseForm.processing">
                         <template v-if="editExpenseForm.processing">
                             <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -1019,3 +1019,23 @@ const resetFilters = () => {
     endDateFilter.value = "";
 };
 </script>
+
+
+<style scoped>
+.transaction-entry-form :is(input, select, textarea):focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+.transaction-entry-form textarea {
+    min-height: 104px;
+    resize: vertical;
+    line-height: 1.6;
+}
+.transaction-entry-form input[type="date"] {
+    min-width: 0;
+}
+.transaction-entry-form button:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+</style>
