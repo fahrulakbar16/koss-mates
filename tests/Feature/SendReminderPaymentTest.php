@@ -53,7 +53,7 @@ class SendReminderPaymentTest extends TestCase
     {
         return DB::table('transactions')->insertGetId(array_merge([
             'user_id' => 1, 'total_price' => 1000000, 'status' => 'incomplete',
-            'transaction_code' => 'TRX-test', 'jatuh_tempo' => '2026-09-16',
+            'transaction_code' => 'TRX-test', 'jatuh_tempo' => '2026-09-14',
         ], $attributes));
     }
 
@@ -70,10 +70,20 @@ class SendReminderPaymentTest extends TestCase
         Http::assertSentCount(1);
         Http::assertSent(fn ($request) => $request['target'] === '6281234567890'
             && str_contains($request['message'], 'Rp 600.000')
-            && str_contains($request['message'], 'dalam 5 hari'));
+            && str_contains($request['message'], 'dalam 3 hari'));
         $this->travel(1)->days();
         $this->artisan('billing:send-reminders')->assertSuccessful();
+        Http::assertSentCount(1);
+        $this->travel(2)->days();
+        $this->artisan('billing:send-reminders')->assertSuccessful();
         Http::assertSentCount(2);
+        $this->travel(3)->days();
+        $this->artisan('billing:send-reminders')->assertSuccessful();
+        $this->artisan('billing:send-reminders')->assertSuccessful();
+        Http::assertSentCount(3);
+        $this->travel(1)->days();
+        $this->artisan('billing:send-reminders')->assertSuccessful();
+        Http::assertSentCount(3);
     }
 
     public function test_api_rejection_can_be_retried_and_does_not_stop_other_transactions(): void
@@ -105,15 +115,18 @@ class SendReminderPaymentTest extends TestCase
         Http::assertNothingSent();
     }
 
-    public function test_today_and_old_overdue_transactions_are_reminded(): void
+    public function test_only_three_reminder_dates_are_sent(): void
     {
-        $this->transaction(['jatuh_tempo' => '2026-09-11']);
+        foreach (range(-6, 6) as $offset) {
+            $this->transaction(['jatuh_tempo' => today()->addDays($offset)->toDateString()]);
+        }
         $this->transaction(['jatuh_tempo' => '2026-08-01']);
         Http::fake(['*' => Http::response(['status' => true])]);
         $this->artisan('billing:send-reminders')->assertSuccessful();
-        Http::assertSentCount(2);
+        Http::assertSentCount(3);
+        Http::assertSent(fn ($request) => str_contains($request['message'], 'dalam 3 hari'));
         Http::assertSent(fn ($request) => str_contains($request['message'], '*HARI INI*'));
-        Http::assertSent(fn ($request) => str_contains($request['message'], 'selama 41 hari'));
+        Http::assertSent(fn ($request) => str_contains($request['message'], 'selama 3 hari'));
     }
 
     public function test_http_failure_is_reported_by_service(): void

@@ -23,7 +23,7 @@ class SendReminderPayment extends Command
      *
      * @var string
      */
-    protected $description = 'Kirim pesan WhatsApp pengingat untuk transaksi yang mendekati atau lewat jatuh tempo (<= 5 hari)';
+    protected $description = 'Kirim pesan WhatsApp pengingat pada H-3, hari jatuh tempo, dan H+3';
 
     /**
      * Execute the console command.
@@ -32,8 +32,7 @@ class SendReminderPayment extends Command
     {
         $this->info('Memulai pengecekan tagihan untuk pengiriman pengingat...');
 
-        // Jatuh tempo kurang dari 5 hari atau sudah lewat (<= 5 hari dari hari ini)
-        $targetDate = Carbon::now()->addDays(5)->format('Y-m-d');
+        $today = Carbon::today();
 
         $sentCount = 0;
         $failedCount = 0;
@@ -42,7 +41,11 @@ class SendReminderPayment extends Command
         $transactions = Transaction::query()
             ->whereIn('status', [Transaction::STATUS_PENDING, Transaction::STATUS_INCOMPLETE])
             ->whereNotNull('jatuh_tempo')
-            ->whereDate('jatuh_tempo', '<=', $targetDate)
+            ->where(function ($query) use ($today) {
+                $query->whereDate('jatuh_tempo', $today->copy()->addDays(3))
+                    ->orWhereDate('jatuh_tempo', $today)
+                    ->orWhereDate('jatuh_tempo', $today->copy()->subDays(3));
+            })
             ->select('id')->lazyById(100);
 
         foreach ($transactions as $candidate) {
@@ -55,7 +58,7 @@ class SendReminderPayment extends Command
                     if (! $transaction
                         || ! in_array($transaction->status, [Transaction::STATUS_PENDING, Transaction::STATUS_INCOMPLETE], true)
                         || ! $transaction->jatuh_tempo
-                        || $transaction->jatuh_tempo->gt($today->copy()->addDays(5))
+                        || ! in_array((int) $today->diffInDays($transaction->jatuh_tempo->copy()->startOfDay(), false), [3, 0, -3], true)
                         || ($transaction->last_reminder_sent_at && $transaction->last_reminder_sent_at->gte($today))) {
                         return false;
                     }
