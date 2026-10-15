@@ -22,6 +22,8 @@ class SuccessfulTransactionLogTest extends TestCase
         Schema::create('transaction_logs', function (Blueprint $table) {
             $table->id();
             $table->integer('transaction_id')->nullable();
+            $table->integer('boarding_house_id')->default(9);
+            $table->dateTime('transaction_date')->default('2026-09-26 12:00:00');
             $table->string('type');
             $table->string('status');
             $table->string('reference_number')->nullable();
@@ -51,6 +53,24 @@ class SuccessfulTransactionLogTest extends TestCase
 
         $this->assertSame([2, 4, 5, 7], TransactionLog::successful()->orderBy('id')->pluck('id')->all());
         $this->assertEquals(1500500, TransactionLog::successful()->whereIn('type', ['payment', 'income'])->sum('amount'));
+        Schema::create('boarding_houses', function (Blueprint $table) {
+            $table->id();
+            $table->integer('cluster_id')->nullable();
+        });
+        Schema::create('clusters', function (Blueprint $table) {
+            $table->id();
+        });
+        DB::table('boarding_houses')->insert(['id' => 9]);
+        $user = new class {
+            public function hasRole($role): bool { return false; }
+        };
+        $list = app(\App\Actions\Admin\FinancialReport\GetBoardingHouseFinancialList::class)
+            ->execute(['start_date' => '2026-09-01', 'end_date' => '2026-09-30'], $user);
+        $report = (new \App\Http\Resources\Admin\FinancialReport\BoardingHouseFinancialResource($list->first()))
+            ->toArray(request());
+        $this->assertEquals(1500500, $report['total_income']);
+        $this->assertEquals(50, $report['total_expense']);
+
         DB::table('payments')->where('id', 132)->update(['payment_status' => 'pending']);
         $this->assertSame([4, 5], TransactionLog::successful()->orderBy('id')->pluck('id')->all());
     }

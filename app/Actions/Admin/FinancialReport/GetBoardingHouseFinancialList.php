@@ -24,7 +24,7 @@ class GetBoardingHouseFinancialList
         $query = BoardingHouse::query()
             ->with(['cluster', 'transactionLogs' => function ($q) use ($month, $year, $startDate, $endDate, $useDateRange) {
                 $q->whereIn('type', ['payment', 'income', 'expense'])
-                    ->where('status', 'completed');
+                    ->successful();
 
                 if ($useDateRange) {
                     $q->whereBetween('transaction_date', [$startDate, $endDate]);

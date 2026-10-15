@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \App\Models\TransactionLog::observe(\App\Observers\TransactionLogObserver::class);
         Expense::observe(ExpenseObserver::class);
         payment::observe(PaymentObserver::class);
 

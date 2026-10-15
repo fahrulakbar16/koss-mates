@@ -32,6 +32,16 @@ class TransactionLog extends Model
         'transaction_date' => 'datetime',
     ];
 
+    public function financialSource(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(FinancialSource::class);
+    }
+
+    public function save(array $options = [])
+    {
+        return $this->getConnection()->transaction(fn () => parent::save($options));
+    }
+
     public function expense(): BelongsTo
     {
         return $this->belongsTo(Expense::class);

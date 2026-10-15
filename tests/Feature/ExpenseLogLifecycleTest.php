@@ -31,6 +31,7 @@ class ExpenseLogLifecycleTest extends TestCase
     private function migrateLogs(): void
     {
         (require database_path('migrations/2026_10_15_000001_link_transaction_logs_to_expenses.php'))->up();
+        (require database_path('migrations/2026_10_16_000001_create_financial_sources_table.php'))->up();
     }
 
     public function test_backfill_and_cascade_delete_all_linked_logs(): void
