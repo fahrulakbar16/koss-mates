@@ -323,18 +323,6 @@ class ImportController extends Controller
                         'status' => 'selesai',
                     ]);
 
-                    // 5. Add to TransactionLog for reporting
-                    TransactionLog::create([
-                        'room_id' => $room ? $room->id : null,
-                        'boarding_house_id' => $bh->id,
-                        'type' => 'expense',
-                        'amount' => $amount,
-                        'status' => 'completed',
-                        'description' => "[IMPORT] $category: $description",
-                        'payment_method' => 'cash',
-                        'transaction_date' => $expenseDate,
-                    ]);
-
                     $results['success']++;
                 });
             } catch (\Exception $e) {

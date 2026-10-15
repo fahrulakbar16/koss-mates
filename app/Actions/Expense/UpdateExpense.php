@@ -3,6 +3,7 @@
 namespace App\Actions\Expense;
 
 use App\Models\Expense;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class UpdateExpense
@@ -33,6 +34,6 @@ class UpdateExpense
             $updateData['receipt_path'] = $receiptFile->store('receipts', 'public');
         }
 
-        return $expense->update($updateData);
+        return DB::transaction(fn () => $expense->update($updateData));
     }
 }

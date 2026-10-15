@@ -14,6 +14,7 @@ class TransactionLog extends Model
     protected $table = 'transaction_logs';
 
     protected $fillable = [
+        'expense_id',
         'transaction_id',
         'room_id',
         'boarding_house_id',
@@ -30,6 +31,11 @@ class TransactionLog extends Model
         'amount' => 'decimal:2',
         'transaction_date' => 'datetime',
     ];
+
+    public function expense(): BelongsTo
+    {
+        return $this->belongsTo(Expense::class);
+    }
 
     /** Filter out payment logs whose underlying payment is no longer successful. */
     public function scopeSuccessful(Builder $query): Builder

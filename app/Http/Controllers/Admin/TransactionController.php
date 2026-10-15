@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -115,14 +116,14 @@ class TransactionController extends Controller
             'category'          => 'required|string',
         ]);
 
-        $expense->update([
+        DB::transaction(fn () => $expense->update([
             'boarding_house_id' => $validated['boarding_house_id'],
             'room_id'           => $validated['room_id'] ?? null,
             'amount'            => $validated['amount'],
             'expense_date'      => $validated['expense_date'],
             'description'       => $validated['description'],
             'category'          => $validated['category'],
-        ]);
+        ]));
 
         return Redirect::back()->with('success', 'Pengeluaran berhasil diperbarui');
     }

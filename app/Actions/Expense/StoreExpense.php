@@ -4,6 +4,7 @@ namespace App\Actions\Expense;
 
 use App\Models\BoardingHouse;
 use App\Models\Expense;
+use Illuminate\Support\Facades\DB;
 
 class StoreExpense
 {
@@ -22,13 +23,13 @@ class StoreExpense
             $receiptPath = $receiptFile->store('receipts', 'public');
         }
 
-        return $boardingHouse->expenses()->create([
+        return DB::transaction(fn () => $boardingHouse->expenses()->create([
             'description' => $data['description'],
             'amount' => $data['amount'],
             'expense_date' => $data['date'],
             'room_id' => $data['room_id'] ?? null,
             'category' => 'other', // Default category
             'receipt_path' => $receiptPath,
-        ]);
+        ]));
     }
 }

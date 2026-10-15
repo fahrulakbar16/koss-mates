@@ -30,6 +30,11 @@ class Expense extends Model
         'expense_date' => 'date',
     ];
 
+    public function transactionLogs(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TransactionLog::class);
+    }
+
     /**
      * Get the user that owns the expense
      */
