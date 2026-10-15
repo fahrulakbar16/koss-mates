@@ -26,9 +26,9 @@ class GetTransactionByBoardingHouse
                     ->whereYear('transaction_date', $year);
             }
             $q->whereIn('type', ['payment', 'income'])
-                ->where('status', 'completed');
+                ->successful();
         }], 'amount')->with([
-            'transactionLogs' => fn($q) => $q->orderBy('transaction_date', 'desc'),
+            'transactionLogs' => fn($q) => $q->successful()->orderBy('transaction_date', 'desc'),
             'transactionLogs.transaction.user',
             'transactionLogs.room',
         ])->get();

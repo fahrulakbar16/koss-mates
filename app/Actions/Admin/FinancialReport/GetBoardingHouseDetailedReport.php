@@ -20,7 +20,7 @@ class GetBoardingHouseDetailedReport
             ->whereMonth('transaction_date', $month)
             ->whereYear('transaction_date', $year)
             ->whereIn('type', ['payment', 'income'])
-            ->where('status', 'completed')
+            ->successful()
             ->with(['transaction.user', 'room'])
             ->orderBy('transaction_date', 'desc')
             ->get();

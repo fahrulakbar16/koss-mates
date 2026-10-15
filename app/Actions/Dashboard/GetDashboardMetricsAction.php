@@ -49,7 +49,7 @@ class GetDashboardMetricsAction
             }
 
             // Monthly Income (Pemasukan) - filtered by cluster
-            $currentMonthIncome = TransactionLog::where('status', 'completed')
+            $currentMonthIncome = TransactionLog::successful()
                 ->where('type', 'payment')
                 ->where('transaction_date', '>=', $currentMonthStart)
                 ->when($boardingHouseIds, function ($query) use ($boardingHouseIds) {
@@ -57,7 +57,7 @@ class GetDashboardMetricsAction
                 })
                 ->sum('amount');
 
-            $previousMonthIncome = TransactionLog::where('status', 'completed')
+            $previousMonthIncome = TransactionLog::successful()
                 ->where('type', 'payment')
                 ->whereBetween('transaction_date', [$previousMonthStart, $previousMonthEnd])
                 ->when($boardingHouseIds, function ($query) use ($boardingHouseIds) {
@@ -99,7 +99,7 @@ class GetDashboardMetricsAction
 
             foreach ($allHouses as $house) {
                 $houseIncome = TransactionLog::where('boarding_house_id', $house->id)
-                    ->where('status', 'completed')
+                    ->successful()
                     ->where('type', 'payment')
                     ->where('transaction_date', '>=', $currentMonthStart)
                     ->sum('amount');
@@ -209,7 +209,7 @@ class GetDashboardMetricsAction
 
             // Recent Transactions - Income (Pemasukan) - filtered by cluster
             $recentIncome = TransactionLog::with(['transaction.user', 'room.boardingHouse'])
-                ->where('status', 'completed')
+                ->successful()
                 ->where('type', 'payment')
                 ->when($boardingHouseIds, function ($query) use ($boardingHouseIds) {
                     $query->whereIn('boarding_house_id', $boardingHouseIds);

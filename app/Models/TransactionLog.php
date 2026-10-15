@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TransactionLog extends Model
@@ -29,6 +30,29 @@ class TransactionLog extends Model
         'amount' => 'decimal:2',
         'transaction_date' => 'datetime',
     ];
+
+    /** Filter out payment logs whose underlying payment is no longer successful. */
+    public function scopeSuccessful(Builder $query): Builder
+    {
+        $paymentReference = $query->getConnection()->getDriverName() === 'sqlite'
+            ? "'PAY-' || payments.id || '-%'"
+            : "CONCAT('PAY-', payments.id, '-%')";
+
+        return $query->where('transaction_logs.status', 'completed')
+            ->where(function ($entries) use ($paymentReference) {
+                $entries->where('transaction_logs.type', '<>', 'payment')
+                    ->orWhereExists(function ($payments) use ($paymentReference) {
+                        $payments->selectRaw('1')->from('payments')
+                            ->whereColumn('payments.transaction_id', 'transaction_logs.transaction_id')
+                            ->where('payments.payment_status', 'success')
+                            ->where(function ($reference) use ($paymentReference) {
+                                // Legacy imported entries do not have payment references.
+                                $reference->whereNull('transaction_logs.reference_number')
+                                    ->orWhereRaw("transaction_logs.reference_number LIKE {$paymentReference}");
+                            });
+                    });
+            });
+    }
 
     /**
      * Get the transaction that owns the transaction log

@@ -27,7 +27,7 @@ class TransactionController extends Controller
 
         $boardingHouseIds = PengelolaScopeHelper::getBoardingHouseIds($user, $clusterId);
 
-        $query = TransactionLog::with(['room', 'boardingHouse', 'transaction'])
+        $query = TransactionLog::successful()->with(['room', 'boardingHouse', 'transaction'])
             ->latest('transaction_date');
 
         if ($boardingHouseIds !== null) {

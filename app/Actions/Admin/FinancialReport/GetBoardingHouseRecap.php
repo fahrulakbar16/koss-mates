@@ -29,7 +29,7 @@ class GetBoardingHouseRecap
                         ->whereYear('transaction_date', $year);
                 }
                 $query->whereIn('transaction_logs.type', ['payment', 'income'])
-                    ->where('transaction_logs.status', 'completed');
+                    ->successful();
             }], 'amount')
             ->get();
 
@@ -48,7 +48,7 @@ class GetBoardingHouseRecap
 
         $incomeQuery = TransactionLog::where('boarding_house_id', $boardingHouse->id)
             ->whereIn('type', ['payment', 'income'])
-            ->where('status', 'completed');
+            ->successful();
 
         if ($useDateRange) {
             $incomeQuery->whereBetween('transaction_date', [$startDate, $endDate]);

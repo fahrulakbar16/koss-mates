@@ -18,7 +18,7 @@ class GetRoomTransactionDetail
         $transactions = TransactionLog::where('room_id', $room->id)
             ->whereBetween('transaction_date', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
             ->whereIn('type', ['payment', 'income'])
-            ->where('status', 'completed')
+            ->successful()
             ->with(['transaction.user', 'room'])
             ->orderBy('transaction_date', 'desc')
             ->get();
