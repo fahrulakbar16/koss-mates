@@ -57,17 +57,19 @@ class ExpenseLogLifecycleTest extends TestCase
         $this->assertEquals(0, DB::table('transaction_logs')->count());
     }
 
-    public function test_pruning_defaults_to_preview_and_preserves_ambiguous_and_non_expense_logs(): void
+    public function test_pruning_defaults_to_preview_and_preserves_ambiguous_expenses_and_room_income(): void
     {
         $this->migrateLogs();
-        foreach ([['expense', 'EXP-999'], ['expense', null], ['income', null]] as [$type, $ref]) {
-            DB::table('transaction_logs')->insert(['type' => $type, 'reference_number' => $ref, 'amount' => 100, 'transaction_date' => '2026-10-15']);
+        foreach ([['expense', 'EXP-999', null], ['expense', null, null], ['income', null, null], ['income', null, 1], ['payment', null, null]] as [$type, $ref, $roomId]) {
+            DB::table('transaction_logs')->insert(['type' => $type, 'room_id' => $roomId, 'reference_number' => $ref, 'amount' => 100, 'transaction_date' => '2026-10-15']);
         }
         $this->artisan('transactions:prune-orphan-expense-logs')->assertSuccessful();
+        $this->assertEquals(5, DB::table('transaction_logs')->count());
+        $this->artisan('transactions:prune-orphan-expense-logs --delete')->assertSuccessful();
+        $this->assertSame([2, 4, 5], DB::table('transaction_logs')->orderBy('id')->pluck('id')->all());
         $this->assertEquals(3, DB::table('transaction_logs')->count());
         $this->artisan('transactions:prune-orphan-expense-logs --delete')->assertSuccessful();
-        $this->assertEquals(2, DB::table('transaction_logs')->count());
-        $this->artisan('transactions:prune-orphan-expense-logs --delete')->assertSuccessful();
-        $this->assertEquals(2, DB::table('transaction_logs')->count());
+        $this->assertSame([2, 4, 5], DB::table('transaction_logs')->orderBy('id')->pluck('id')->all());
+        $this->assertEquals(3, DB::table('transaction_logs')->count());
     }
 }

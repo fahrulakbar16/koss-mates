@@ -86,12 +86,12 @@ class TransactionController extends Controller
 
         $validated = $request->validate([
             'boarding_house_id' => 'required|exists:boarding_houses,id',
-            'room_id'           => 'nullable|exists:rooms,id',
+            'room_id'           => 'required|exists:rooms,id',
             'amount'            => 'required|numeric|min:0',
             'transaction_date'  => 'required|date',
             'description'       => 'required|string',
             'payment_method'    => 'required|string',
-        ]);
+        ], ['room_id.required' => 'Kamar wajib dipilih.']);
 
         $transaction->update([
             'boarding_house_id' => $validated['boarding_house_id'],

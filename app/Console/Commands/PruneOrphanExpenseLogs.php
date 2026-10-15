@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\DB;
 
 class PruneOrphanExpenseLogs extends Command
 {
-    protected $signature = 'transactions:prune-orphan-expense-logs {--delete : Hapus log yang terbukti tidak memiliki induk (default hanya pratinjau)}';
+    protected $signature = 'transactions:prune-orphan-expense-logs {--delete : Hapus log expense yatim dan pemasukan manual tanpa kamar (default hanya pratinjau)}';
 
-    protected $description = 'Periksa/hapus log expense yatim; log tanpa identitas induk dilewati untuk pemeriksaan manual';
+    protected $description = 'Periksa/hapus log expense yatim dan income tanpa kamar; expense tanpa identitas dilewati';
 
     public function handle(): int
     {
         $orphans = 0;
         $unknown = 0;
+        $roomlessIncome = 0;
         DB::table('transaction_logs')->where('type', 'expense')->orderBy('id')->chunkById(200, function ($logs) use (&$orphans, &$unknown) {
             foreach ($logs as $candidate) {
                 DB::transaction(function () use ($candidate, &$orphans, &$unknown) {
@@ -40,7 +41,24 @@ class PruneOrphanExpenseLogs extends Command
                 });
             }
         });
-        $this->info(($this->option('delete') ? 'Dihapus' : 'Kandidat hapus').": {$orphans}. Perlu tinjauan manual: {$unknown}.");
+        DB::table('transaction_logs')->where('type', 'income')->whereNull('room_id')
+            ->orderBy('id')->chunkById(200, function ($logs) use (&$roomlessIncome) {
+                foreach ($logs as $candidate) {
+                    DB::transaction(function () use ($candidate, &$roomlessIncome) {
+                        $log = DB::table('transaction_logs')->where('id', $candidate->id)->lockForUpdate()->first();
+                        if (!$log || $log->type !== 'income' || $log->room_id !== null) {
+                            return;
+                        }
+                        $roomlessIncome++;
+                        $this->line("Log #{$log->id} | income tanpa kamar | {$log->transaction_date} | {$log->amount} | {$log->description}");
+                        if ($this->option('delete')) {
+                            DB::table('transaction_logs')->where('id', $log->id)->delete();
+                        }
+                    });
+                }
+            });
+        $total = $orphans + $roomlessIncome;
+        $this->info(($this->option('delete') ? 'Dihapus' : 'Kandidat hapus').": {$total}. Expense yatim: {$orphans}. Income tanpa kamar: {$roomlessIncome}. Perlu tinjauan manual: {$unknown}.");
         return self::SUCCESS;
     }
 }

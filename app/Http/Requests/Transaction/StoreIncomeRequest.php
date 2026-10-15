@@ -11,11 +11,16 @@ class StoreIncomeRequest extends FormRequest
         return true;
     }
 
+    public function messages(): array
+    {
+        return ['room_id.required' => 'Kamar wajib dipilih.'];
+    }
+
     public function rules(): array
     {
         return [
             'boarding_house_id' => 'required|exists:boarding_houses,id',
-            'room_id' => 'nullable|exists:rooms,id',
+            'room_id' => 'required|exists:rooms,id',
             'amount' => 'required|numeric|min:0',
             'transaction_date' => 'required|date',
             'description' => 'required|string',

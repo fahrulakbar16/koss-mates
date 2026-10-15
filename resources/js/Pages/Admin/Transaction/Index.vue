@@ -206,11 +206,11 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label for="incomeForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
-                        <select id="incomeForm-room_id" v-model="incomeForm.room_id"
+                        <label for="incomeForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Wajib)</label>
+                        <select id="incomeForm-room_id" v-model="incomeForm.room_id" required
                             class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none "
                             :disabled="!incomeForm.boarding_house_id">
-                            <option value="">Semua Kamar</option>
+                            <option value="" disabled>Pilih Kamar</option>
                             <option v-for="room in availableIncomeRooms" :key="room.id" :value="room.id">{{ room.name }}</option>
                         </select>
                         <p v-if="!incomeForm.boarding_house_id" class="text-xs text-gray-400 mt-2 px-1">Pilih properti terlebih dahulu</p>
@@ -450,11 +450,11 @@
                         <div v-if="editIncomeForm.errors.boarding_house_id" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editIncomeForm.errors.boarding_house_id }}</div>
                     </div>
                     <div class="space-y-2">
-                        <label for="editIncomeForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Opsional)</label>
-                        <select id="editIncomeForm-room_id" v-model="editIncomeForm.room_id"
+                        <label for="editIncomeForm-room_id" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Kamar (Wajib)</label>
+                        <select id="editIncomeForm-room_id" v-model="editIncomeForm.room_id" required
                             class="w-full h-12 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 rounded-xl text-sm font-medium text-gray-700 dark:text-white transition-all outline-none "
                             :disabled="!editIncomeForm.boarding_house_id">
-                            <option value="">Semua Kamar</option>
+                            <option value="" disabled>Pilih Kamar</option>
                             <option v-for="room in availableEditIncomeRooms" :key="room.id" :value="room.id">{{ room.name }}</option>
                         </select>
                         <div v-if="editIncomeForm.errors.room_id" class="text-primary-500 text-xs mt-1 font-medium ml-1">{{ editIncomeForm.errors.room_id }}</div>
