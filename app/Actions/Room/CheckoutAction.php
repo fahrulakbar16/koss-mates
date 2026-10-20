@@ -15,16 +15,21 @@ class CheckoutAction
      */
     public function execute(BoardingHouse $boardingHouse, Room $room): void
     {
-        if ($room->status !== Room::STATUS_OCCUPIED) {
-            throw new \Exception('Kamar tidak dalam status terisi (occupied)');
-        }
-
         DB::transaction(function () use ($boardingHouse, $room) {
+            $room = Room::whereKey($room->id)->lockForUpdate()->firstOrFail();
+
             // Find the active check-in record
             $userRoom = UserRooms::where('room_id', $room->id)
-                ->where('status', 'checked_in')
+                ->whereIn('status', ['checked_in', 'checkin_open'])
                 ->latest()
+                ->lockForUpdate()
                 ->first();
+
+            // The room detail also treats an active tenancy as occupied,
+            // even when the stored room status is out of sync.
+            if (!$userRoom && $room->status !== Room::STATUS_OCCUPIED) {
+                throw new \Exception('Kamar tidak dalam status terisi (occupied)');
+            }
 
             if ($userRoom) {
                 $userRoom->update([
