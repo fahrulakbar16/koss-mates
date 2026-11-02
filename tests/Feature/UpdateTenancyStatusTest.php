@@ -66,6 +66,16 @@ class UpdateTenancyStatusTest extends TestCase
         $this->assertDatabaseCount('log_activities', 3);
     }
 
+    public function test_booked_tenant_can_be_checked_in(): void
+    {
+        $room = $this->room();
+        $room->update(['status' => 'booked']);
+        $tenancy = $this->tenancy($room, 'booked');
+        app(UpdateTenancyStatusAction::class)->execute($room, $tenancy->id, 'checked_in', 'booked');
+        $this->assertSame('checked_in', $tenancy->fresh()->status);
+        $this->assertSame('occupied', $room->fresh()->status);
+    }
+
     public function test_cannot_update_a_record_from_another_room(): void
     {
         $room = $this->room();
@@ -88,13 +98,24 @@ class UpdateTenancyStatusTest extends TestCase
         $this->assertDatabaseCount('log_activities', 0);
     }
 
-    public function test_cannot_reactivate_a_tenancy_when_room_is_full(): void
+    public function test_closed_tenancies_cannot_be_changed_even_when_room_is_available(): void
     {
         $room = $this->room();
-        $old = $this->tenancy($room, 'cancelled');
-        $this->tenancy($room, 'checked_in');
-        $this->expectException(ValidationException::class);
-        app(UpdateTenancyStatusAction::class)->execute($room, $old->id, 'booked', 'cancelled');
+        $room->update(['status' => 'available']);
+        foreach (['cancelled', 'checked_out'] as $status) {
+            $tenancy = $this->tenancy($room, $status);
+            foreach (['booked', 'checked_in', 'cancelled'] as $targetStatus) {
+                try {
+                    app(UpdateTenancyStatusAction::class)->execute($room, $tenancy->id, $targetStatus, $status);
+                    $this->fail('Closed tenancy must not be editable.');
+                } catch (ValidationException $e) {
+                    $this->assertArrayHasKey('status', $e->errors());
+                }
+                $this->assertSame($status, $tenancy->fresh()->status);
+                $this->assertSame('available', $room->fresh()->status);
+            }
+        }
+        $this->assertDatabaseCount('log_activities', 0);
     }
 
     public function test_requires_room_edit_permission(): void

@@ -26,6 +26,7 @@ class GetRoomsAction
                 $query->where('status', $status);
             })
             ->with(['prices', 'penyewaAktif', 'tenancies' => fn ($q) => $q
+                ->whereIn('status', UpdateTenancyStatusAction::EDITABLE_STATUSES)
                 ->select('id', 'room_id', 'user_id', 'status', 'start_date', 'end_date')
                 ->with('user:id,name')->orderByDesc('id')])
             ->withCount('transactions')
@@ -42,6 +43,8 @@ class GetRoomsAction
             // Override status to 'occupied' if there's an active tenant
             if ($room->active_tenant) {
                 $room->status = 'occupied';
+            } elseif ($room->tenancies->contains('status', 'booked')) {
+                $room->status = 'booked';
             }
 
             return $room;

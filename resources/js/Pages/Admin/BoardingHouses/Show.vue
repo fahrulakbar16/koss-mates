@@ -331,34 +331,34 @@
                                     </div>
 
                                     <div class="py-4 border-t border-gray-100 dark:border-gray-600/50">
-                                        <!-- Show tenant name when room is occupied -->
-                                        <div v-if="room.active_tenant" class="space-y-2">
+                                        <!-- Show current occupants or tenants with a booking -->
+                                        <div v-if="displayTenancies(room).length" class="space-y-2">
                                             <p class="text-xs text-gray-400 uppercase tracking-wider font-bold">
-                                                Ditempati Oleh</p>
-                                            <div class="flex items-center gap-3">
+                                                {{ room.status === 'booked' ? 'Dipesan Oleh' : 'Ditempati Oleh' }}</p>
+                                            <div v-for="tenancy in displayTenancies(room)" :key="tenancy.id" class="flex items-center gap-3">
                                                 <div
                                                     class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-900/10 flex items-center justify-center border-2 border-blue-200 dark:border-blue-800">
                                                     <span class="text-sm font-bold text-blue-600 dark:text-blue-400">
-                                                        {{ room.active_tenant.charAt(0).toUpperCase() }}
+                                                        {{ (tenancy.user?.name || 'Penyewa').charAt(0).toUpperCase() }}
                                                     </span>
                                                 </div>
                                                 <div class="flex-1 min-w-0">
                                                     <p
                                                         class="text-sm font-semibold text-gray-900 dark:text-white truncate">
-                                                        {{ room.active_tenant }}
+                                                        {{ tenancy.user?.name || 'Penyewa tidak ditemukan' }}
                                                     </p>
-                                                    <p class="text-xs text-gray-500 dark:text-gray-400">Penyewa Aktif
+                                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ room.status === 'booked' ? 'Booking' : 'Penyewa Aktif' }}
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- Empty state for available rooms -->
                                         <div v-else class="text-center py-3">
-                                            <p class="text-sm text-gray-400 dark:text-gray-500">Kamar Tersedia</p>
+                                            <p class="text-sm text-gray-400 dark:text-gray-500">{{ room.status === 'available' ? 'Kamar Tersedia' : (room.status === 'booked' ? 'Data penyewa booking belum tersedia' : 'Belum ada data penyewa') }}</p>
                                         </div>
                                     </div>
 
-                                    <button v-if="can('rooms.edit') && room.tenancies?.length" type="button"
+                                    <button v-if="can('rooms.edit') && ['booked', 'occupied'].includes(room.status) && editableTenancies(room).length" type="button"
                                         class="mb-3 text-sm font-semibold text-primary-600 hover:underline"
                                         @click="openTenancyStatus(room)">Ubah Status Sewa</button>
 
@@ -514,7 +514,7 @@
                         <label for="tenancy-record" class="block text-sm mb-1">Catatan sewa</label>
                         <select id="tenancy-record" v-model="tenancyForm.user_room_id" @change="selectTenancy"
                             class="w-full rounded-lg border-gray-300 dark:bg-gray-700" :disabled="tenancyForm.processing">
-                            <option v-for="tenancy in tenancyRoom?.tenancies || []" :key="tenancy.id" :value="tenancy.id">
+                            <option v-for="tenancy in editableTenancies(tenancyRoom)" :key="tenancy.id" :value="tenancy.id">
                                 #{{ tenancy.id }} · {{ tenancy.user?.name || 'Penyewa' }} · {{ tenancyLabels[tenancy.status] || tenancy.status }} · {{ tenancy.start_date || 'Tanpa tanggal mulai' }}
                             </option>
                         </select>
@@ -1102,20 +1102,26 @@ const props = defineProps({
 const { can, is } = useAuth();
 
 const tenancyRoom = ref(null);
+const editableTenancies = (room) => (room?.tenancies || []).filter(tenancy =>
+    ['booked', 'checkin_open', 'checked_in'].includes(tenancy.status));
+const displayTenancies = (room) => editableTenancies(room).filter(tenancy =>
+    room.status === 'booked' ? tenancy.status === 'booked' : ['checkin_open', 'checked_in'].includes(tenancy.status));
 const tenancyLabels = {
     booked: 'Dipesan', checkin_open: 'Menunggu Check-in', checked_in: 'Sudah Check-in',
     checked_out: 'Sudah Check-out', cancelled: 'Dibatalkan',
 };
 const tenancyForm = useForm({ user_room_id: null, status: '', previous_status: '' });
 function selectTenancy() {
-    const tenancy = tenancyRoom.value?.tenancies.find(t => t.id === Number(tenancyForm.user_room_id));
+    const tenancy = editableTenancies(tenancyRoom.value).find(t => t.id === Number(tenancyForm.user_room_id));
     tenancyForm.status = tenancy?.status || '';
     tenancyForm.previous_status = tenancy?.status || '';
     tenancyForm.clearErrors();
 }
 function openTenancyStatus(room) {
+    const tenancies = editableTenancies(room);
+    if (!['booked', 'occupied'].includes(room.status) || !tenancies.length) return;
     tenancyRoom.value = room;
-    tenancyForm.user_room_id = room.tenancies[0].id;
+    tenancyForm.user_room_id = (displayTenancies(room)[0] || tenancies[0]).id;
     selectTenancy();
 }
 function closeTenancyStatus() {

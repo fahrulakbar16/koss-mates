@@ -10,6 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class UpdateTenancyStatusAction
 {
+    public const EDITABLE_STATUSES = ['booked', 'checkin_open', 'checked_in'];
+
     public const STATUSES = ['booked', 'checkin_open', 'checked_in', 'checked_out', 'cancelled'];
 
     public function execute(Room $room, int $tenancyId, string $status, string $previousStatus): void
@@ -28,13 +30,10 @@ class UpdateTenancyStatusAction
                 throw ValidationException::withMessages(['status' => 'Status sudah berubah. Muat ulang halaman sebelum menyimpan.']);
             }
 
-            $active = ['booked', 'checkin_open', 'checked_in'];
-            if (in_array($status, $active, true) && !in_array($tenancy->status, $active, true)) {
-                $occupied = UserRooms::where('room_id', $room->id)->where('id', '!=', $tenancyId)
-                    ->whereIn('status', $active)->count();
-                if ($occupied >= ($room->capacity ?: 1)) {
-                    throw ValidationException::withMessages(['status' => 'Kapasitas kamar sudah penuh. Periksa status sewa lainnya terlebih dahulu.']);
-                }
+            if (!in_array($tenancy->status, self::EDITABLE_STATUSES, true)) {
+                throw ValidationException::withMessages([
+                    'status' => 'Hanya sewa yang masih booking atau terisi yang dapat diubah.',
+                ]);
             }
 
             $tenancy->update(['status' => $status]);
