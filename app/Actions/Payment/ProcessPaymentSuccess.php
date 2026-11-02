@@ -13,7 +13,7 @@ class ProcessPaymentSuccess
     /**
      * Process a successful payment. Idempotent — safe to call multiple times.
      */
-    public function execute(payment $payment): void
+    public function execute(payment $payment, ?Carbon $paymentDate = null): void
     {
         if ($payment->payment_status === 'success') {
             return;
@@ -22,7 +22,7 @@ class ProcessPaymentSuccess
         DB::beginTransaction();
         try {
             $payment->payment_status = 'success';
-            $payment->payment_date = now();
+            $payment->payment_date = $paymentDate ?? now();
             $payment->save();
 
             $transaction = $payment->transaction;

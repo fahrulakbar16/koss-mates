@@ -142,6 +142,7 @@
                                 <thead class="bg-primary-50 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
                                     <tr>
                                         <th class="p-3 border-b w-10 text-center">No</th>
+                                        <th class="p-3 border-b text-left whitespace-nowrap">Tanggal</th>
                                         <th class="p-3 border-b text-left">Keterangan</th>
                                         <th class="p-3 border-b text-right w-32">Total</th>
                                     </tr>
@@ -151,6 +152,7 @@
                                         <tr v-for="(expense, index) in expenses.data" :key="expense.id"
                                             class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
                                             <td class="p-2 text-center text-gray-500">{{ index + 1 }}</td>
+                                            <td class="p-2 whitespace-nowrap text-gray-500">{{ formatExpenseDate(expense.expense_date) }}</td>
                                             <td class="p-2 text-gray-700 dark:text-gray-300">
                                                 <div class="font-medium">{{ expense.category }}</div>
                                                 <div class="text-xs text-gray-500">{{ expense.description }}</div>
@@ -161,13 +163,13 @@
                                     </template>
                                     <template v-else>
                                         <tr>
-                                            <td colspan="3" class="p-4 text-center text-gray-400 italic">Tidak ada data
+                                            <td colspan="4" class="p-4 text-center text-gray-400 italic">Tidak ada data
                                                 pengeluaran</td>
                                         </tr>
                                     </template>
 
                                     <tr class="bg-gray-50 dark:bg-gray-700/30 font-bold border-t-2 border-gray-300">
-                                        <td colspan="2" class="p-3 text-right uppercase text-xs tracking-wider">Total
+                                        <td colspan="3" class="p-3 text-right uppercase text-xs tracking-wider">Total
                                             Pengeluaran:</td>
                                         <td class="p-3 text-right text-primary-600 dark:text-primary-400 font-mono">{{
                                             formatCurrency(summary.total_expense) }}
@@ -262,6 +264,14 @@ const periodLabel = computed(() => {
 });
 
 const currentDate = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+const formatExpenseDate = (value) => {
+    if (!value) return '-';
+    // Keep the expense's calendar date rather than shifting it by browser timezone.
+    const date = String(value).slice(0, 10);
+    const [year, month, day] = date.split('-');
+    return year && month && day ? `${day}/${month}/${year}` : '-';
+};
 
 const formatCurrency = (value) => {
     return new Intl.NumberFormat('id-ID', {

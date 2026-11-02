@@ -127,9 +127,12 @@ class RoomController extends Controller
     {
         abort_unless(Gate::allows('rooms.edit'), 403, 'Anda tidak memiliki akses untuk mengatur harga kamar');
 
+        abort_unless($room->boarding_house_id === $boardingHouse->id, 403);
+
         $validator = Validator::make($request->all(), [
             'prices' => ['required', 'array'],
-            'prices.*.duration' => ['required', 'integer', 'min:1'],
+            'prices.*.id' => ['nullable', 'integer', 'distinct', \Illuminate\Validation\Rule::exists('rooms_price', 'id')->where('room_id', $room->id)],
+            'prices.*.duration' => ['required', 'integer', 'min:1', 'distinct'],
             'prices.*.price' => ['required', 'numeric', 'min:0'],
         ], [
             'prices.required' => 'Data harga wajib diisi.',
@@ -409,7 +412,7 @@ class RoomController extends Controller
 
             if ($newStatus === 'success' && $oldStatus !== 'success') {
                 $payment->save(); // Save details first
-                app(\App\Actions\Payment\ProcessPaymentSuccess::class)->execute($payment);
+                app(\App\Actions\Payment\ProcessPaymentSuccess::class)->execute($payment, Carbon::parse($request->payment_date));
             } else {
                 $payment->payment_status = $newStatus;
                 $payment->save();
@@ -427,7 +430,7 @@ class RoomController extends Controller
 
                 // If rekap history exists, update it
                 $roomPrice = $transaction->roomPrice;
-                if ($roomPrice) {
+                if ($roomPrice && $transaction->userRoom) {
                     $duration = $roomPrice->duration;
                     $paymentDate = $payment->payment_date ?: now();
 
@@ -566,6 +569,29 @@ class RoomController extends Controller
     /**
      * Delete a transaction/bill.
      */
+    public function updateTenancyStatus(Request $request, BoardingHouse $boardingHouse, Room $room)
+    {
+        abort_unless(Gate::allows('rooms.edit'), 403);
+        abort_unless($room->boarding_house_id === $boardingHouse->id, 404);
+        $user = $request->user();
+        if ($user->hasRole('Pemilik')) {
+            abort_unless((int) $boardingHouse->owner_id === (int) $user->id, 403);
+        } elseif ($user->hasRole('Pengelola')) {
+            abort_unless((int) $boardingHouse->pengelola_id === (int) $user->id
+                || (int) $boardingHouse->cluster?->pengelola_id === (int) $user->id, 403);
+        }
+        $data = $request->validate([
+            'user_room_id' => ['required', 'integer'],
+            'status' => ['required', \Illuminate\Validation\Rule::in(\App\Actions\Room\UpdateTenancyStatusAction::STATUSES)],
+            'previous_status' => ['required', 'string'],
+        ]);
+        app(\App\Actions\Room\UpdateTenancyStatusAction::class)->execute(
+            $room, $data['user_room_id'], $data['status'], $data['previous_status']
+        );
+
+        return redirect()->back()->with('success', 'Status sewa berhasil diperbarui.');
+    }
+
     public function destroyTransaction(BoardingHouse $boardingHouse, Room $room, Transaction $transaction)
     {
         if ($transaction->room_id !== $room->id) {

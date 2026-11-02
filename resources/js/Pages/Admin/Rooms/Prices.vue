@@ -57,7 +57,7 @@
                                         class="bg-transparent border-none focus:ring-0 text-gray-900 dark:text-white font-bold p-0 placeholder:text-gray-400 placeholder:font-normal"
                                         placeholder="Tambahkan Nama Paket (Opsional)..." />
                                 </div>
-                                <button type="button" @click="removePriceItem(index)"
+                                <button v-if="!priceItem.id" type="button" @click="removePriceItem(index)"
                                     class="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl transition-all"
                                     title="Hapus Harga">
                                     <TrashIcon class="w-5 h-5" />

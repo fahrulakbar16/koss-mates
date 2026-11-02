@@ -3,7 +3,7 @@
 namespace App\Actions\Room;
 
 use App\Models\Room;
-use App\Models\RoomPrice;
+use Illuminate\Support\Facades\DB;
 use App\Helpers\LogActivityHelper;
 
 class StoreRoomPricesAction
@@ -13,21 +13,27 @@ class StoreRoomPricesAction
      */
     public function execute(Room $room, array $prices): void
     {
-        // Delete all existing prices for this room
-        $room->prices()->delete();
+        DB::transaction(function () use ($room, $prices) {
+            // Serialize updates for this room and preserve existing price IDs.
+            Room::whereKey($room->id)->lockForUpdate()->firstOrFail();
 
-        // Create new prices
-        foreach ($prices as $priceData) {
-            if (isset($priceData['price']) && $priceData['price'] > 0) {
-                RoomPrice::create([
-                    'room_id' => $room->id,
+            foreach ($prices as $priceData) {
+                if (!isset($priceData['price']) || $priceData['price'] <= 0) {
+                    continue;
+                }
+
+                $price = !empty($priceData['id'])
+                    ? $room->prices()->whereKey($priceData['id'])->firstOrFail()
+                    : $room->prices()->firstOrNew(['duration' => $priceData['duration']]);
+
+                $price->fill([
                     'duration' => $priceData['duration'],
                     'price' => $priceData['price'],
                     'name' => $priceData['name'] ?? null,
                     'addons' => $priceData['addons'] ?? null,
-                ]);
+                ])->save();
             }
-        }
+        });
 
         LogActivityHelper::addToLog('Memperbarui daftar harga kamar: ' . $room->name, [
             'room_id' => $room->id,

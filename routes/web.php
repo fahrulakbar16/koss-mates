@@ -213,6 +213,7 @@ Route::prefix('admin/transactions')->middleware(['auth'])->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('admin.transactions.index');
     Route::post('/income', [\App\Http\Controllers\Admin\TransactionController::class, 'storeIncome'])->name('admin.transactions.store-income');
     Route::post('/expense', [\App\Http\Controllers\Admin\TransactionController::class, 'storeExpense'])->name('admin.transactions.store-expense');
+    Route::put('/payment/{transaction}', [\App\Http\Controllers\Admin\TransactionController::class, 'updatePayment'])->name('admin.transactions.update-payment');
     Route::put('/income/{transaction}', [\App\Http\Controllers\Admin\TransactionController::class, 'updateIncome'])->name('admin.transactions.update-income');
     Route::put('/expense/{expense}', [\App\Http\Controllers\Admin\TransactionController::class, 'updateExpense'])->name('admin.transactions.update-expense');
     Route::delete('/income/{transaction}', [\App\Http\Controllers\Admin\TransactionController::class, 'destroyIncome'])->name('admin.transactions.destroy-income');
@@ -278,6 +279,7 @@ Route::prefix('boarding-houses')->group(function () {
     Route::post('/{boardingHouse}/rooms/{room}/assign-tenant', [RoomController::class, 'assignTenant'])->name('boarding-houses.rooms.assign-tenant');
     Route::post('/{boardingHouse}/rooms/{room}/cancel-booking', [RoomController::class, 'cancelBooking'])->name('boarding-houses.rooms.cancel-booking');
     Route::post('/{boardingHouse}/rooms/{room}/checkout', [RoomController::class, 'checkout'])->name('boarding-houses.rooms.checkout');
+    Route::put('/{boardingHouse}/rooms/{room}/tenancy-status', [RoomController::class, 'updateTenancyStatus'])->name('boarding-houses.rooms.tenancy-status');
     Route::put('/{boardingHouse}/rooms/{room}/update-checkin', [RoomController::class, 'updateCheckin'])->name('boarding-houses.rooms.update-checkin');
 
     // Boarding House Expenses

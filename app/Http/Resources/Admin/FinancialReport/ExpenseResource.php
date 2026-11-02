@@ -19,7 +19,8 @@ class ExpenseResource extends JsonResource
             'category' => $this->category ?? $this->type,
             'description' => $this->description,
             'amount' => $this->amount,
-            'expense_date' => $this->expense_date ?? $this->transaction_date,
+            'expense_date' => ($date = $this->expense_date ?? $this->transaction_date)
+                ? \Carbon\Carbon::parse($date)->toDateString() : null,
         ];
     }
 }

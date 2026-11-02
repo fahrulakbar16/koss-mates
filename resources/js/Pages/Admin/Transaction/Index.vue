@@ -152,6 +152,11 @@
                                             <TrashIcon class="w-4 h-4" />
                                         </button>
                                     </div>
+                                    <button v-else-if="item.type === 'payment' && item.editable_payment && canEditPayments"
+                                        @click="openEditPayment(item)" title="Edit pembayaran"
+                                        class="p-2 rounded-lg text-gray-400 hover:text-primary-600 hover:bg-primary-50">
+                                        <EditIcon class="w-4 h-4" />
+                                    </button>
                                     <span v-else class="text-xs text-gray-300 dark:text-gray-600">—</span>
                                 </td>
                             </tr>
@@ -177,6 +182,41 @@
                 <Pagination :pagination="transactions" />
             </div>
         </div>
+
+        <Modal :show="showPaymentModal" title="Edit Pembayaran Sewa" max-width="lg" @close="closePaymentModal">
+            <form id="editPaymentForm" @submit.prevent="submitEditPayment" class="space-y-4">
+                <p class="text-sm text-gray-500">{{ paymentItem?.description }}</p>
+                <div>
+                    <label for="paymentAmount" class="block text-sm mb-1">Jumlah pembayaran (Rp)</label>
+                    <input id="paymentAmount" v-model="editPaymentForm.amount" type="number" min="0" step="1" required
+                        class="w-full rounded-lg border-gray-300 dark:bg-gray-700" />
+                    <p class="text-sm text-red-600">{{ editPaymentForm.errors.amount }}</p>
+                </div>
+                <div>
+                    <label for="paymentDate" class="block text-sm mb-1">Tanggal pembayaran</label>
+                    <input id="paymentDate" v-model="editPaymentForm.payment_date" type="date" required
+                        class="w-full rounded-lg border-gray-300 dark:bg-gray-700" />
+                    <p class="text-sm text-red-600">{{ editPaymentForm.errors.payment_date }}</p>
+                </div>
+                <div>
+                    <label for="paymentMethod" class="block text-sm mb-1">Metode pembayaran</label>
+                    <select id="paymentMethod" v-model="editPaymentForm.payment_method" class="w-full rounded-lg border-gray-300 dark:bg-gray-700">
+                        <option value="cash">Tunai / Manual</option>
+                        <option value="gateway">Transfer Online</option>
+                    </select>
+                    <p class="text-sm text-red-600">{{ editPaymentForm.errors.payment_method }}</p>
+                </div>
+            </form>
+            <template #footer>
+                <div class="flex justify-end gap-3">
+                    <button type="button" :disabled="editPaymentForm.processing" @click="closePaymentModal">Batal</button>
+                    <button type="submit" form="editPaymentForm" :disabled="editPaymentForm.processing"
+                        class="px-4 py-2 rounded-lg bg-primary-600 text-white disabled:opacity-50">
+                        {{ editPaymentForm.processing ? 'Menyimpan...' : 'Simpan Pembayaran' }}
+                    </button>
+                </div>
+            </template>
+        </Modal>
 
         <!-- Income Modal (Add) -->
         <Modal :show="showIncomeModal" @close="closeIncomeModal" max-width="2xl">
@@ -755,9 +795,32 @@ defineOptions({
 
 const props = defineProps({
     transactions: Object,
+    canEditPayments: Boolean,
     boardingHouses: Array,
     filters: Object,
 });
+
+const showPaymentModal = ref(false);
+const paymentItem = ref(null);
+const editPaymentForm = useForm({ amount: '', payment_date: '', payment_method: 'cash' });
+const openEditPayment = (item) => {
+    paymentItem.value = item;
+    editPaymentForm.clearErrors();
+    editPaymentForm.amount = item.editable_payment.amount;
+    editPaymentForm.payment_date = dayjs(item.editable_payment.payment_date || item.transaction_date).format('YYYY-MM-DD');
+    editPaymentForm.payment_method = item.editable_payment.payment_method || 'cash';
+    showPaymentModal.value = true;
+};
+const closePaymentModal = () => {
+    if (!editPaymentForm.processing) showPaymentModal.value = false;
+};
+const submitEditPayment = () => {
+    if (editPaymentForm.processing) return;
+    editPaymentForm.put(route('admin.transactions.update-payment', paymentItem.value.id), {
+        preserveScroll: true,
+        onSuccess: () => { showPaymentModal.value = false; },
+    });
+};
 
 const search = ref(props.filters?.search || "");
 const typeFilter = ref(props.filters?.type || "");

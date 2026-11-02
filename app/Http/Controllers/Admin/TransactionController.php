@@ -55,12 +55,23 @@ class TransactionController extends Controller
 
         $transactions = $query->paginate(10)->withQueryString();
 
+        $payments = \App\Models\payment::whereIn('id', $transactions->getCollection()
+            ->map(fn ($log) => $log->referencedPaymentId())->filter())
+            ->get(['id', 'transaction_id', 'amount', 'payment_method', 'payment_date', 'payment_status'])->keyBy('id');
+        $transactions->getCollection()->each(function ($log) use ($payments) {
+            $payment = $payments->get($log->referencedPaymentId());
+            $log->setAttribute('editable_payment', $payment && $log->transaction
+                && (int) $payment->transaction_id === (int) $log->transaction_id
+                && $payment->payment_status === 'success' ? $payment : null);
+        });
+
         $boardingHousesQuery = BoardingHouse::with('rooms');
         PengelolaScopeHelper::applyBoardingHouseScope($boardingHousesQuery, $user);
         $boardingHouses = $boardingHousesQuery->get();
 
         return Inertia::render('Admin/Transaction/Index', [
             'transactions' => $transactions,
+            'canEditPayments' => \Illuminate\Support\Facades\Gate::allows('rooms.edit'),
             'boardingHouses' => $boardingHouses,
             'filters' => $request->only(['search', 'type', 'start_date', 'end_date']),
         ]);
@@ -78,6 +89,26 @@ class TransactionController extends Controller
         app(StoreExpense::class)->execute($request->validated());
 
         return Redirect::back()->with('success', 'Pengeluaran berhasil ditambahkan');
+    }
+
+    public function updatePayment(Request $request, TransactionLog $transaction)
+    {
+        abort_unless(\Illuminate\Support\Facades\Gate::allows('rooms.edit'), 403);
+        $ids = PengelolaScopeHelper::getBoardingHouseIds($request->user());
+        abort_if($ids !== null && !in_array($transaction->boarding_house_id, $ids), 403);
+        abort_unless($transaction->referencedPaymentId() && $transaction->transaction, 422,
+            'Pembayaran tidak dapat dicocokkan. Periksa melalui detail kamar.');
+
+        $payment = \App\Models\payment::whereKey($transaction->referencedPaymentId())
+            ->where('transaction_id', $transaction->transaction_id)->where('payment_status', 'success')->firstOrFail();
+        $room = $transaction->transaction->room;
+        abort_unless($room && (int) $room->boarding_house_id === (int) $transaction->boarding_house_id, 422);
+
+        // This screen corrects payment details without changing payment status.
+        $request->merge(['payment_status' => $payment->payment_status]);
+        return app(\App\Http\Controllers\RoomController::class)->updatePayment(
+            $request, $room->boardingHouse, $room, $payment
+        );
     }
 
     public function updateIncome(Request $request, TransactionLog $transaction)

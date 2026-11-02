@@ -55,6 +55,11 @@ class Room extends Model
             ->withPivot('status', 'start_date', 'end_date', 'room_price_id');
     }
 
+    public function tenancies(): HasMany
+    {
+        return $this->hasMany(UserRooms::class, 'room_id');
+    }
+
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(UserRooms::class, 'room_id');

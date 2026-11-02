@@ -32,6 +32,15 @@ class TransactionLog extends Model
         'transaction_date' => 'datetime',
     ];
 
+    public function referencedPaymentId(): ?int
+    {
+        if ($this->type !== 'payment' || !preg_match('/^PAY-(\d+)-/', $this->reference_number ?? '', $matches)) {
+            return null;
+        }
+
+        return (int) $matches[1];
+    }
+
     public function financialSource(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(FinancialSource::class);

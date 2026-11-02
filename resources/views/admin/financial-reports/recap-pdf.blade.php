@@ -401,6 +401,7 @@
                     <thead>
                         <tr>
                             <th style="width: 35px;" class="text-center">NO</th>
+                            <th style="width: 65px;">TANGGAL</th>
                             <th>KATEGORI & RINCIAN</th>
                             <th style="width: 110px;" class="text-right">JUMLAH (IDR)</th>
                         </tr>
@@ -409,6 +410,9 @@
                         @forelse($expenses as $index => $expense)
                             <tr>
                                 <td class="text-center text-gray-400">{{ $index + 1 }}</td>
+                                <td class="text-xs text-gray-500">
+                                    {{ !empty($expense['expense_date']) ? \Carbon\Carbon::parse($expense['expense_date'])->format('d/m/Y') : '-' }}
+                                </td>
                                 <td>
                                     <div class="font-bold">{{ $expense['category'] }}</div>
                                     <div class="text-xs text-gray-500">{{ $expense['description'] }}</div>
@@ -419,7 +423,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center text-gray-400" style="padding: 20px;">
+                                <td colspan="4" class="text-center text-gray-400" style="padding: 20px;">
                                     <em>Tidak ada data pengeluaran.</em>
                                 </td>
                             </tr>
@@ -427,7 +431,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="row-total">
-                            <td colspan="2" class="text-right text-xs" style="padding: 10px; color: #64748b;">TOTAL
+                            <td colspan="3" class="text-right text-xs" style="padding: 10px; color: #64748b;">TOTAL
                                 PENGELUARAN:</td>
                             <td class="text-right currency text-primary-600" style="font-size: 11pt; padding: 10px;">
                                 {{ number_format($summary['total_expense'], 0, ',', '.') }}

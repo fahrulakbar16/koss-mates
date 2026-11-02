@@ -968,7 +968,7 @@ function openPaymentModal(paymentRecord, transaction) {
     paymentForm.amount = paymentRecord.amount || 0;
     formattedAmount.value = formatRupiahString(paymentForm.amount);
     paymentForm.payment_status = paymentRecord.payment_status || "success";
-    paymentForm.payment_method = "cash";
+    paymentForm.payment_method = paymentRecord.payment_method || "cash";
 
     if (paymentRecord.payment_date) {
         const date = new Date(paymentRecord.payment_date);

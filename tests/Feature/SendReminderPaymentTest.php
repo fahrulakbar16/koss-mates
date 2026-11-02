@@ -18,6 +18,7 @@ class SendReminderPaymentTest extends TestCase
         config(['database.default' => 'sqlite', 'database.connections.sqlite.database' => ':memory:']);
         DB::purge('sqlite');
         Schema::create('transactions', function (Blueprint $table) {
+            $table->softDeletes();
             $table->id();
             $table->integer('user_id')->nullable();
             $table->integer('room_id')->nullable();

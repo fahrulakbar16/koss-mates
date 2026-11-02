@@ -25,7 +25,9 @@ class GetRoomsAction
             ->when($status, function ($query, $status) {
                 $query->where('status', $status);
             })
-            ->with(['prices', 'penyewaAktif'])
+            ->with(['prices', 'penyewaAktif', 'tenancies' => fn ($q) => $q
+                ->select('id', 'room_id', 'user_id', 'status', 'start_date', 'end_date')
+                ->with('user:id,name')->orderByDesc('id')])
             ->withCount('transactions')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc');

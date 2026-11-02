@@ -26,6 +26,23 @@ class PaymentObserver
         if ($payment->isDirty('payment_status') && $payment->payment_status === 'success') {
             $this->logTransaction($payment);
         }
+
+        if ($payment->wasChanged(['amount', 'payment_date', 'payment_method', 'payment_status'])) {
+            $logs = TransactionLog::where('transaction_id', $payment->transaction_id)->where('type', 'payment');
+            // A legacy log without a reference is only unambiguous with one payment.
+            $singlePayment = payment::where('transaction_id', $payment->transaction_id)->count() === 1;
+            $logs->where(function ($query) use ($payment, $singlePayment) {
+                $query->where('reference_number', 'like', 'PAY-' . $payment->id . '-%');
+                if ($singlePayment) {
+                    $query->orWhereNull('reference_number')->orWhere('reference_number', '');
+                }
+            })->update([
+                'amount' => $payment->amount,
+                'payment_method' => $payment->payment_method,
+                'transaction_date' => $payment->payment_date ?? now(),
+                'status' => $payment->payment_status === 'success' ? 'completed' : $payment->payment_status,
+            ]);
+        }
     }
 
     /**

@@ -358,6 +358,10 @@
                                         </div>
                                     </div>
 
+                                    <button v-if="can('rooms.edit') && room.tenancies?.length" type="button"
+                                        class="mb-3 text-sm font-semibold text-primary-600 hover:underline"
+                                        @click="openTenancyStatus(room)">Ubah Status Sewa</button>
+
                                     <!-- Actions -->
                                     <div
                                         class="pt-4 border-t border-gray-100 dark:border-gray-600/50 flex flex-wrap items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -502,6 +506,39 @@
                     </div>
                 </div>
             </div>
+
+            <Modal :show="!!tenancyRoom" title="Ubah Status Sewa" maxWidth="lg" @close="closeTenancyStatus">
+                <div class="space-y-4">
+                    <p class="font-semibold">{{ tenancyRoom?.name }}</p>
+                    <div>
+                        <label for="tenancy-record" class="block text-sm mb-1">Catatan sewa</label>
+                        <select id="tenancy-record" v-model="tenancyForm.user_room_id" @change="selectTenancy"
+                            class="w-full rounded-lg border-gray-300 dark:bg-gray-700" :disabled="tenancyForm.processing">
+                            <option v-for="tenancy in tenancyRoom?.tenancies || []" :key="tenancy.id" :value="tenancy.id">
+                                #{{ tenancy.id }} · {{ tenancy.user?.name || 'Penyewa' }} · {{ tenancyLabels[tenancy.status] || tenancy.status }} · {{ tenancy.start_date || 'Tanpa tanggal mulai' }}
+                            </option>
+                        </select>
+                        <p v-if="tenancyForm.errors.user_room_id" class="text-sm text-red-600">{{ tenancyForm.errors.user_room_id }}</p>
+                    </div>
+                    <div>
+                        <label for="tenancy-status" class="block text-sm mb-1">Status sewa</label>
+                        <select id="tenancy-status" v-model="tenancyForm.status" class="w-full rounded-lg border-gray-300 dark:bg-gray-700" :disabled="tenancyForm.processing">
+                            <option v-for="(label, value) in tenancyLabels" :key="value" :value="value">{{ label }}</option>
+                        </select>
+                        <p v-if="tenancyForm.errors.status" class="text-sm text-red-600">{{ tenancyForm.errors.status }}</p>
+                    </div>
+                    <p class="text-sm text-gray-500">Koreksi status sewa akan menyesuaikan ketersediaan kamar. Tanggal sewa dan pembayaran tetap seperti sebelumnya.</p>
+                </div>
+                <template #footer>
+                    <div class="flex justify-end gap-3">
+                        <button type="button" :disabled="tenancyForm.processing" @click="closeTenancyStatus">Batal</button>
+                        <button type="button" :disabled="tenancyForm.processing" @click="saveTenancyStatus"
+                            class="px-4 py-2 rounded-lg bg-primary-600 text-white disabled:opacity-50">
+                            {{ tenancyForm.processing ? 'Menyimpan...' : 'Simpan Status' }}
+                        </button>
+                    </div>
+                </template>
+            </Modal>
 
             <!-- Room Modal -->
             <Modal :show="isModalOpen" :title="isEditMode ? `Edit ${selectedItem?.name}` : 'Tambah Kamar Baru'"
@@ -1063,6 +1100,34 @@ const props = defineProps({
 });
 
 const { can, is } = useAuth();
+
+const tenancyRoom = ref(null);
+const tenancyLabels = {
+    booked: 'Dipesan', checkin_open: 'Menunggu Check-in', checked_in: 'Sudah Check-in',
+    checked_out: 'Sudah Check-out', cancelled: 'Dibatalkan',
+};
+const tenancyForm = useForm({ user_room_id: null, status: '', previous_status: '' });
+function selectTenancy() {
+    const tenancy = tenancyRoom.value?.tenancies.find(t => t.id === Number(tenancyForm.user_room_id));
+    tenancyForm.status = tenancy?.status || '';
+    tenancyForm.previous_status = tenancy?.status || '';
+    tenancyForm.clearErrors();
+}
+function openTenancyStatus(room) {
+    tenancyRoom.value = room;
+    tenancyForm.user_room_id = room.tenancies[0].id;
+    selectTenancy();
+}
+function closeTenancyStatus() {
+    if (!tenancyForm.processing) tenancyRoom.value = null;
+}
+function saveTenancyStatus() {
+    if (tenancyForm.processing || !tenancyRoom.value) return;
+    tenancyForm.put(route('boarding-houses.rooms.tenancy-status', [props.boardingHouse.id, tenancyRoom.value.id]), {
+        preserveScroll: true,
+        onSuccess: () => { tenancyRoom.value = null; },
+    });
+}
 
 const breadcrumbs = [
     { label: "Properti" },
