@@ -21,6 +21,7 @@ class GetBoardingHouseRecap
 
         $tenants = UserRooms::with(['user.tenant', 'room', 'plan'])
             ->where('boarding_house_id', $boardingHouse->id)
+            ->whereIn('status', ['checked_in', 'checkin_open'])
             ->withSum(['transactionLogs as paid_amount' => function ($query) use ($month, $year, $startDate, $endDate, $useDateRange) {
                 if ($useDateRange) {
                     $query->whereBetween('transaction_date', [$startDate, $endDate]);
@@ -31,7 +32,9 @@ class GetBoardingHouseRecap
                 $query->whereIn('transaction_logs.type', ['payment', 'income'])
                     ->successful();
             }], 'amount')
-            ->get();
+            ->get()
+            ->sortBy(fn (UserRooms $tenancy) => $tenancy->room?->name ?? '', SORT_NATURAL | SORT_FLAG_CASE)
+            ->values();
 
         $expensesQuery = TransactionLog::where('boarding_house_id', $boardingHouse->id)
             ->where('type', 'expense')

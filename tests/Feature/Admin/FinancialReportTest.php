@@ -23,6 +23,44 @@ class FinancialReportTest extends TestCase
         parent::setUp();
     }
 
+    public function test_recap_only_includes_checked_in_and_checkin_open_tenancies(): void
+    {
+        $user = User::factory()->create();
+        $boardingHouse = BoardingHouse::create([
+            'name' => 'Test Kos',
+            'owner_id' => $user->id,
+            'address' => 'Test Address',
+        ]);
+
+        $includedIds = [];
+        foreach (['cancelled', 'booked', 'checked_out', 'checked_in', 'checkin_open'] as $index => $status) {
+            $room = Room::create([
+                'boarding_house_id' => $boardingHouse->id,
+                'name' => $index === 0 ? 'Kamar 104' : 'Kamar 102',
+            ]);
+            $price = RoomPrice::create([
+                'room_id' => $room->id,
+                'duration' => 1,
+                'price' => 4800000,
+            ]);
+            $tenancy = UserRooms::create([
+                'user_id' => $user->id,
+                'boarding_house_id' => $boardingHouse->id,
+                'room_id' => $room->id,
+                'room_price_id' => $price->id,
+                'status' => $status,
+            ]);
+            if (in_array($status, ['checked_in', 'checkin_open'], true)) {
+                $includedIds[] = $tenancy->id;
+            }
+        }
+
+        $result = app(GetBoardingHouseRecap::class)->execute($boardingHouse, []);
+
+        $this->assertCount(2, $result['tenants']);
+        $this->assertEqualsCanonicalizing($includedIds, $result['tenants']->modelKeys());
+    }
+
     public function test_boarding_house_recap_includes_both_payment_and_income_types()
     {
         $user = new User();
@@ -53,7 +91,7 @@ class FinancialReportTest extends TestCase
             'room_id' => $room->id,
             'boarding_house_id' => $boardingHouse->id,
             'room_price_id' => $roomPrice->id,
-            'status' => 'active',
+            'status' => 'checked_in',
         ]);
 
         // Create a 'payment' log
