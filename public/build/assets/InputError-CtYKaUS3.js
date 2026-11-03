@@ -1,0 +1,1 @@
+import{aS as a,a1 as s,Y as t,ba as r,$ as m}from"./app-B7H5_RFg.js";const o={key:0},c={class:"text-sm text-primary-600 dark:text-primary-400"},y={__name:"InputError",props:{message:[String,Array]},setup(e){return(n,i)=>e.message?(a(),s("div",o,[t("p",c,r(Array.isArray(e.message)?e.message[0]:e.message),1)])):m("",!0)}};export{y as _};

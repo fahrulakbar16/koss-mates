@@ -354,7 +354,7 @@ import { useSidebar } from "@/Composables/useSidebar";
 import { computed, ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { usePage, router, Link } from "@inertiajs/vue3";
 import { useAuth } from "@/Composables/useAuth";
-import { messaging } from "@/firebase";
+import { getSupportedMessaging } from "@/firebase";
 import { onMessage } from "firebase/messaging";
 import Swal from "sweetalert2";
 
@@ -374,8 +374,15 @@ const showClusterDropdown = computed(() => {
     return clusters.value.length > 0 && (is('Superadmin') || is('Pengelola') || is('Pemilik'));
 });
 
+let unsubscribeMessaging;
+let sidebarUnmounted = false;
+onBeforeUnmount(() => {
+    sidebarUnmounted = true;
+    unsubscribeMessaging?.();
+});
+
 // Initialize selected cluster from URL or localStorage
-onMounted(() => {
+onMounted(async () => {
     // Try to get cluster_id from URL query params
     const urlParams = new URLSearchParams(window.location.search);
     const clusterIdFromUrl = urlParams.get('cluster_id');
@@ -396,9 +403,12 @@ onMounted(() => {
     }
 
     // Listen for foreground notifications
-    onMessage(messaging, (payload) => {
+    const messaging = await getSupportedMessaging();
+    if (!messaging || sidebarUnmounted) return;
+
+    unsubscribeMessaging = onMessage(messaging, (payload) => {
         console.log('Message received. ', payload);
-        const { title, body } = payload.notification;
+        const { title, body } = payload.notification || {};
 
         // Play notification sound
         // const audio = new Audio('/audio/notification.mp3');

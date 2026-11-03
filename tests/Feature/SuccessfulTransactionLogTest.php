@@ -14,6 +14,15 @@ class SuccessfulTransactionLogTest extends TestCase
     {
         config(['database.default' => 'sqlite', 'database.connections.sqlite.database' => ':memory:']);
         DB::purge('sqlite');
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id();
+            $table->softDeletes();
+        });
+        DB::table('transactions')->insert([
+            ['id' => 130, 'deleted_at' => null],
+            ['id' => 144, 'deleted_at' => null],
+            ['id' => 145, 'deleted_at' => null],
+        ]);
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->integer('transaction_id');
@@ -70,6 +79,15 @@ class SuccessfulTransactionLogTest extends TestCase
             ->toArray(request());
         $this->assertEquals(1500500, $report['total_income']);
         $this->assertEquals(50, $report['total_expense']);
+
+        // Soft-deleted parents hide both referenced and legacy payment logs,
+        // while manual income and expense entries remain visible.
+        DB::table('transactions')->where('id', 130)->update(['deleted_at' => now()]);
+        $this->assertSame([4, 5], TransactionLog::successful()->orderBy('id')->pluck('id')->all());
+        $this->assertEquals(500, TransactionLog::successful()->whereIn('type', ['payment', 'income'])->sum('amount'));
+
+        DB::table('transactions')->where('id', 130)->update(['deleted_at' => null]);
+        $this->assertSame([2, 4, 5, 7], TransactionLog::successful()->orderBy('id')->pluck('id')->all());
 
         DB::table('payments')->where('id', 132)->update(['payment_status' => 'pending']);
         $this->assertSame([4, 5], TransactionLog::successful()->orderBy('id')->pluck('id')->all());

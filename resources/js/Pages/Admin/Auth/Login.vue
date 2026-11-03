@@ -405,7 +405,7 @@
 import FullScreenLayout from "@/Components/layout/FullScreenLayout.vue";
 import { Link, useForm, usePage, router } from "@inertiajs/vue3";
 import { ref, computed, onMounted } from "vue";
-import { auth, googleProvider, messaging } from "@/firebase";
+import { auth, googleProvider, getSupportedMessaging } from "@/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { getToken } from "firebase/messaging";
 import Swal from "sweetalert2";
@@ -458,6 +458,9 @@ const isGoogleLoading = ref(false);
 // Get FCM Token
 const getFcmToken = async () => {
     try {
+        const messaging = await getSupportedMessaging();
+        if (!messaging) return;
+
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
             const token = await getToken(messaging, {

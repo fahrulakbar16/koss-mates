@@ -56,7 +56,7 @@ class TransactionLog extends Model
         return $this->belongsTo(Expense::class);
     }
 
-    /** Filter out payment logs whose underlying payment is no longer successful. */
+    /** Only include successful entries with an active parent transaction for payments. */
     public function scopeSuccessful(Builder $query): Builder
     {
         $paymentReference = $query->getConnection()->getDriverName() === 'sqlite'
@@ -64,6 +64,10 @@ class TransactionLog extends Model
             : "CONCAT('PAY-', payments.id, '-%')";
 
         return $query->where('transaction_logs.status', 'completed')
+            ->where(function ($entries) {
+                $entries->where('transaction_logs.type', '<>', 'payment')
+                    ->orWhereHas('transaction');
+            })
             ->where(function ($entries) use ($paymentReference) {
                 $entries->where('transaction_logs.type', '<>', 'payment')
                     ->orWhereExists(function ($payments) use ($paymentReference) {

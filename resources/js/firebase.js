@@ -11,11 +11,28 @@ const firebaseConfig = {
   measurementId: "G-DJD4WS5QQY"
 };
 
-import { getMessaging } from "firebase/messaging";
+import { getMessaging, isSupported } from "firebase/messaging";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const messaging = getMessaging(app);
 const googleProvider = new GoogleAuthProvider();
 
-export { auth, googleProvider, messaging };
+// Messaging is optional on HTTP development hosts and unsupported browsers.
+// Cache initialization so all consumers share the same support check.
+let messagingPromise;
+function getSupportedMessaging() {
+  if (typeof window === "undefined" || !window.isSecureContext) {
+    return Promise.resolve(null);
+  }
+
+  messagingPromise ??= isSupported()
+    .then((supported) => supported ? getMessaging(app) : null)
+    .catch((error) => {
+      console.warn("Firebase Messaging is unavailable:", error);
+      return null;
+    });
+
+  return messagingPromise;
+}
+
+export { auth, googleProvider, getSupportedMessaging };
